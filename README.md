@@ -1,8 +1,16 @@
 # Marketing OS
 
-Turn Claude Code or OpenAI Codex into a full marketing team.
+Scale your marketing without growing the team.
 
-Marketing OS is a ready-to-run system of **46 skills, 8 workflows, and 6 specialist agents**, backed by a knowledge base of your company's positioning, personas, and brand. Every draft comes out on-brand and grounded in real facts about your company.
+Marketing OS runs on Claude Code or OpenAI Codex and gives a solo marketer or a small team more reach. It does three things:
+
+- **Automates** repetitive production work.
+- **Speeds up** the work you already do.
+- **Extends** into specialties you'd otherwise outsource or skip.
+
+It ships with **46 skills, 8 workflows, and 6 specialist agents**, all grounded in a knowledge base of your company's positioning, personas, and brand, so every draft comes out on-brand and accurate.
+
+You stay in control. Each skill walks through its task and pauses for your approval at key stages. It drafts and assists; it doesn't run your marketing on its own.
 
 Works with **Claude Code** and **OpenAI Codex**.
 
@@ -11,8 +19,8 @@ Works with **Claude Code** and **OpenAI Codex**.
 You'll need [Claude Code](https://docs.anthropic.com/en/docs/claude-code) (or [OpenAI Codex](https://openai.com/codex)) installed. Then:
 
 ```bash
-git clone https://github.com/t0ddharris/agentic-marketing-os.git marketing-os
-cd marketing-os
+git clone https://github.com/t0ddharris/mktg-os.git mktg-os
+cd mktg-os
 ./scripts/create-instance.sh
 ```
 
@@ -111,7 +119,7 @@ Prefer to add the skills to an existing project instead of scaffolding a new rep
 
 **Claude Code:**
 ```bash
-claude plugin install --plugin-dir ./path-to-marketing-os
+claude plugin install --plugin-dir ./path-to-mktg-os
 ```
 
 **Codex:** Clone into your Codex plugin path. The `.codex-plugin/plugin.json` manifest registers it automatically.
