@@ -2,15 +2,15 @@
 
 Scale your marketing without growing the team.
 
-Marketing OS runs on Claude Code or OpenAI Codex and gives a solo marketer or a small team more reach. It does three things:
+Marketing OS was built to give marketers and GTM teams more reach. It does three things:
 
 - **Automates** repetitive production work.
 - **Speeds up** the work you already do.
 - **Extends** into specialties you'd otherwise outsource or skip.
 
-It ships with **46 skills, 8 workflows, and 6 specialist agents**, all grounded in a knowledge base of your company's positioning, personas, and brand, so every draft comes out on-brand and accurate.
+It comes with **46 skills, 8 workflows, and 6 specialist agents**, plus a "brain" template that forms a knowledge base of your company's positioning, personas, and brand, so every draft comes out on-brand and accurate.
 
-You stay in control. Each skill walks through its task and pauses for your approval at key stages. It drafts and assists; it doesn't run your marketing on its own.
+Everything is moldable. You do not need to use the specialist agents. Feel free to work with your main agent to customize the workflows and skills to your own processes and styles.
 
 Works with **Claude Code** and **OpenAI Codex**.
 
