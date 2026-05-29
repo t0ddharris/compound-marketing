@@ -1,0 +1,6 @@
+extends: occurrence
+message: "Too many em dashes. Use commas, colons, parentheses, or periods instead."
+level: warning
+scope: text
+max: 3
+token: "—"

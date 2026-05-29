@@ -1,0 +1,25 @@
+{
+  "name": "marketing-os",
+  "version": "1.0.0",
+  "description": "Complete marketing operations system for Claude Code. 46 skills, 6 specialist agents, brain-based knowledge architecture, routing tables, and quality enforcement.",
+  "author": {
+    "name": "Todd Harris",
+    "url": "https://github.com/t0ddharris"
+  },
+  "license": "MIT",
+  "keywords": [
+    "marketing",
+    "content",
+    "copywriting",
+    "seo",
+    "hubspot",
+    "social-media",
+    "ads",
+    "cro",
+    "brand",
+    "analytics"
+  ],
+  "skills": "./.claude/skills/",
+  "agents": "./.claude/agents/",
+  "hooks": "./.claude/settings.json"
+}

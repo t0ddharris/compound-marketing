@@ -1,0 +1,19 @@
+# Secrets
+.env
+
+# macOS
+.DS_Store
+
+# Local tooling
+.playwright-mcp/
+.mcp.json
+.obsidian/
+
+# Session briefs (local only)
+brief/
+
+# Local working docs and notes (not part of the distributable baseline)
+docs/
+
+# Local-only demo generator (not part of the distributable baseline)
+scripts/create-demo.sh

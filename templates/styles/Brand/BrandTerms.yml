@@ -1,0 +1,30 @@
+extends: substitution
+message: "Use '%s' instead of '%s'."
+level: error
+ignorecase: true
+swap:
+  utilize: use
+  utilise: use
+  leverage: use
+  facilitate: help
+  implement: set up
+  robust: strong
+  comprehensive: complete
+  innovative: new
+  cutting-edge: modern
+  seamless: smooth
+  groundbreaking: new
+  holistic: complete
+  delve: explore
+  bolster: strengthen
+  underscore: highlight
+  unveil: show
+  streamline: simplify
+  elucidate: explain
+  ascertain: determine
+  endeavour: try
+  foster: encourage
+  pivotal: key
+  multifaceted: complex
+  nuanced: subtle
+  transformative: significant

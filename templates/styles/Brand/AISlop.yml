@@ -1,0 +1,39 @@
+extends: existence
+message: "Possible AI slop pattern: '%s' — review whether this negation-then-correction is doing real work or is just a rhetorical trick."
+level: warning
+ignorecase: true
+tokens:
+  # Negation-then-correction: "X isn't/wasn't/don't Y. It's/They Z."
+  # [^.]+ matches any phrase up to the period, not just a single word.
+  - "wasn't [^.]+\\. It was"
+  - "wasn't [^.]+\\. It's"
+  - "wasn't [^.]+\\. It "
+  - "isn't [^.]+\\. It's"
+  - "isn't [^.]+\\. It "
+  - "isn't [^.]+\\. That's"
+  - "isn't [^.]+\\. That "
+  - "don't [^.]+\\. They "
+  - "don't [^.]+\\. It "
+  - "doesn't [^.]+\\. It "
+  - "doesn't [^.]+\\. They "
+  - "aren't [^.]+\\. They"
+  - "weren't [^.]+\\. They"
+  - "can't [^.]+\\. You "
+  - "can't [^.]+\\. It "
+  - "couldn't [^.]+\\. It "
+  - "wouldn't [^.]+\\. It "
+  # "not just X" inversions
+  - "not just [^.]+\\. That's"
+  - "not just [^.]+\\. It's"
+  - "not just [^.]+\\. It "
+  - "That's not just"
+  - "That's not [^.]+\\. That's"
+  - "That's not [^.]+\\. It's"
+  - "It's not [^.]+\\. It's"
+  - "It's not [^.]+\\. That's"
+  - "It's not [^.]+\\. That "
+  # Always-bad filler openers
+  - "In an era of"
+  - "In today's"
+  - "Whether you're a"
+  - "Think of [^.]+ as"
