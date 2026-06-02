@@ -17,3 +17,4 @@ docs/
 
 # Local-only demo generator (not part of the distributable baseline)
 scripts/create-demo.sh
+github-social.html

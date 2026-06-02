@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="github-social.png" alt="MKTG-OS" width="640">
+</p>
+
 # Marketing OS
 
 Scale your marketing without sacrificing quality. 
