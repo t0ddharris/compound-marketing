@@ -6,14 +6,16 @@ Works with **Claude Code** and **OpenAI Codex**.
 
 ## Getting Started
 
-Open this repo in your AI coding agent and start working:
+Open this repo in your AI coding agent:
 
 ```bash
 cd [this-repo]
 claude          # or: codex
 ```
 
-That's it. The routing table in CLAUDE.md (or AGENTS.md) automatically matches your requests to the right skill. Ask for what you need in plain language.
+If this is your first time, run `/setup` to walk through your company details, positioning, personas, and brand. If you have existing docs (messaging frameworks, product overviews, brand guides), drop them in `incoming/` first and `/setup` will use them to pre-fill your brain files.
+
+Once set up, the routing table in CLAUDE.md (or AGENTS.md) automatically matches your requests to the right skill. Ask for what you need in plain language.
 
 ## Quick Reference
 

@@ -1,22 +1,24 @@
 # Marketing OS
 
-Scale your marketing without growing the team.
+Scale your marketing without sacrificing quality. 
 
 Marketing OS was built to give marketers and GTM teams more reach. It does three things:
 
-- **Automates** repetitive production work.
+- **Automates** repetitive production work through skills and workflows.
 - **Speeds up** the work you already do.
 - **Extends** into specialties you'd otherwise outsource or skip.
 
-It comes with **46 skills, 8 workflows, and 6 specialist agents**, plus a "brain" template that forms a knowledge base of your company's positioning, personas, and brand, so every draft comes out on-brand and accurate.
+It comes with various skills, workflows, and sub-agents, plus a "brain" template that forms a knowledge base of your company's positioning, personas, and brand, so every draft comes out on-brand and accurate.
 
-Everything is moldable. You do not need to use the specialist agents. Feel free to work with your main agent to customize the workflows and skills to your own processes and styles.
+Everything is moldable. You do not need to use the specialist sub-agents. Feel free to work with your main agent to customize the workflows and skills to your own processes and styles. Trim what you don't need, modify what you want, add what you're missing!
 
 Works with **Claude Code** and **OpenAI Codex**.
 
-## Quick Start
+## Getting Started
 
-You'll need [Claude Code](https://docs.anthropic.com/en/docs/claude-code) (or [OpenAI Codex](https://openai.com/codex)) installed. Then:
+**Prerequisites:** [Claude Code](https://docs.anthropic.com/en/docs/claude-code) or [OpenAI Codex](https://openai.com/codex). Optional: [Vale](https://vale.sh/) for content linting, [GitHub CLI](https://cli.github.com/) (`gh`) for PR workflows.
+
+### 1. Clone and scaffold
 
 ```bash
 git clone https://github.com/t0ddharris/mktg-os.git mktg-os
@@ -24,7 +26,9 @@ cd mktg-os
 ./scripts/create-instance.sh
 ```
 
-The script asks for your company name and scaffolds a standalone repo with every skill, agent, and brain template. Open it and run setup:
+This asks for your company name and creates a standalone repo (e.g., `../your-company-marketing/`) with all skills, agents, and brain templates.
+
+### 2. Run setup
 
 ```bash
 cd ../your-company-marketing
@@ -32,7 +36,30 @@ claude          # or: codex
 /setup
 ```
 
-`/setup` walks you through your company details, positioning, personas, and brand. When it finishes, start working:
+`/setup` is a guided walkthrough. It will:
+
+- Ask about your product, target customer, and category
+- Scrape your website (optional) to pull in messaging and features automatically
+- Build a starter positioning statement and buyer personas
+- Extract your brand colors and fonts from your site (optional)
+- Set up integrations (HubSpot, LinkedIn, Google AI Studio, etc.)
+
+You don't need perfect answers. Anything you skip stays as a `[FILL IN]` placeholder that you can complete later.
+
+### 3. Bring your own docs (optional)
+
+Already have messaging frameworks, product overviews, brand guidelines, or competitive research? Drop them in the `incoming/` folder before or during setup:
+
+```bash
+cp ~/Documents/our-messaging.pdf incoming/
+cp ~/Documents/brand-guide.pdf incoming/
+```
+
+`/setup` will ask if you have reference files in `incoming/` and use the content to pre-fill your brain files (with your approval before writing anything). Supports PDFs, Markdown, plain text, and images. This can save significant manual entry.
+
+### 4. Start working
+
+Once setup finishes, you're ready to go. Ask for what you need in plain language, or use a slash command:
 
 ```
 /blog              Write a blog post
@@ -96,7 +123,7 @@ Each workflow is one command that chains several skills, with an approval gate b
 ## What's Inside
 
 ```
-.claude/skills/    # 46 marketing skills (blog, SEO, CRO, HubSpot, ads, etc.)
+.claude/skills/    # 54 marketing skills (blog, SEO, CRO, HubSpot, ads, etc.)
 .claude/agents/    # 6 specialist agents
 templates/         # Everything copied into a new instance:
   CLAUDE.md        #   Routing tables, writing rules, anti-hallucination guardrails
@@ -106,12 +133,6 @@ templates/         # Everything copied into a new instance:
   .env.example     #   API key template
 scripts/           # Generator scripts
 ```
-
-## Prerequisites
-
-- [Claude Code](https://docs.anthropic.com/en/docs/claude-code) or [OpenAI Codex](https://openai.com/codex)
-- [Vale](https://vale.sh/) for content linting — optional but recommended
-- [GitHub CLI](https://cli.github.com/) (`gh`) for PR workflows — optional
 
 ## Install as a Plugin
 

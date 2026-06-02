@@ -13,9 +13,10 @@ Run `/setup` to create a new, fully configured Marketing OS for your company. Th
 1. Ask company name, location, and preferred AI runtime
 2. Run the generator script to scaffold everything
 3. Scrape the website (optional) to pre-fill brain files
-4. Walk through brain file configuration interactively
-5. Set up integrations (analytics, image gen, meeting notes)
-6. User opens the new repo in their preferred runtime and starts working
+4. Import reference documents from `incoming/` (optional) to pre-fill brain files
+5. Walk through brain file configuration interactively
+6. Set up integrations (analytics, image gen, meeting notes)
+7. User opens the new repo in their preferred runtime and starts working
 
 ---
 
@@ -121,9 +122,28 @@ If they decline, continue with manual entry.
 
 ---
 
+## Step 3c: Import Reference Documents (Optional)
+
+Ask the user:
+
+> Do you have any existing documents you'd like me to reference? Things like messaging frameworks, product overviews, brand guidelines, competitive analyses, or pitch decks. If so, drop them in the `incoming/` folder and I'll use them to pre-fill your brain files.
+
+If they have files:
+1. List the files found in `incoming/` and confirm which ones to read
+2. Read each file and extract relevant information: product facts, positioning language, personas, competitive intel, brand details
+3. Map extracted content to the appropriate brain files (truth.md, positioning-and-messaging.md, competitive.md, personas.md, brand-guide.md)
+4. **Always show what you extracted and confirm before writing.** Never silently inject content from reference documents into brain files.
+5. Note: reference documents are raw inputs, not verified claims. Extracted facts go into brain files as starting points; the user confirms accuracy.
+
+If they also did the website scrape in Step 3b, merge both sources. Where they conflict, ask the user which version is correct.
+
+If they have no files, move on.
+
+---
+
 ## Step 4: Fill truth.md
 
-Using the answers from Steps 1 and 3, fill in `[new-repo]/brain/truth.md`:
+Using the answers from Steps 1, 3, and any imported reference documents (Step 3c), fill in `[new-repo]/brain/truth.md`:
 - Replace `[FILL IN]` placeholders with the user's answers
 - Leave `[FILL IN]` for anything they didn't provide
 - Do NOT invent information
