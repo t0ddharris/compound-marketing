@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="github-social.png" alt="MKTG-OS" width="640">
+  <img src="github-social.png" alt="MKTG-OS">
 </p>
 
 # Marketing OS
