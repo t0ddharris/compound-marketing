@@ -10,13 +10,8 @@ When the user provides direction, raw thoughts, or rough language, **never echo 
 
 ## Writing Style
 
-- Avoid em dashes in all generated content. Use commas, semicolons, or separate sentences instead.
 - When editing marketing/event copy, never use accusatory language toward the audience (e.g., don't imply they have breaches or failures).
-- Always run Vale linting after writing or editing any Markdown or HTML content.
-
-## Content Workflows
-
-After creating or substantially editing any content file (Markdown, HTML), run the copy-editing/linting step (Vale) before considering the task complete.
+- Always run Vale linting after writing or editing any Markdown or HTML content. Do not consider a content task complete until Vale passes.
 
 ## Verification Discipline
 
@@ -24,17 +19,24 @@ After creating or substantially editing any content file (Markdown, HTML), run t
 
 2. **Don't diagnose dataset shape from the head of a sort.** When evaluating whether data looks right, wrong, or suspicious, pull a distribution (counts grouped by the relevant dimension like stage, source, date bucket) or explicitly caveat that you are looking at a sample. A burst of similar records at the top of a sort-by-createdate query is not evidence of a bulk import or spam. The shape of the head of a list is almost never the shape of the full dataset.
 
-## Anti-Hallucination Rules
+## Anti-Hallucination Rules & Content Sourcing
 
 1. **Never invent product facts.** All factual claims must originate from `/brain/truth.md`.
 
 2. **Check the brain first.** Before making any claim about the product, company, features, pricing, or customers, verify it exists in `/brain/`.
+   - Positioning and messaging: `/brain/positioning-and-messaging.md`
+   - ICP details: `/brain/positioning-and-messaging.md` (ICP section)
+   - Competitive positioning: `/brain/positioning-and-messaging.md` (Competitive POV section)
+   - Voice and tone: `/brain/voice-and-tone.md` if it exists. Match the user's sentence rhythm, vocabulary register, conviction level, and personality markers. If the file is missing or empty, write in a clean professional voice and suggest running `/tone-mapping`.
 
 3. **Use placeholders for missing information.** If a fact is not in the brain, use `[FILL IN]` or `[VERIFY]` instead of guessing.
 
 4. **Ask when uncertain.** If you need information that isn't available, ask the user rather than fabricating.
 
 5. **Respect ownership.** Only the Product Marketer agent may modify files in `/brain/`. All other agents read only.
+
+6. **Source Citation Rule.** When writing drafts, if a paragraph depends on a factual claim, explicitly reference the source file.
+   > Example: Our product detects threats in under 200ms *(source: truth.md)* across cloud-native infrastructure *(source: positioning-and-messaging.md)*.
 
 ## File Structure
 
@@ -51,60 +53,36 @@ After creating or substantially editing any content file (Markdown, HTML), run t
 When a workflow skill runs (any multi-step pipeline), all output goes into a single project folder under `marketing/`. The structure:
 
 ```
-marketing/
-  [category]/
-    [project-slug]/
-      [piece-name].md
+marketing/[category]/[project-slug]/[piece-name].md
 ```
 
 **Categories** by workflow:
 
 | Workflow | Category folder |
 |----------|----------------|
-| `/blog-distribute` | `marketing/blog/[post-slug]/` |
-| `/landing-page` | `marketing/pages/[page-slug]/` |
-| `/campaign-launch` | `marketing/campaigns/[campaign-slug]/` |
-| `/competitive-positioning` | `marketing/competitive/[competitor-or-theme-slug]/` |
-| `/case-study-pipeline` | `marketing/case-studies/[customer-slug]/` |
-| `/repurpose` | `marketing/repurposed/[source-slug]/` |
-| `/seo-sprint` | `marketing/seo-sprints/[topic-slug]/` |
-| `/ad-campaign` | `marketing/ads/[campaign-slug]/` |
-
-**File naming** within a project folder — use descriptive names per deliverable:
-
-```
-marketing/blog/ai-marketing-tools/
-  blog-post.md
-  social-linkedin-1.md
-  social-linkedin-2.md
-  social-twitter-1.md
-  email-announcement.md
-  seo-metadata.md
-```
+| `/wf-blog-distribute` | `marketing/blog/[post-slug]/` |
+| `/wf-landing-page` | `marketing/pages/[page-slug]/` |
+| `/wf-campaign-launch` | `marketing/campaigns/[campaign-slug]/` |
+| `/wf-competitive-positioning` | `marketing/competitive/[competitor-or-theme-slug]/` |
+| `/wf-case-study-pipeline` | `marketing/case-studies/[customer-slug]/` |
+| `/wf-repurpose` | `marketing/repurposed/[source-slug]/` |
+| `/wf-seo-sprint` | `marketing/seo-sprints/[topic-slug]/` |
+| `/wf-ad-campaign` | `marketing/ads/[campaign-slug]/` |
 
 **Rules:**
 - Every file produced by a workflow stage goes into the project folder, not scattered across `marketing/`
-- Use kebab-case for all folder and file names
+- Use kebab-case for all folder and file names; use descriptive names per deliverable (e.g., `blog-post.md`, `social-linkedin-1.md`, `email-announcement.md`)
 - The project slug comes from the topic, campaign name, or customer name
 - Ask the user to confirm the project slug before creating files if it's ambiguous
 - Single-skill runs (not workflows) still use their natural location: `marketing/blog/`, `marketing/social/`, etc.
-
-## When Writing Content
-
-- Pull positioning and messaging from `/brain/positioning-and-messaging.md`
-- Pull ICP details from `/brain/positioning-and-messaging.md` (ICP section)
-- Pull competitive positioning from `/brain/positioning-and-messaging.md` (Competitive POV section)
-- Pull voice and tone from `/brain/voice-and-tone.md` if it exists. Match the user's sentence rhythm, vocabulary register, conviction level, and personality markers. If the file is missing or empty, write in a clean professional voice and suggest running `/tone-mapping`.
-- If the brain doesn't have what you need, stop and ask.
 
 ## When Creating Visual Assets or Design
 
 - **Always read `/brain/brand-guide/brand-guide.md` first.** This is the source of truth for colors, typography, gradients, spacing, button styles, card patterns, and all visual design decisions.
 - Logo files are in `/brain/brand-guide/` (PNG format).
-- Follow the design principles defined in your brand guide.
 - Use the `brand-design` skill for **static creative assets** (ads, carousels, social graphics, banners, slide graphics, whitepaper PDFs).
 - Use the `web-design` skill for **live interactive web UI** (Next.js landing pages, HubSpot landing pages, component craft, interaction states, responsive, motion, accessibility, and polish/audit of shipped pages).
-- `hubspot-email`, `hubspot-landing-page`, and `hubspot-cta` all reference `web-design` where relevant; loading them first is correct for those mediums, and they pull in the right parts of `web-design`.
+- `hubspot-email`, `hubspot-landing-page`, and `hubspot-cta` all reference `web-design` where relevant; loading them first is correct for those mediums.
 
 ## Mandatory Skill & Agent Routing
 
@@ -217,50 +195,11 @@ The `analytics` skill should be used **proactively**. Don't wait for the user to
 
 **Rule:** If the user asks a performance, results, or "how is X doing" question and analytics scripts can answer it, run the script FIRST, then answer with real data. Do not guess at metrics or use generic industry benchmarks when we have our own data available.
 
-## GitHub CLI (`gh`)
+## CLI Tools
 
-Use `gh` for all GitHub operations: PRs, issues, API calls, repo queries. No MCP plugin needed.
+**GitHub CLI (`gh`):** Use `gh` for all GitHub operations: PRs, issues, API calls, repo queries. No MCP plugin needed.
 
-## Google Workspace CLI (`gws`)
-
-The `gws` CLI can be configured for your Google Workspace account. Use it to read, create, and edit Google Sheets, Docs, Slides, and Drive files directly from sessions. See `.env.example` for setup.
-
-### Quick Reference
-
-```bash
-# Sheets
-gws sheets +read --spreadsheet SHEET_ID --range "Sheet1!A1:D10"
-gws sheets +append --spreadsheet SHEET_ID --values 'col1,col2,col3'
-gws sheets +append --spreadsheet SHEET_ID --json-values '[["a","b"],["c","d"]]'
-
-# Docs
-gws docs +write --document DOC_ID --text 'Text to append'
-gws docs documents get --params '{"documentId": "DOC_ID"}'
-
-# Drive
-gws drive files list --params '{"pageSize": 10, "q": "name contains '\''keyword'\''"}'
-gws drive +upload ./file.pdf --name 'Display Name.pdf'
-
-# Slides
-gws slides presentations get --params '{"presentationId": "PRES_ID"}'
-
-# Output formats
---format json|table|yaml|csv
-```
-
-### When to Use
-
-- **Tracking and reporting**: Read/write campaign trackers, content calendars, or KPI dashboards in Google Sheets
-- **Content collaboration**: Read briefs or write drafts into shared Google Docs
-- **Asset management**: Upload finished PDFs, images, or reports to Drive
-- **Presentations**: Read or update slide decks
-
-### Finding File IDs
-
-Extract the ID from the Google URL:
-- Sheets: `docs.google.com/spreadsheets/d/{SHEET_ID}/edit`
-- Docs: `docs.google.com/document/d/{DOC_ID}/edit`
-- Slides: `docs.google.com/presentation/d/{PRES_ID}/edit`
+**Google Workspace CLI (`gws`):** Configured for Google Workspace. Use it to read, create, and edit Google Sheets, Docs, Slides, and Drive files. See `.env.example` for setup details and command reference. Extract file IDs from Google URLs (the segment after `/d/` in the URL).
 
 ## Em Dash Discipline
 
@@ -274,26 +213,16 @@ Em dashes are overused in AI-generated text. Limit yourself to **1 per paragraph
 
 If a draft exceeds 3 em dashes, revise before presenting it. This applies to ALL output: content, chat responses, plans, everything.
 
-## AI Slop Patterns — NEVER Use
+## AI Slop Patterns: NEVER Use
 
 These patterns are dead giveaways for AI-generated content. No agent, no skill, no draft should ever use them:
 
-- **"X wasn't Y. It was Z."** — e.g., "The alert wasn't late. It was ignored."
-- **"That's not just X. That's Y."** — e.g., "That's not just detection. That's prevention."
-- **"Here's the thing:"** / **"Here's why that matters:"**
-- **"Let that sink in."**
-- **"Read that again."**
-- **"Full stop."**
-- **"And that changes everything."**
-- **Repetitive single-word punctuation lists** — e.g., "Point one. Permanent. Point two. Permanent." This rhythmic hammer pattern is a dead giveaway. If you're making three points, write three real sentences with varying structure.
-- **Dangling stat fragments** — e.g., "100+ rounds of improvement. 30% better." Dropping a number as its own sentence for dramatic effect is a ChatGPT pattern. Weave stats into real sentences.
-- **Movie-trailer bridges** — e.g., "I've been thinking about that ever since." Orchestrated transitions that manufacture suspense between sections. Just connect the ideas directly.
+- **"X wasn't Y. It was Z."**
+- **"That's not just X. That's Y."**
+- **"Here's the thing:" / "Here's why that matters:"**
+- **"Let that sink in." / "Read that again." / "Full stop." / "And that changes everything."**
+- **Repetitive single-word punctuation lists** (e.g., "Point one. Permanent. Point two. Permanent."). Write real sentences with varying structure.
+- **Dangling stat fragments** (e.g., "100+ rounds of improvement. 30% better."). Weave stats into real sentences.
+- **Movie-trailer bridges** (e.g., "I've been thinking about that ever since."). Connect ideas directly.
 
-If you catch yourself writing any of these, rewrite the sentence in a natural, human voice. This applies to ALL content.
-
-## Source Citation Rule
-
-When writing drafts, if a paragraph depends on a factual claim, explicitly reference the source file.
-
-Example:
-> Our product detects threats in under 200ms *(source: truth.md)* across cloud-native infrastructure *(source: positioning-and-messaging.md)*.
+If you catch yourself writing any of these, rewrite in a natural, human voice. This applies to ALL content.
