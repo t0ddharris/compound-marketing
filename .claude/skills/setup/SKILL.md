@@ -1,12 +1,12 @@
 ---
 name: setup
 version: 3.0.0
-description: "Create a new Marketing OS for your company. Trigger with /setup. Asks your company name, scaffolds a standalone repo with all skills and brain templates, then walks you through configuring everything."
+description: "Create a new Compound Marketing instance for your company. Trigger with /setup. Asks your company name, scaffolds a standalone repo with all skills and brain templates, then walks you through configuring everything."
 ---
 
-# Marketing OS Setup
+# Compound Marketing Setup
 
-Run `/setup` to create a new, fully configured Marketing OS for your company. This is the first thing a user does after cloning marketing-os.
+Run `/setup` to create a new, fully configured Compound Marketing instance for your company. This is the first thing a user does after cloning compound-marketing.
 
 ## Overview
 
@@ -30,7 +30,7 @@ Then derive the default path: `../[company-slug]-marketing/` (lowercase, hyphena
 
 Ask:
 
-> I'll create your marketing OS at `[path]`. Good, or would you prefer a different location?
+> I'll create your Compound Marketing instance at `[path]`. Good, or would you prefer a different location?
 
 ---
 
@@ -63,7 +63,7 @@ This script:
 - Copies all skills into both `.claude/skills/` and `.agents/skills/` (hardlinked)
 - Copies agents into the primary runtime's agents directory
 - Generates both `CLAUDE.md` and `AGENTS.md` (identical except title and path references)
-- Writes `.marketing-os.yml` with the primary runtime setting
+- Writes `.compound-marketing.yml` with the primary runtime setting
 - Copies brain templates with `[FILL IN]` placeholders
 - Copies Vale styles, settings, .gitignore
 - Initializes git with an initial commit
@@ -73,11 +73,11 @@ If the script doesn't exist or fails, do the same work manually:
 - Copy skills into both `.claude/skills/` and `.agents/skills/`
 - Copy agents into the primary runtime's agents directory
 - Generate both `CLAUDE.md` and `AGENTS.md`
-- Write `.marketing-os.yml` with `primary_runtime: [claude|codex]`
+- Write `.compound-marketing.yml` with `primary_runtime: [claude|codex]`
 - Copy brain/, styles/, PRODUCT.md, INDEX.md, .vale.ini, .claude/settings.json, .env.example, .gitignore
-- `git init && git add -A && git commit -m "Initial setup: [Company] marketing OS"`
+- `git init && git add -A && git commit -m "Initial setup: [Company] Compound Marketing instance"`
 
-**All remaining steps operate on files in the NEW repo, not the marketing-os source repo.**
+**All remaining steps operate on files in the NEW repo, not the compound-marketing source repo.**
 
 ---
 
@@ -228,7 +228,7 @@ Update CLAUDE.md (and AGENTS.md — keep them in sync) in the new repo if they w
 
 Show the user what integrations are available and ask which ones they want to set up:
 
-> The Marketing OS can connect to these services for analytics, image generation, and meeting notes. Which do you use?
+> Compound Marketing can connect to these services for analytics, image generation, and meeting notes. Which do you use?
 
 | Service | What it powers | Required? |
 |---------|---------------|-----------|
@@ -269,7 +269,7 @@ git commit -m "Configure brain files for [Company]"
 Present (adapt the commands based on the runtime they chose — `/` for Claude, `$` for Codex):
 
 ```
-Setup complete. Your marketing OS is at: [path]
+Setup complete. Your Compound Marketing instance is at: [path]
 Primary runtime: [Claude Code | Codex]
 
 Brain files configured:
@@ -330,7 +330,7 @@ Utilities:
 
 ## Rules
 
-- All file writes happen in the NEW repo, never in marketing-os
+- All file writes happen in the NEW repo, never in compound-marketing
 - Never invent information the user didn't provide
 - Show what you'll write and confirm before saving
 - If the user wants to skip a step, skip it. Leave placeholders.

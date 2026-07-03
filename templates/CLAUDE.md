@@ -1,4 +1,4 @@
-# Claude Instructions for Marketing OS
+# Claude Instructions for Compound Marketing
 
 ## Human Authority
 

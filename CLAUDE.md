@@ -1,6 +1,6 @@
-# Marketing OS Generator
+# Compound Marketing Generator
 
-This is the source repo for the Marketing OS, a distributable system that creates fully configured marketing environments for AI coding agents.
+This is the source repo for Compound Marketing, a distributable system that creates fully configured marketing environments for AI coding agents.
 
 ## What This Repo Is
 
@@ -30,10 +30,10 @@ Generated instances support both Claude Code (`.claude/`) and OpenAI Codex (`.ag
 
 - Scaffolds skills into both `.claude/skills/` and `.agents/skills/` (hardlinked)
 - Generates both `CLAUDE.md` and `AGENTS.md` (identical except title and path references)
-- Writes `.marketing-os.yml` recording the primary runtime
+- Writes `.compound-marketing.yml` recording the primary runtime
 - Includes a `sync-skills` skill that keeps the secondary in sync after edits
 
-Skills use `SKILL.md` as the entry point, which both runtimes understand. The `sync-skills` skill reads `.marketing-os.yml` to determine direction (primary → secondary).
+Skills use `SKILL.md` as the entry point, which both runtimes understand. The `sync-skills` skill reads `.compound-marketing.yml` to determine direction (primary → secondary).
 
 ## Key Rule
 

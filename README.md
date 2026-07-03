@@ -1,18 +1,18 @@
 <p align="center">
-  <img src="github-social.png" alt="MKTG-OS">
+  <img src="github-social.png" alt="Compound Marketing">
 </p>
 
-# Marketing OS
+# Compound Marketing
 
-Scale your marketing without sacrificing quality. 
+**Each unit of marketing work should make the next one easier.**
 
-Marketing OS was built to give marketers and GTM teams more reach. It does three things:
+Compound Marketing is built primarily for B2B marketers and GTM teams — more reach without sacrificing quality. It does three things:
 
 - **Automates** repetitive production work through skills and workflows.
 - **Speeds up** the work you already do.
 - **Extends** into specialties you'd otherwise outsource or skip.
 
-It comes with various skills, workflows, and sub-agents, plus a "brain" template that forms a knowledge base of your company's positioning, personas, and brand, so every draft comes out on-brand and accurate.
+What makes it compound: skills capture how you do the work, workflows chain those skills into full pipelines, and a "brain" holds your company's positioning, personas, and brand. Every correction you make and every session you close feeds back into the system — so the hundredth blog post starts from everything the first ninety-nine taught it. The approach borrows from [compound engineering](https://github.com/EveryInc/compound-engineering-plugin), applied to marketing.
 
 Everything is moldable. You do not need to use the specialist sub-agents. Feel free to work with your main agent to customize the workflows and skills to your own processes and styles. Trim what you don't need, modify what you want, add what you're missing!
 
@@ -25,8 +25,8 @@ Works with **Claude Code** and **OpenAI Codex**.
 ### 1. Clone and scaffold
 
 ```bash
-git clone https://github.com/t0ddharris/mktg-os.git mktg-os
-cd mktg-os
+git clone https://github.com/t0ddharris/compound-marketing.git compound-marketing
+cd compound-marketing
 ./scripts/create-instance.sh
 ```
 
@@ -73,7 +73,7 @@ Once setup finishes, you're ready to go. Ask for what you need in plain language
 
 ## How It Works
 
-Marketing OS has four layers, each fixing a way AI marketing usually goes wrong:
+Compound Marketing has four layers, each fixing a way AI marketing usually goes wrong:
 
 - **Brain** (`brain/`) — One source of truth for your company. Every factual claim traces back to a brain file. If a fact isn't there, the system writes `[FILL IN]` instead of inventing one.
 - **Skills** (`.claude/skills/`) — Step-by-step workflows for specific tasks, each with its own references, templates, and approval gates.
@@ -144,7 +144,7 @@ Prefer to add the skills to an existing project instead of scaffolding a new rep
 
 **Claude Code:**
 ```bash
-claude plugin install --plugin-dir ./path-to-mktg-os
+claude plugin install --plugin-dir ./path-to-compound-marketing
 ```
 
 **Codex:** Clone into your Codex plugin path. The `.codex-plugin/plugin.json` manifest registers it automatically.

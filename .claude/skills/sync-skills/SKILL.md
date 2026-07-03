@@ -10,17 +10,17 @@ Synchronize skills between Claude Code and Codex so both runtimes share the same
 
 ## Step 0: Detect Primary Runtime
 
-Read `.marketing-os.yml` in the repo root. The `primary_runtime` field (`claude` or `codex`) determines sync direction:
+Read `.compound-marketing.yml` in the repo root. The `primary_runtime` field (`claude` or `codex`) determines sync direction:
 
 - **claude** (default): `.claude/skills/` → `.agents/skills/`
 - **codex**: `.agents/skills/` → `.claude/skills/`
 
-If `.marketing-os.yml` doesn't exist or has no `primary_runtime`, default to `claude`.
+If `.compound-marketing.yml` doesn't exist or has no `primary_runtime`, default to `claude`.
 
 Set `SRC` and `DST` based on the primary:
 
 ```bash
-CONFIG=".marketing-os.yml"
+CONFIG=".compound-marketing.yml"
 PRIMARY="claude"
 if [ -f "$CONFIG" ]; then
   PRIMARY=$(grep 'primary_runtime:' "$CONFIG" | awk '{print $2}' | tr -d '"'"'" || echo "claude")
@@ -171,4 +171,4 @@ Primary runtime: [claude|codex]
 - The marker file contains the source path for traceability
 - Skip symlinked SKILL.md files in user-level sync — these are managed by their own installer
 - Never sync the `sync-skills` or `setup` skills themselves — they belong to the primary runtime only
-- Direction is always primary → secondary, governed by `.marketing-os.yml`
+- Direction is always primary → secondary, governed by `.compound-marketing.yml`

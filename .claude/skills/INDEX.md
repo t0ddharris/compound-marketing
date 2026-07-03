@@ -80,5 +80,5 @@
 | [[revops/SKILL.md\|revops]] | Revenue operations, lead scoring, marketing-to-sales handoff |
 | [[site-architecture/SKILL.md\|site-architecture]] | Site hierarchy, navigation, URL structure planning |
 | [[brain-health/SKILL.md\|brain-health]] | Brain file completeness check with next-step recommendations |
-| [[setup/SKILL.md\|setup]] | Scaffold and configure a new Marketing OS instance |
+| [[setup/SKILL.md\|setup]] | Scaffold and configure a new Compound Marketing instance |
 | [[sync-skills/SKILL.md\|sync-skills]] | Sync skills between Claude Code and Codex runtimes |

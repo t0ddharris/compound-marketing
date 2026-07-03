@@ -1,6 +1,6 @@
-# Marketing OS — Index
+# Compound Marketing — Index
 
-Master index for the marketing OS. Start here to find anything.
+Master index for this Compound Marketing instance. Start here to find anything.
 
 ## System
 

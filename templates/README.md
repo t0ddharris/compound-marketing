@@ -1,4 +1,4 @@
-# [COMPANY] Marketing OS
+# [COMPANY] — Compound Marketing
 
 Your company's marketing operations system, powered by AI coding agents. This repo is the single source of truth for your marketing: brand knowledge, skills, workflows, and all generated content.
 
@@ -100,12 +100,12 @@ incoming/               Drop zone for raw inputs (notes, CSVs, briefs)
 .agents/agents/         Specialist agents (Codex) — mirrored from .claude/
 CLAUDE.md               Routing tables and rules (Claude Code)
 AGENTS.md               Routing tables and rules (Codex)
-.marketing-os.yml       Runtime configuration
+.compound-marketing.yml       Runtime configuration
 ```
 
 ## Keeping Skills in Sync
 
-If you edit a skill and use both Claude Code and Codex, run `/sync-skills` to keep the secondary runtime's copy up to date. The `.marketing-os.yml` file records which runtime is primary and governs sync direction.
+If you edit a skill and use both Claude Code and Codex, run `/sync-skills` to keep the secondary runtime's copy up to date. The `.compound-marketing.yml` file records which runtime is primary and governs sync direction.
 
 ## Session Workflow
 
