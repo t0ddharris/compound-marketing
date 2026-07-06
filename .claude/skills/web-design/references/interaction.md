@@ -13,22 +13,22 @@ Hover, focus, active, keyboard, forms. Everything the user touches.
 
 See brand-guide for variants. Interaction rules on top of that:
 
-- Hover changes background (not border, not text) for primary/secondary. Teal `#50F6E8` → `#3DD4C8`, purple `#6A2AFF` → `#8B55FF`.
-- Tertiary hover is `purple_darkest` at 5% opacity; active at 8%.
+- Hover changes background (not border, not text) for primary/secondary. Use the hover values from brand-guide — typically the same hue shifted one step (darker on light accents, lighter on dark ones). Never invent a hover color.
+- Tertiary/ghost hover uses a low-opacity tint of a brand color (~5% opacity; active ~8%).
 - Transparent variant uses `text-decoration: underline` on hover — no background change.
 - Disabled: `opacity: 0.5; cursor: not-allowed;`.
 - Never change the button's size or border-radius on hover. Movement belongs in motion.md.
 
 ## Cards (clickable)
 
-- Border default `#454545`, hover `#A39BA0`. That's the whole hover treatment — don't add shadow, scale, or translate unless there's a reason.
+- Hover = border color shifts one step brighter/darker (use the brand-guide's default and hover border values). That's the whole hover treatment — don't add shadow, scale, or translate unless there's a reason.
 - The whole card is the click target. Don't put a small "Read more" button inside a clickable card — double target, ambiguous.
 - If the card has a CTA button visually, still make the whole card clickable; the button is visual affordance.
 
 ## Focus rings
 
 - **Never `outline: none` without a replacement.** Keyboard users need a visible focus state.
-- Default focus ring: `outline: 2px solid #50F6E8; outline-offset: 2px;` on dark surfaces. On teal surfaces, use `outline: 2px solid #0F0F0F`.
+- Default focus ring: `outline: 2px solid var(--accent); outline-offset: 2px;` (use the brand accent). On accent-colored surfaces, invert: use the canvas color for the ring.
 - `:focus-visible` only — not `:focus`. Mouse clicks should not trigger the ring.
 - Cards, buttons, links, form inputs all need focus rings.
 

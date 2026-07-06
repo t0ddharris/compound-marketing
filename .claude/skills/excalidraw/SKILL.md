@@ -497,8 +497,8 @@ If validation fails, the generator raises an error with details. Fix the spec an
 
 <!-- Updated by /reflect. Promote stable patterns to the main skill body. -->
 
-- **[HIGH]** For complex diagrams (>10 nodes), avoid cross-connecting elements within the main structure. Show relationships as separate workflow examples alongside the hierarchy instead. *(Session 6, 2026-05-04)*
-- **[MEDIUM]** For diagrams with more than ~15 elements, write a generator script rather than hand-crafting JSON. Bidirectional bindings are too error-prone at scale. *(Session 6, 2026-05-04)*
-- **[MEDIUM]** When placing side labels, compute position from the leftmost content edge across all tiers, not from a single tier's alignment. *(Session 6, 2026-05-04)*
-- **[HIGH]** File generation via `generate_excalidraw.py` is the only supported approach. Live MCP collab (excaliclaude) was tested and abandoned due to unreliable rendering. *(Session 10, 2026-05-04)*
-- **[CRITICAL]** Indices MUST follow Excalidraw's fractional-indexing format: `a` prefix = 2 chars (`a0`–`az`), `b` prefix = 3 chars (`b00`–`bzz`). Using `b0`, `c0`, `c4` etc. makes files uneditable — Excalidraw can't generate new indices relative to malformed ones. The generator now handles this correctly. *(Session 11, 2026-05-05)*
+- **[HIGH]** For complex diagrams (>10 nodes), avoid cross-connecting elements within the main structure. Show relationships as separate workflow examples alongside the hierarchy instead.
+- **[MEDIUM]** For diagrams with more than ~15 elements, write a generator script rather than hand-crafting JSON. Bidirectional bindings are too error-prone at scale.
+- **[MEDIUM]** When placing side labels, compute position from the leftmost content edge across all tiers, not from a single tier's alignment.
+- **[HIGH]** File generation via `generate_excalidraw.py` is the only supported approach. Live MCP collab (excaliclaude) was tested and abandoned due to unreliable rendering.
+- **[CRITICAL]** Indices MUST follow Excalidraw's fractional-indexing format: `a` prefix = 2 chars (`a0`–`az`), `b` prefix = 3 chars (`b00`–`bzz`). Using `b0`, `c0`, `c4` etc. makes files uneditable — Excalidraw can't generate new indices relative to malformed ones. The generator now handles this correctly.

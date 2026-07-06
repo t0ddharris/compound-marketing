@@ -1,6 +1,6 @@
 ---
 name: brand-design
-version: 1.0.0
+version: 2.0.0
 description: "When the user wants to create visual creative assets — LinkedIn ads, carousel images, social graphics, banners, display ads, presentation slides, or any visual marketing content. Also use when the user mentions 'design,' 'creative,' 'ad image,' 'carousel,' 'banner,' 'social graphic,' 'slide,' 'visual asset,' 'LinkedIn ad,' or 'display ad.' This skill ensures all visual output follows the brand system."
 ---
 
@@ -8,15 +8,15 @@ description: "When the user wants to create visual creative assets — LinkedIn 
 
 You are an expert brand designer creating on-brand visual assets for the company. Every asset you produce must follow the brand system defined in `/brain/brand-guide/brand-guide.md`.
 
-**Scope boundary — use `web-design` instead when:** the task is live interactive web UI — Next.js landing pages, HubSpot landing pages, hover/focus/responsive states, motion, accessibility, page audits, or polishing shipped web pages. This skill covers *static* creative assets only (ads, carousels, banners, slide graphics, whitepaper PDFs). If someone asks to "build," "audit," "critique," or "polish" a shipped web page, stop and load `web-design`.
+**Scope boundary — use `web-design` instead when:** the task is live interactive web UI — framework landing pages, HubSpot landing pages, hover/focus/responsive states, motion, accessibility, page audits, or polishing shipped web pages. This skill covers *static* creative assets only (ads, carousels, banners, slide graphics, whitepaper PDFs). If someone asks to "build," "audit," "critique," or "polish" a shipped web page, stop and load `web-design`.
 
 ## Before Designing
 
 **Always read the brand guide first:**
-Read `/brain/brand-guide/brand-guide.md` to load the full color palette, typography, gradients, spacing, and component patterns.
+Read `/brain/brand-guide/brand-guide.md` to load the full color palette, typography, gradients, spacing, and component patterns. **Every color, font, radius, and spacing value in this skill comes from that file** — this skill defines production patterns, the brand guide supplies the values. If the brand guide is missing or still has `[FILL IN]` placeholders, stop and suggest running `/design-extract` (from a website) or filling it manually before producing assets.
 
-**Check the Figma reference file for approved styles:**
-The primary creative reference is the [Company] Social Media Banners Figma file (key: `YwZzzI2srMQ9nLwIixJD16`). Use `mcp__figma-remote-mcp__get_screenshot` to pull current approved designs before creating new assets. Skip any frame named "archived - do not use."
+**Check approved design references if the brand guide lists any:**
+If the brand guide records a Figma reference file or an approved-designs folder (e.g., `marketing/assets/`), pull current approved designs before creating new assets so your work extends the existing system rather than inventing a parallel one. Skip anything marked archived.
 
 **If the asset includes product claims or copy:**
 Read `/brain/truth.md` and `/brain/positioning-and-messaging.md` to ensure accuracy. Never invent product facts.
@@ -45,44 +45,55 @@ Gather this context (ask if not provided):
 
 ## Brand System Reference
 
-**Do not redefine brand system values here.** Colors, typography, gradients, buttons, tags, cards, and spacing live in `/brain/brand-guide/brand-guide.md` and that file is authoritative. This section only documents patterns that are specific to creative asset production (card-internal labels, accent bars, flow strips, event cards, etc.) and are not in the brand guide.
+**Do not redefine brand system values here.** Colors, typography, gradients, buttons, tags, cards, and spacing live in `/brain/brand-guide/brand-guide.md` and that file is authoritative.
 
-### Quick reference — the non-negotiables
-
-Load the brand guide and apply it verbatim. The handful of rules you must never forget:
-
-- **Dark-first canvas.** Primary background `#0F0F0F` (web) or `#151515` (slides). Never light/white.
-- **Teal is the primary accent.** Lead with `#50F6E8`. Purple `#6A2AFF` is an approved alternate primary button color when teal fails contrast or competes with adjacent teal; see brand guide for when to use which.
-- **Two gradients, used by purpose:**
-  - `linear-gradient(90deg, #50F6E8 0%, #8B55FF 100%)` — default for accent lines, borders, decorations, any **non-text** surface
-  - `linear-gradient(90deg, #50F6E8 0.48%, #8B55FF 47.12%, #FF7CA9 100%)` — **text effects only** (gradient headlines via `background-clip: text`). Never use the three-color gradient on lines, borders, or backgrounds.
-- **Inter font.** Weight 600 for headlines, 400 for body, 500 for buttons/labels. Full type scale in brand guide.
-- **Tags: three variants only.** `.od-tag` (solid), `.od-tag--outline` (outlined), `.od-tag--outline--sm` (outlined small for CTA cards). All cyan. All `5px` radius. No pink, no purple, no `999px` pill shapes. See brand guide "Tags & Pills" for full CSS and usage rules.
-
-Everything else — exact hex values, full type scale, button variants, card borders, spacing scale, shadows — read from the brand guide.
-
-### Card-internal labels (plain text)
-
-When labeling items inside a card (e.g., pillar names, feature names), use plain bold teal uppercase text — not pills. This maintains clear hierarchy: pills = section level, plain text = card level.
+When building assets, load the brand guide's values into CSS custom properties so the patterns below stay reusable:
 
 ```css
-.pillar-name {
+:root {
+  --canvas: /* primary background from brand guide */;
+  --surface: /* card/surface color from brand guide */;
+  --border: /* default border color from brand guide */;
+  --text-primary: /* primary text color from brand guide */;
+  --text-secondary: /* supporting text color from brand guide */;
+  --text-muted: /* tertiary/meta text color from brand guide */;
+  --accent: /* primary accent color from brand guide */;
+  --accent-2: /* secondary accent, if the brand has one */;
+  --gradient: /* signature gradient, if the brand has one */;
+  --font: /* brand font stack from brand guide */;
+}
+```
+
+The non-negotiables, whatever the brand's values are:
+
+- **One canvas.** Use the brand's primary background consistently. Don't drift between near-matches across assets.
+- **One accent leads.** The brand guide defines the primary accent and any approved alternates (and when to use which). Don't promote a secondary color to primary because it looks nice on one asset.
+- **Gradients (if the brand has them) are used by purpose.** The brand guide defines where each gradient variant is allowed (text effects vs. decorative surfaces). Never invent new gradient stops or apply a text-only gradient to borders and backgrounds.
+- **The brand font, at the brand's weights.** Load it properly (Google Fonts import or local files per the brand guide). No substitutions in final assets.
+- **Component patterns come from the brand guide.** Tags, buttons, and cards each have defined variants — use those, don't design new ones per asset.
+
+### Production patterns (generic, brand-agnostic)
+
+These patterns are specific to creative asset production and work with any brand's values:
+
+**Card-internal labels (plain text).** When labeling items inside a card (e.g., pillar names, feature names), use plain bold uppercase text in the accent color — not pills or tags. This maintains hierarchy: tags = section level, plain text = card level.
+
+```css
+.card-label {
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: #50F6E8;
+  color: var(--accent);
 }
 ```
 
-### Short accent bars (diagram / small-card indicator)
-
-For diagrammatic cards (12px radius, smaller than the standard website card), use a short colored accent bar (3px × 24px) on the left edge via `::before`, not a full-height left border.
+**Short accent bars (diagram / small-card indicator).** For diagrammatic cards (smaller radius than the brand's standard card), use a short accent bar (3px × 24px) on the left edge via `::before`, not a full-height left border.
 
 ```css
 .diagram-card {
-  background: #131313;
-  border: 1px solid #454545;
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 12px;
   padding: 20px 24px;
   position: relative;
@@ -96,68 +107,60 @@ For diagrammatic cards (12px radius, smaller than the standard website card), us
   width: 3px;
   height: 24px;
   border-radius: 0 2px 2px 0;
-  background: #50F6E8; /* or #8B55FF for semantic variation — never pink */
+  background: var(--accent); /* or --accent-2 for semantic variation */
 }
 ```
 
-Note: this is the small-diagram card pattern, not the standard 32px-radius website card. Use the website card spec from the brand guide for any card that represents a real product/feature.
+Use the brand guide's standard card spec for any card that represents a real product/feature; reserve the diagram card for small schematic elements.
 
-### Flow elements (connected strip)
-
-For sequential flows (A → B → C), use a single card container with items and arrows inside — no individual borders between items.
+**Flow elements (connected strip).** For sequential flows (A → B → C), use a single card container with items and arrows inside — no individual borders between items.
 
 ```css
 .flow {
   display: flex;
   align-items: center;
-  background: #131313;
-  border: 1px solid #454545;
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 12px;
 }
 
 .flow-item {
   font-size: 15px;
   font-weight: 500;
-  color: #F9F9F9;
+  color: var(--text-primary);
   padding: 12px 24px;
 }
 
 .flow-arrow {
   font-size: 14px;
-  color: #50F6E8;
+  color: var(--accent);
   padding: 12px 14px;
 }
 ```
 
-### Gradient text (headline emphasis)
-
-Apply the **three-color text gradient** from the brand guide to emphasis words in headlines via `background-clip: text`. This is the only approved use of the three-color gradient.
+**Gradient or accent text (headline emphasis).** If the brand guide defines a text-effect gradient, apply it to emphasis words in headlines via `background-clip: text` — and only where the brand guide allows. If the brand has no gradient, use the accent color for emphasis words instead.
 
 ```css
 .tagline strong {
   font-weight: 700;
-  background: linear-gradient(90deg, #50F6E8 0.48%, #8B55FF 47.12%, #FF7CA9 100%);
+  background: var(--gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 ```
 
-For accent lines, borders, or decorations that are not text, use the two-color gradient (`#50F6E8 → #8B55FF`) instead. See brand guide "Signature Gradient" for the full rule.
-
-### Blockquote / capstone lines
-
-For italic summary lines or pull quotes, use a subtle left border.
+**Blockquote / capstone lines.** For italic summary lines or pull quotes, use a subtle left border.
 
 ```css
 .capstone {
   font-size: 15px;
   font-weight: 500;
-  color: #CBCACB;
+  color: var(--text-secondary);
   font-style: italic;
   line-height: 155%;
   padding-left: 16px;
-  border-left: 2px solid #454545;
+  border-left: 2px solid var(--border);
 }
 ```
 
@@ -166,20 +169,20 @@ For italic summary lines or pull quotes, use a subtle left border.
 ## Design Principles
 
 ### Contrast & Hierarchy
-The dark canvas creates natural hierarchy. Use brightness to guide the eye:
-1. Gradient or white text — highest priority (headline)
-2. White text — primary information
-3. Off-white text — supporting information
-4. Grey text — tertiary/meta information
+Use contrast against the canvas to guide the eye:
+1. Accent/gradient or highest-contrast text — highest priority (headline)
+2. Primary text — main information
+3. Secondary text — supporting information
+4. Muted text — tertiary/meta information
 
 ### Restraint
-The gradient is powerful because it's used sparingly. A single gradient headline against a dark background is more impactful than gradient everywhere.
+Accents are powerful because they're used sparingly. A single accented headline against a clean canvas is more impactful than accent everywhere.
 
 ### Breathing Room
-[Company] design uses generous spacing. Don't crowd elements. Let the dark space work — negative space on a dark canvas reads as premium, not empty.
+Use generous spacing. Don't crowd elements. Negative space reads as premium, not empty.
 
 ### Consistency Over Novelty
-Match the existing website patterns. Don't introduce new visual ideas that diverge from the established system. The goal is brand coherence, not creative exploration.
+Match the brand's existing patterns (website, approved assets). Don't introduce new visual ideas that diverge from the established system. The goal is brand coherence, not creative exploration.
 
 ---
 
@@ -189,12 +192,12 @@ Match the existing website patterns. Don't introduce new visual ideas that diver
 - **Recommended sizes:** 1200x627px (landscape), 1080x1080px (square)
 - Keep headline to 5-8 words max
 - One clear CTA
-- Logo in corner (use `logo_text_white.png` on dark backgrounds)
+- Logo in corner (use the logo variant that contrasts with your canvas — the brand guide lists available logo files)
 - High contrast — these compete in a busy feed
 
 ### LinkedIn Carousel
 - **Size:** 1080x1080px (square, recommended) or 1080x1350px (portrait) per slide
-- **Slide 1 (Hook):** Bold headline with gradient text, minimal copy
+- **Slide 1 (Hook):** Bold headline with accent treatment, minimal copy
 - **Middle slides:** One idea per slide, consistent layout
 - **Final slide:** CTA slide with clear next step
 - Maintain consistent header/footer elements across slides
@@ -223,7 +226,7 @@ Match the existing website patterns. Don't introduce new visual ideas that diver
 
 ### Event Social Cards (Speaker / Sponsorship Promos)
 
-Designer-approved pattern for promoting [Company] presence at industry events. Reference: `marketing/assets/social-cards/[event-name]/`
+A proven pattern for promoting company presence at industry events. Store finished cards in `marketing/assets/social-cards/[event-name]/` so future events can extend the set.
 
 **Size:** 1200x627px (landscape, works on both LinkedIn and X)
 
@@ -231,65 +234,58 @@ Designer-approved pattern for promoting [Company] presence at industry events. R
 
 ```
 ┌──────────────────────────────────────────────────────────┐
-│  [Event Logo]                    [[Company] Logo]           │
-│                                  DIAMOND SPONSOR         │
+│  [Event Logo]                    [Company Logo]          │
+│                                  SPONSOR TIER            │
 │                                                          │
-│  Catch our Keynote Session - May 21 @ 9:15 AM CDT       │
+│  Catch our Keynote Session - [Date] @ [Time]             │
 │                                                          │
 │  Session Title:                    ┌─────────┐           │
 │  Subtitle in Italic                │  Photo  │           │
 │  Across Multiple Lines             └─────────┘           │
 │                                   Speaker Name           │
 │  EVENT NAME (uppercase, muted)    Title                  │
-│  Date · Location                  KEYNOTE SPEAKER        │
+│  Date · Location                  SPEAKER ROLE           │
 └──────────────────────────────────────────────────────────┘
 ```
 
-**Background:** Use Banner9-style SVG backgrounds from `brain/brand-assets/`. Three proven variants:
-1. Teal gradient with ghosted [Company] cross icon (Banner9) — vibrant, energetic
-2. Same but slightly more prominent cross — balanced
-3. Dark/black background with subtle teal glow around cross — premium, restrained
-
-A text-stripped version (`banner9-bg.svg`) lives in the social cards folder.
+**Background:** Use a branded background from `brain/brand-guide/` or an approved background asset if one exists. Good variants range from vibrant (gradient + ghosted brand mark) to restrained (dark/solid with a subtle accent glow). Match the energy to the message.
 
 **Top band (co-branding):**
 - Event logo (official event branding, not just text) — top left
-- [Company] `logo_text_white.png` — top right
-- "DIAMOND SPONSOR" (or relevant tier) in teal (`#50F6E8`), uppercase, small, directly below the [Company] logo
+- Company logo — top right
+- Sponsor tier (e.g., "GOLD SPONSOR"), if applicable, in the accent color, uppercase, small, directly below the company logo
 
 **Session intro line:**
-- Conversational tone: "Catch our **Keynote Session** - May 21 @ 9:15 AM CDT"
-- "Keynote Session" in bold white; rest in regular weight off-white
+- Conversational tone: "Catch our **Keynote Session** - [Date] @ [Time]"
+- The session type in bold primary text; the rest in regular weight secondary text
 - This line bridges the logos above and the session title below
 
 **Session title (visual hero):**
-- Main title in bold (weight 700), white `#F9F9F9`
-- Subtitle/description in *italic* (weight 400 italic), white — this is a key design choice that differentiates title from description
+- Main title in bold (weight 700), primary text color
+- Subtitle/description in *italic* (weight 400 italic) — the italic differentiates title from description without a second color
 - Largest text on the card, ~36-42px equivalent at 1200px width
 
 **Event details (muted):**
-- Event name in uppercase, grey (`#A39BA0` or similar muted tone), weight 600
+- Event name in uppercase, muted text color, weight 600
 - Date + location below in lighter weight, separated by a center dot (·)
 
 **Speaker section (right column):**
-- Circular headshot crop with solid teal border ring (2-3px, `#50F6E8`)
-- Headshot positioned over the background cross icon when possible
-- Vignette/blend the headshot edges into the card background if the original photo has a light background
-- Speaker name in white, weight 600, ~18-20px
-- Title (e.g., "Co-founder & CTO") in off-white/grey, weight 400, ~13-14px
-- Role label (e.g., "KEYNOTE SPEAKER") in teal `#50F6E8`, uppercase, weight 600, letter-spacing, ~10-11px
+- Circular headshot crop with a solid accent border ring (2-3px)
+- Vignette/blend the headshot edges into the card background if the original photo has a clashing background
+- Speaker name in primary text, weight 600, ~18-20px
+- Title (e.g., "Co-founder & CTO") in secondary text, weight 400, ~13-14px
+- Role label (e.g., "KEYNOTE SPEAKER") in the accent color, uppercase, weight 600, letter-spacing, ~10-11px
 
 **Typography notes for event cards:**
-- Inter throughout
+- Brand font throughout
 - Session title is the dominant text element; logos and speaker name are secondary
-- Italic on the session subtitle is intentional — it creates visual distinction between the talk title and its description without using a second color
 - Generous line spacing on the session title (1.15-1.2 line-height)
 
 ### Display / Banner Ads
 - Follow IAB standard sizes as requested
 - Extreme economy of words — 3-5 words headline max
 - Logo, headline, CTA — that's it
-- Ensure the gradient accent is visible even at small sizes
+- Ensure the brand accent is visible even at small sizes
 
 ### Blog / Content Headers
 - **Size:** 1200x630px (standard OG image size)
@@ -299,10 +295,10 @@ A text-stripped version (`banner9-bg.svg`) lives in the social cards folder.
 
 ### Presentation Slides
 - **Size:** 1920x1080px (16:9)
-- **Background:** `#151515` (slide background — slightly lighter than web `#0F0F0F`)
-- White/gradient text
+- **Background:** the slide background from the brand guide (brands often use a slightly different value than the web canvas — check)
+- High-contrast headline treatment per the brand guide
 - One idea per slide
-- Use the card pattern (32px radius, `#131313` bg) for content blocks
+- Use the brand's card pattern for content blocks
 - Data and diagrams should use brand accent colors
 
 ---
@@ -321,9 +317,9 @@ Generate production-quality HTML/CSS that can be:
 
 Use inline styles or a `<style>` block. Include:
 - Exact dimensions with `width` and `height`
-- All brand fonts (import Inter from Google Fonts)
-- All brand colors by hex value
-- The signature gradient where appropriate
+- The brand font loaded properly (import or local files per the brand guide)
+- All brand colors by their exact values from the brand guide (no approximations)
+- The brand's signature accent/gradient where appropriate
 
 **2. Design Rationale**
 Brief notes on:
@@ -340,7 +336,7 @@ Brief notes on:
 
 - Use semantic HTML
 - All text must be real text (not images of text) for easy editing
-- Include `@import` for Inter font
+- Load the brand font via `@import` or `@font-face`
 - Set `box-sizing: border-box` globally
 - Use flexbox/grid for layout
 - Add comments marking editable sections (headlines, body copy, CTA text)
@@ -350,16 +346,16 @@ Brief notes on:
 ## Checklist Before Delivering
 
 - [ ] Read `/brain/brand-guide/brand-guide.md`
-- [ ] Dark background (`#0F0F0F`) as primary canvas
-- [ ] Inter font loaded and applied
+- [ ] Canvas color matches the brand guide exactly
+- [ ] Brand font loaded and applied at the brand's weights
 - [ ] Colors match brand palette exactly (no approximations)
-- [ ] Gradient used correctly: two-color `#50F6E8 → #8B55FF` for non-text surfaces; three-color `#50F6E8 → #8B55FF → #FF7CA9` for gradient text only
+- [ ] Gradients/accents used only where the brand guide allows them
 - [ ] Spacing follows the brand scale
-- [ ] Border radius matches brand patterns (12px buttons, 32px cards, 5px tags)
-- [ ] Text hierarchy is clear (gradient/white → off-white → grey)
+- [ ] Border radius matches brand patterns
+- [ ] Text hierarchy is clear (accent/primary → secondary → muted)
 - [ ] Any product claims verified against `/brain/truth.md`
 - [ ] Asset dimensions match the target platform
-- [ ] Logo included where appropriate (correct variant for background)
+- [ ] Logo included where appropriate (correct variant for the background)
 - [ ] Readable at actual display size (especially mobile)
 - [ ] Font sizes meet platform minimums (e.g., no text below 24px on carousel slides)
 - [ ] No AI slop patterns in any copy (see CLAUDE.md)
@@ -371,7 +367,7 @@ Brief notes on:
 
 ### Figma MCP (Design Input)
 
-When the user provides a Figma URL or references a Figma design:
+When the user provides a Figma URL or references a Figma design (and the Figma MCP server is connected):
 
 1. **Pull design context** — Use `mcp__figma-remote-mcp__get_design_context` to extract layout, colors, typography, and spacing from the Figma node. Use this to match the design exactly when building HTML/CSS.
 2. **Take a screenshot** — Use `mcp__figma-remote-mcp__get_screenshot` to see the visual design before translating it to code.
@@ -379,14 +375,14 @@ When the user provides a Figma URL or references a Figma design:
 4. **Generate design system rules** — Use `mcp__figma-remote-mcp__create_design_system_rules` to produce a design system reference for the repo.
 5. **Get metadata** — Use `mcp__figma-remote-mcp__get_metadata` to get an overview of the node structure (layer names, sizes, positions) before pulling full design context.
 
-**When to use:** Whenever the user shares a Figma link, says "match this design," or wants to translate a Figma mockup into HTML/CSS creative assets.
+**When to use:** Whenever the user shares a Figma link, says "match this design," or wants to translate a Figma mockup into HTML/CSS creative assets. If the brand guide records a canonical Figma reference file, check it for approved styles before designing from scratch.
 
 ### agent-browser (Visual Validation)
 
 After generating HTML/CSS assets, use agent-browser to validate rendering:
 
 1. **Open the asset** — Run `agent-browser open <file-or-url>` to open the HTML file or a local server URL.
-2. **Take a screenshot** — Run `agent-browser screenshot` to capture the rendered asset at exact dimensions. Compare against the Figma original.
+2. **Take a screenshot** — Run `agent-browser screenshot` to capture the rendered asset at exact dimensions. Compare against the reference design if one exists.
 3. **Test at different sizes** — Run `agent-browser set viewport <width> <height>` to test the asset at different viewport sizes (e.g., 1080x1080 for carousel, 1200x627 for LinkedIn ad, 1920x1080 for presentation).
 4. **Accessibility snapshot** — Run `agent-browser snapshot -i` to check text contrast and element structure.
 
@@ -412,7 +408,7 @@ After taking a screenshot, run a **spatial quality check** using `agent-browser 
    - **Minimum clearance: 8px** between any edge of a text label and any line. If closer, move the label clearly away (12px+ preferred).
    - This is the single most common visual defect in diagram work — always check it.
 10. **Mirror-distance labels** — When two labels flank a divider or boundary line (one above, one below), they must be equidistant from that line. Measure the gap from each label's nearest edge to the line. If the gaps differ by more than 4px, flag it and adjust so both gaps match. This applies to any pair of labels that mirror each other across a horizontal or vertical rule (e.g., "loads" above a zone divider and "sends" below it).
-11. **Zone label consistency** — When a layout has multiple zones separated by dividers or borders (e.g., "Userspace" / "Kernel"), each zone label must have the same distance from its nearest boundary (top border, divider, or bottom border). Measure each zone label's gap from the edge it "belongs to" — if they differ by more than 4px, flag it. For example, if "Kernel" is 16px below the divider, "Userspace" must be ~16px below the top border of its container.
+11. **Zone label consistency** — When a layout has multiple zones separated by dividers or borders (e.g., "Userspace" / "Kernel"), each zone label must have the same distance from its nearest boundary (top border, divider, or bottom border). Measure each zone label's gap from the edge it "belongs to" — if they differ by more than 4px, flag it. For example, if one zone label is 16px below the divider, the other zone's label must be ~16px below the top border of its container.
 
 **How to run the check:**
 
@@ -435,8 +431,8 @@ Example — text-vs-lines check (adapt selectors and line coordinates to your di
     { name: 'namespace-bottom', y: 415 },    // dashed container border
   ];
   const arrowLines = [
-    { name: 'bpf→events', y: 500, x1: 590, x2: 660 },   // horizontal SVG arrow
-    { name: 'odiglet→collector', y: 344, x1: 680, x2: 790 },
+    { name: 'service-a→queue', y: 500, x1: 590, x2: 660 },   // horizontal SVG arrow
+    { name: 'agent→collector', y: 344, x1: 680, x2: 790 },
   ];
 
   // 2. Check every text label against every line
@@ -489,22 +485,24 @@ Example — text-vs-lines check (adapt selectors and line coordinates to your di
 
 ## Post-Processing: Background Color Enforcement
 
-AI image generators (Gemini, etc.) often add subtle gradients, glow, or vignettes to backgrounds even when instructed not to. When an asset requires an **exact background color** (e.g., `#151515` for slides, `#0F0F0F` for web), use this PIL script to force every dark pixel to the target color after generation.
+AI image generators (Gemini, etc.) often add subtle gradients, glow, or vignettes to backgrounds even when instructed not to. When an asset requires an **exact background color** (e.g., your brand's slide or web canvas), use this PIL script to force every near-background pixel to the target color after generation.
 
 **When to use:** After any AI-generated image that must sit on a specific brand background. Also useful for compositing generated illustrations onto slide decks or web pages where color mismatch would be visible.
+
+The script below targets dark canvases (the threshold catches near-black pixels). For light canvases, invert the comparison (`r > threshold and g > threshold and b > threshold` with a threshold around 200).
 
 ```python
 from PIL import Image
 
-def enforce_background_color(input_path, output_path, target_rgb=(21, 21, 21), threshold=60):
+def enforce_background_color(input_path, output_path, target_rgb, threshold=60):
     """
     Replace all near-dark pixels with an exact background color.
 
     Args:
         input_path: Path to the source image
         output_path: Path to save the processed image
-        target_rgb: The exact background color as (R, G, B).
-                     Common values: (15, 15, 15) for #0F0F0F, (21, 21, 21) for #151515
+        target_rgb: The exact background color as (R, G, B) — use your brand
+                    guide's canvas value, e.g. (18, 18, 18) for #121212
         threshold: Pixels where R, G, and B are ALL below this value get replaced.
                    Default 60 catches dark backgrounds without touching colored elements.
                    Lower (e.g., 40) for tighter replacement; higher (e.g., 80) for more aggressive.
@@ -522,20 +520,12 @@ def enforce_background_color(input_path, output_path, target_rgb=(21, 21, 21), t
     img.save(output_path)
     print(f"Replaced {replaced:,} pixels → rgb{target_rgb} in {output_path}")
 
-# Usage examples:
-# enforce_background_color("input.png", "output.png")                          # Default: #151515
-# enforce_background_color("input.png", "output.png", target_rgb=(15, 15, 15)) # #0F0F0F (web)
-# enforce_background_color("input.png", "output.png", threshold=40)            # Tighter match
+# Usage: pass your brand guide's exact canvas values
+# enforce_background_color("input.png", "output.png", target_rgb=(18, 18, 18))
+# enforce_background_color("input.png", "output.png", target_rgb=(18, 18, 18), threshold=40)  # tighter match
 ```
 
-**Brand background values:**
-
-| Context | Hex | RGB tuple |
-|---------|-----|-----------|
-| Web canvas | `#0F0F0F` | `(15, 15, 15)` |
-| Slide background | `#151515` | `(21, 21, 21)` |
-| Card surface | `#131313` | `(19, 19, 19)` |
-| Elevated surface | `#191919` | `(25, 25, 25)` |
+Look up the exact RGB values for your web canvas, slide background, and card surfaces in `/brain/brand-guide/brand-guide.md` before running.
 
 ---
 
@@ -550,15 +540,16 @@ def enforce_background_color(input_path, output_path, target_rgb=(21, 21, 21), t
 **Workflow:**
 - Search the library for the concept you need
 - Fetch the SVG from unpkg: `https://unpkg.com/lucide-static@latest/icons/{name}.svg`
-- Adapt to brand colors (`#50F6E8` stroke) and scale to fit the target viewBox
+- Adapt to brand colors (accent-color stroke) and scale to fit the target viewBox
 - Only create custom SVG icons when no library icon fits the concept
 
 **To embed a Lucide icon in a 120x120 viewBox:**
 ```svg
-<g transform="translate(10, 10) scale(4.2)" stroke="#50F6E8" stroke-width="0.36" stroke-linecap="round" stroke-linejoin="round" fill="none">
+<g transform="translate(10, 10) scale(4.2)" stroke="var(--accent)" stroke-width="0.36" stroke-linecap="round" stroke-linejoin="round" fill="none">
   <!-- paste Lucide path data here -->
 </g>
 ```
+(Replace `var(--accent)` with the literal accent hex when the SVG is used standalone outside a page with the custom property defined.)
 
 ---
 
@@ -568,17 +559,17 @@ When asked to design a whitepaper, datasheet, or other multi-page branded docume
 
 ### Workflow: HTML First, Figma Second
 
-1. **Build as HTML/CSS** — Design the full document as a multi-page HTML file with brand styling. Use all the brand system rules from this skill (dark canvas, Inter typography, gradient accents, card patterns, spacing scale). Structure the HTML with explicit page breaks via `page-break-after: always` or separate page divs.
+1. **Build as HTML/CSS** — Design the full document as a multi-page HTML file with brand styling. Use all the brand system rules from the brand guide (canvas, typography, accents, card patterns, spacing scale). Structure the HTML with explicit page breaks via `page-break-after: always` or separate page divs.
 
 2. **Export to PDF** — Use the `html-to-pdf` skill to export a print-quality vector PDF via Playwright. This gives selectable text, exact colors, and crisp rendering at any zoom.
 
-3. **Push to Figma for editing** — Use `mcp__figma-remote-mcp__generate_figma_design` to capture the HTML page into Figma. This imports the design as a visual reference that the team can annotate, adjust, or polish in Figma's editor.
+3. **Push to Figma for editing (optional)** — If the Figma MCP server is connected, use `mcp__figma-remote-mcp__generate_figma_design` to capture the HTML page into Figma. This imports the design as a visual reference that the team can annotate, adjust, or polish in Figma's editor.
 
 ### Why Not Build Directly in Figma?
 
-The `use_figma` tool (Plugin API) can create Figma objects programmatically, but multi-page documents with complex typography, diagrams, pull quotes, and brand styling require hundreds of lines of JS per page. The results are functional but not designer-polished. HTML/CSS gives us:
+Figma plugin APIs can create objects programmatically, but multi-page documents with complex typography, diagrams, pull quotes, and brand styling require hundreds of lines of JS per page. The results are functional but not designer-polished. HTML/CSS gives us:
 - Full control over typography, spacing, and layout
-- Reusable brand CSS patterns from this skill
+- Reusable brand CSS patterns
 - Print-quality PDF export (vector, selectable text)
 - A source file we can version-control and iterate on
 
@@ -589,10 +580,10 @@ Figma's strength is collaborative visual editing, not document authoring. Use it
 - **Page size:** Match the target output (e.g., 8.5"x11" letter, A4). Set HTML body dimensions to the DPI-scaled equivalent.
 - **Margins:** Generous margins (minimum 0.75" on all sides for print safety).
 - **Headers/footers:** Consistent placement with the company logo, page numbers, and document title.
-- **Section breaks:** Use the brand gradient as a subtle section divider (thin line or text accent), not a full bar.
+- **Section breaks:** Use the brand accent as a subtle section divider (thin line or text accent), not a full bar.
 - **Pull quotes:** Use the capstone/blockquote pattern from the brand system.
 - **Diagrams:** Build inline as SVG or styled HTML, not as image embeds. This keeps them vector-sharp in PDF.
-- **Cover page:** Full-bleed dark background with gradient text headline, subtitle, date, and [Company] logo.
+- **Cover page:** Full-bleed brand canvas with an accented headline, subtitle, date, and company logo.
 
 ---
 
@@ -607,6 +598,4 @@ Figma's strength is collaborative visual editing, not document authoring. Use it
 
 ## Learnings
 
-<!-- Updated by /reflect. Promote stable patterns to the main skill body. -->
-
-- **[HIGH]** Homepage particle visuals (torus ring, diamond, sphere, atom) are available as local assets in `/brain/brand-guide/`. Use these directly rather than approximating with CSS. Standalone PNG layers exist for compositing. *(Session 85, 2026-04-16)*
+<!-- Updated by /reflect in your instance. Promote stable patterns to the main skill body. Ships empty. -->

@@ -68,7 +68,7 @@ When the user provides direction, raw thoughts, or rough language, never echo it
 5. Before adding any new fact to `truth.md`, explicitly ask the user for confirmation unless the fact was already approved in writing
 6. **`audience-language.md` and `customer-journey.md` contain private sales call data.** You may reference them internally for messaging development. When producing any external-facing asset (web copy, comparison pages, sales collateral), never quote prospects directly or attribute language to specific companies unless the user has explicitly approved it.
 7. **Mark public-ready quotes clearly.** When a customer quote is approved for public use, mark it in the brain file so downstream agents know which quotes are safe. Unapproved quotes must never leak into external content.
-8. **Language precision:** Enforce "Words We Use" / "Words We Avoid" from `positioning-and-messaging.md` in all output. Key rules: "AI threat detection platform" (never "AI-powered security"), "non-human adversary" (never "autonomous threat detection"), "AI agent attacks" (never "AI-powered attacks"), don't use "next-gen," "military-grade," or "zero-day."
+8. **Language precision:** Enforce "Words We Use" / "Words We Avoid" from `positioning-and-messaging.md` in all output — yours and other agents'. You own that vocabulary: keep it current, and flag drafts that paraphrase the category label instead of using it exactly.
 
 ## Files You Own
 
@@ -104,7 +104,7 @@ When building or updating messaging:
 | **Response copy** | Someone asked "What do we do?" | Direct answer: "[Company] is..." — get to the point fast | Elevator pitches, What We Do, Short/Medium descriptions, conference bios |
 | **Mechanism copy** | Someone asked "How does it work?" | Consequence + mechanism: lead with what the buyer experiences, then name the technology | How We Do It, technical explainers |
 
-**The rule:** If someone asks you what [Company] does in an elevator, you say "[Company] is a [category] that..." — you don't spend 15 seconds setting up the AI threat narrative. Elevator pitches, "What We Do" sections, and short descriptions are response copy. They must open with a direct answer. Problem-first narrative is reserved for discovery copy where the reader needs context before the product name means anything to them.
+**The rule:** If someone asks you what [Company] does in an elevator, you say "[Company] is a [category] that..." — you don't spend 15 seconds setting up the problem narrative. Elevator pitches, "What We Do" sections, and short descriptions are response copy. They must open with a direct answer. Problem-first narrative is reserved for discovery copy where the reader needs context before the product name means anything to them.
 
 **What applies everywhere regardless of copy type:**
 - Vivid language over abstract ("your applications never feel it" vs. "near zero performance overhead")

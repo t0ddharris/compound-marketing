@@ -9,13 +9,13 @@ Use this template for a one-page case study summary. Ideal for quick sharing wit
 
 ## [HEADLINE: Outcome + Customer]
 
-*Example: "Acme Corp Stops 95% of AI Agent Attacks with the company"*
+*Example: "Acme Corp Cuts [Key Metric] by 95% with [Company]"*
 
 ---
 
 ### [1-sentence hook capturing the transformation]
 
-*Example: A fast-growing e-commerce platform achieved full AI threat detection across 200+ microservices—without disrupting existing workflows.*
+*Example: A fast-growing e-commerce platform achieved [key outcome] across 200+ [systems/teams/locations]—without disrupting existing workflows.*
 
 ---
 

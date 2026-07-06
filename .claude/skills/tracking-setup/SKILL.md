@@ -373,4 +373,4 @@ For implementation, see the [tools registry](../../tools/REGISTRY.md). Key analy
 
 <!-- Updated by /reflect. Promote stable patterns to the main skill body. -->
 
-- **[HIGH]** When installing tracking on a CMS with a native GA4 integration option (HubSpot, WordPress, Shopify, etc.), enable either GTM OR the native GA4 integration — never both. Both firing in parallel causes every pageview to be double-counted, dropping funnel conversion rates to ~50% of reality. GTM is almost always the right choice because the GA4 tag lives inside the container. *(Session 79, 2026-04-14)*
+- **[HIGH]** When installing tracking on a CMS with a native GA4 integration option (HubSpot, WordPress, Shopify, etc.), enable either GTM OR the native GA4 integration — never both. Both firing in parallel causes every pageview to be double-counted, dropping funnel conversion rates to ~50% of reality. GTM is almost always the right choice because the GA4 tag lives inside the container.

@@ -1,6 +1,6 @@
 ---
 name: hubspot-landing-page
-version: 1.0.0
+version: 1.1.0
 description: "Build HubSpot landing page templates for the Design Manager. Use when the user wants to create, edit, or troubleshoot HubSpot landing page templates. Also use when the user mentions 'HubSpot landing page,' 'landing page template,' 'HubL template,' 'Design Manager,' or 'HubSpot CMS.' For CTA buttons, see hubspot-cta. For page conversion optimization, see page-cro."
 ---
 
@@ -91,6 +91,8 @@ Every page template must include these in the `<head>` and before `</body>`:
 - `standard_header_includes` — injects HubSpot tracking, stylesheets, and required meta tags
 - `standard_footer_includes` — injects HubSpot tracking code, analytics, and required scripts
 
+**Never put `{% %}` HubL syntax inside HTML comments.** HubSpot's linter parses HubL tags as real tags even inside `<!-- -->`, causing cascading false errors (missing `standard_header_includes`, broken `dnd_area`). Keep developer notes in skill files or use plain text descriptions in comments.
+
 ---
 
 ## Drag-and-Drop Template System
@@ -125,7 +127,7 @@ Top-level horizontal band. Each section spans the full page width.
 
 ```jinja
 {% dnd_section
-  background_color="#0F0F0F",
+  background_color="#111111",
   max_width=1080,
   padding={
     "top": 64,
@@ -139,10 +141,10 @@ Top-level horizontal band. Each section spans the full page width.
 ```
 
 **Parameters:**
-- `background_color` (String/Dict) — hex, rgb, or rgba. e.g. `"#0F0F0F"` or `{r: 15, g: 15, b: 15, a: 1}`
+- `background_color` (String/Dict) — hex, rgb, or rgba. e.g. `"#111111"` or `{r: 17, g: 17, b: 17, a: 1}`
 - `background_image` (Dict) — `{"backgroundPosition": "MIDDLE_CENTER", "backgroundSize": "cover", "imageUrl": "..."}`
-- `background_linear_gradient` (Dict) — `{"direction": "to right", "colors": ["#50F6E8", "#8B55FF"]}` (two-color brand gradient; see `brain/brand-guide/brand-guide.md`)
-- `max_width` (Integer) — content max width in pixels
+- `background_linear_gradient` (Dict) — `{"direction": "to right", "colors": ["#111111", "#EEEEEE"]}` (placeholder values — use the brand gradient colors from `brain/brand-guide/brand-guide.md`)
+- `max_width` (Number) — content max width in pixels
 - `margin` (Dict) — `{"top": 0, "bottom": 0}`
 - `padding` (Dict) — `{"top": 64, "bottom": 64, "left": 32, "right": 32}`
 - `vertical_alignment` (String) — `TOP`, `MIDDLE`, or `BOTTOM`
@@ -158,7 +160,7 @@ Vertical divisions within a section. Uses the 12-column grid.
 {% dnd_column
   offset=0,
   width=6,
-  background_color="#131313",
+  background_color="#222222",
   padding={"top": 32, "bottom": 32, "left": 40, "right": 40}
 %}
   {# rows or modules go here #}
@@ -166,8 +168,8 @@ Vertical divisions within a section. Uses the 12-column grid.
 ```
 
 **Parameters:**
-- `offset` (Integer) — starting grid position (0-11)
-- `width` (Integer) — column span (1-12)
+- `offset` (Number) — starting grid position (0-11)
+- `width` (Number) — column span (1-12)
 - `background_color`, `background_image`, `background_linear_gradient` — same as section
 - `margin`, `padding` (Dict) — spacing
 - `vertical_alignment` (String) — `TOP`, `MIDDLE`, `BOTTOM`
@@ -198,8 +200,8 @@ Places a HubSpot module (default or custom) into the layout.
 
 **Parameters:**
 - `path` (String) — module path. Default modules use `@hubspot/` prefix
-- `offset` (Integer) — grid position
-- `width` (Integer) — column span
+- `offset` (Number) — grid position
+- `width` (Number) — column span
 - `horizontal_alignment` (String) — `LEFT`, `CENTER`, `RIGHT`
 
 ---
@@ -233,8 +235,8 @@ Override default module content using `module_attribute`:
 ```jinja
 {% dnd_module path="@hubspot/rich_text" %}
   {% module_attribute "html" %}
-    <h1 style="color: #F9F9F9;">Hero Headline</h1>
-    <p style="color: #E2E2E2;">Supporting subheadline copy goes here.</p>
+    <h1 style="color: var(--text);">Hero Headline</h1>
+    <p style="color: var(--text-muted);">Supporting subheadline copy goes here.</p>
   {% end_module_attribute %}
 {% end_dnd_module %}
 ```
@@ -257,6 +259,8 @@ For content that marketers should be able to edit without touching code:
 {% boolean "show_form" label="Show Form Section", value=true %}
 ```
 
+**Personalization tokens:** don't bake tokens (`{{ contact.firstname }}`, etc.) into the `html=` default of a `rich_text` field — the token won't render correctly from the template default. Ship a plain default and insert the token via the HubSpot page editor's Insert → Personalize menu.
+
 **CTA buttons:** Use `{% cta "field_id" label="Label" %}` for tracked CTA buttons. Create CTAs in HubSpot using the **Embedded HTML** template type (**Marketing > Lead Capture > CTAs > Embeds and Buttons > Embedded HTML**) with brand CSS. The marketer picks which CTA to use from the sidebar. For anchor links (e.g., scroll to form), use a styled `<a>` with `.btn-primary` class — these don't need CTA tracking since the conversion is the form submission. See the `hubspot-cta` skill for brand CSS, full workflow, and CTA creation details.
 
 ---
@@ -269,51 +273,28 @@ Include these CSS custom properties in the template's `<style>` block for consis
 
 ```css
 :root {
-  /* Core Colors */
-  --od-black: #0F0F0F;
-  --od-black-light: #131313;
-  --od-black-lighter: #191919;
-  --od-white: #F9F9F9;
-  --od-off-white: #E2E2E2;
-
-  /* Accents */
-  --od-purple: #8B55FF;
-  --od-purple-dark: #6A2AFF;
-  --od-cyan: #50F6E8;
-  --od-pink: #FF7CA9;
-
-  /* Greys */
-  --od-grey: #A39BA0;
-  --od-grey-dark: #454545;
-  --od-grey-darkest: #2A2A2A;
-
-  /* Gradients — see brain/brand-guide/brand-guide.md "Signature Gradient" */
-  --od-gradient: linear-gradient(90deg, #50F6E8 0%, #8B55FF 100%); /* default: UI accents, borders, decorations */
-  --od-gradient-text: linear-gradient(90deg, #50F6E8 0.48%, #8B55FF 47.12%, #FF7CA9 100%); /* text effects only (background-clip: text) */
-
-  /* Typography */
-  --od-font: 'Inter', sans-serif;
-
-  /* Spacing */
-  --od-max-width: 1080px;
-  --od-section-pad-y: 64px;
-  --od-section-pad-x: 32px;
-
-  /* Radius */
-  --od-radius-sm: 8px;
-  --od-radius-btn: 12px;
-  --od-radius-md: 16px;
-  --od-radius-lg: 24px;
-  --od-radius-card: 32px;
+  /* Fill values from brain/brand-guide/brand-guide.md */
+  --canvas: /* primary background */;
+  --surface: /* card/surface color */;
+  --border: /* default border color */;
+  --text: /* primary text */;
+  --text-muted: /* secondary text */;
+  --accent: /* primary accent */;
+  --accent-2: /* secondary accent, if any */;
+  --gradient: /* decorative gradient, if the brand has one */;
+  --gradient-text: /* text-effect gradient, if the brand has one */;
+  --font: /* brand font stack, from brand-guide */;
 }
 ```
 
 ### Brand-Compliant Section Patterns
 
-**Hero Section (Dark):**
+**Note on colors:** `dnd_*` parameters like `background_color` and `background_linear_gradient` require literal color values — they can't reference CSS variables. The `#111111` / `#222222` values below are obvious placeholders; substitute the actual values from `brain/brand-guide/brand-guide.md`. Inline styles inside `module_attribute` blocks *can* use `var(--token)` because the `:root` block lives in the template's `<head>`.
+
+**Hero Section:**
 ```jinja
 {% dnd_section
-  background_color="#0F0F0F",
+  background_color="#111111",
   max_width=1080,
   padding={"top": 80, "bottom": 64, "left": 32, "right": 32}
 %}
@@ -321,9 +302,9 @@ Include these CSS custom properties in the template's `<style>` block for consis
     {% dnd_module path="@hubspot/rich_text" %}
       {% module_attribute "html" %}
         <div style="text-align: center;">
-          <p style="font-size: 14px; font-weight: 400; color: #50F6E8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px;">[TAG LINE]</p>
-          <h1 style="font-size: 60px; font-weight: 600; color: #F9F9F9; line-height: 110%; letter-spacing: -1.72px; margin-bottom: 24px;">[HEADLINE]</h1>
-          <p style="font-size: 18px; font-weight: 400; color: #E2E2E2; line-height: 32px; max-width: 680px; margin: 0 auto 40px;">[SUBHEADLINE]</p>
+          <p style="font-size: 14px; font-weight: 400; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px;">[TAG LINE]</p>
+          <h1 style="font-size: 60px; font-weight: 600; color: var(--text); line-height: 110%; letter-spacing: -1.72px; margin-bottom: 24px;">[HEADLINE]</h1>
+          <p style="font-size: 18px; font-weight: 400; color: var(--text-muted); line-height: 32px; max-width: 680px; margin: 0 auto 40px;">[SUBHEADLINE]</p>
         </div>
       {% end_module_attribute %}
     {% end_dnd_module %}
@@ -336,16 +317,16 @@ Include these CSS custom properties in the template's `<style>` block for consis
 **Feature Grid (Cards):**
 ```jinja
 {% dnd_section
-  background_color="#0F0F0F",
+  background_color="#111111",
   max_width=1080,
   padding={"top": 64, "bottom": 64, "left": 32, "right": 32}
 %}
   {% dnd_column offset=0, width=4, padding={"top": 16, "right": 16, "bottom": 16, "left": 16} %}
     {% dnd_module path="@hubspot/rich_text" %}
       {% module_attribute "html" %}
-        <div style="background: #131313; border: 1px solid #454545; border-radius: 32px; padding: 32px 40px;">
-          <h3 style="font-size: 20px; font-weight: 600; color: #F9F9F9; line-height: 120%; margin-bottom: 16px;">[Feature Title]</h3>
-          <p style="font-size: 16px; font-weight: 400; color: #E2E2E2; line-height: 120%;">[Feature description]</p>
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 32px; padding: 32px 40px;">
+          <h3 style="font-size: 20px; font-weight: 600; color: var(--text); line-height: 120%; margin-bottom: 16px;">[Feature Title]</h3>
+          <p style="font-size: 16px; font-weight: 400; color: var(--text-muted); line-height: 120%;">[Feature description]</p>
         </div>
       {% end_module_attribute %}
     {% end_dnd_module %}
@@ -357,15 +338,15 @@ Include these CSS custom properties in the template's `<style>` block for consis
 **Form Section:**
 ```jinja
 {% dnd_section
-  background_color="#131313",
+  background_color="#222222",
   max_width=1080,
   padding={"top": 64, "bottom": 64, "left": 32, "right": 32}
 %}
   {% dnd_column offset=0, width=6, vertical_alignment="MIDDLE", padding={"right": 40} %}
     {% dnd_module path="@hubspot/rich_text" %}
       {% module_attribute "html" %}
-        <h2 style="font-size: 48px; font-weight: 600; color: #F9F9F9; line-height: 110%; letter-spacing: -1.72px; margin-bottom: 24px;">[Form Headline]</h2>
-        <p style="font-size: 18px; color: #E2E2E2; line-height: 32px;">[Supporting copy]</p>
+        <h2 style="font-size: 48px; font-weight: 600; color: var(--text); line-height: 110%; letter-spacing: -1.72px; margin-bottom: 24px;">[Form Headline]</h2>
+        <p style="font-size: 18px; color: var(--text-muted); line-height: 32px;">[Supporting copy]</p>
       {% end_module_attribute %}
     {% end_dnd_module %}
   {% end_dnd_column %}
@@ -376,17 +357,19 @@ Include these CSS custom properties in the template's `<style>` block for consis
 {% end_dnd_section %}
 ```
 
+For single-field capture forms (newsletter subscribe, early-access waitlist), use a centered single-column hero layout instead of the split-column form card above — one field doesn't balance against a dense text column. Centered matches how Substack, TLDR, and Every handle the pattern.
+
 **Social Proof / Logo Bar:**
 ```jinja
 {% dnd_section
-  background_color="#0F0F0F",
+  background_color="#111111",
   max_width=1080,
   padding={"top": 48, "bottom": 48, "left": 32, "right": 32}
 %}
   {% dnd_column offset=0, width=12 %}
     {% dnd_module path="@hubspot/rich_text" %}
       {% module_attribute "html" %}
-        <p style="text-align: center; font-size: 14px; font-weight: 500; text-transform: uppercase; color: #A39BA0; letter-spacing: 1px; margin-bottom: 32px;">Trusted by</p>
+        <p style="text-align: center; font-size: 14px; font-weight: 500; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; margin-bottom: 32px;">Trusted by</p>
       {% end_module_attribute %}
     {% end_dnd_module %}
     {% dnd_module path="@hubspot/logo_grid" %}
@@ -398,7 +381,7 @@ Include these CSS custom properties in the template's `<style>` block for consis
 **Gradient Accent Divider:**
 ```jinja
 {% dnd_section
-  background_linear_gradient={"direction": "to right", "colors": ["#50F6E8", "#8B55FF"]},
+  background_linear_gradient={"direction": "to right", "colors": ["#111111", "#EEEEEE"]},
   padding={"top": 2, "bottom": 2}
 %}
   {% dnd_column offset=0, width=12 %}
@@ -406,7 +389,7 @@ Include these CSS custom properties in the template's `<style>` block for consis
 {% end_dnd_section %}
 ```
 
-Dividers and non-text surfaces always use the two-color teal→purple gradient. The three-color gradient (adding pink) is only for gradient text effects via `background-clip: text`. See `brain/brand-guide/brand-guide.md` "Signature Gradient."
+The gradient colors above are placeholders. If the brand guide defines a decorative gradient, use it for dividers and non-text surfaces. If it defines a separate text-effect gradient, reserve that one for gradient text via `background-clip: text`. See `brain/brand-guide/brand-guide.md`.
 
 ---
 
@@ -420,7 +403,7 @@ Dividers and non-text surfaces always use the two-color teal→purple gradient. 
 3. <html lang="en">
 4. <head>
    - {{ standard_header_includes }}
-   - Google Fonts import (Inter)
+   - Brand font import (see brand-guide)
    - CSS custom properties (:root block)
    - Base reset and typography styles
    - Component styles (buttons, cards, forms, HubSpot form overrides)
@@ -441,12 +424,12 @@ Dividers and non-text surfaces always use the two-color teal→purple gradient. 
 3. <html lang="en">
 4. <head>
    - {{ standard_header_includes }}
-   - Google Fonts import (Inter)
+   - Brand font import (see brand-guide)
    - CSS custom properties (:root block)
    - Base reset and typography styles
    - Component styles (buttons, cards, forms)
    - Responsive media queries (@media max-width: 768px)
-5. <body style="background-color: #0F0F0F; margin: 0;">
+5. <body style="background-color: var(--canvas); margin: 0;">
 6. {% dnd_area "main_content" %}
    a. Hero section (headline, subhead, CTA)
    b. Social proof / logo bar (optional)
@@ -487,6 +470,8 @@ Each `{% text %}`, `{% rich_text %}`, `{% image %}`, `{% boolean %}`, and `{% fo
 
 **CRITICAL: Never put `{% text %}` inside a `<p>` tag.** HubSpot wraps every `{% text %}` field in a block-level `<div id="hs_cos_wrapper_...">`. A `<div>` inside a `<p>` is invalid HTML — browsers eject the block element, breaking layout, centering, and font-size overrides. Always use `<div>` (or `<h1>`–`<h6>`, `<span>` for inline) as the parent container for `{% text %}` tags. This applies to `{% rich_text %}` and `{% module %}` tags as well.
 
+**The same applies to headings:** never place `{% rich_text %}` (or `{% text %}` / `{% module %}`) inside `<h1>`–`<h6>` — the injected `<div>` inside a heading is invalid HTML. For headings that need editable or personalized content, render in `<div role="heading" aria-level="1">` styled to match your heading rules; keep non-editable accent spans (e.g., gradient words) as separate fields inside the same container.
+
 ### When to Use Fixed vs Drag-and-Drop
 
 | Approach | Use When | Tradeoff |
@@ -501,7 +486,7 @@ Each `{% text %}`, `{% rich_text %}`, `{% image %}`, `{% boolean %}`, and `{% fo
 2. <!DOCTYPE html>
 3. <head>
    - {{ standard_header_includes }}
-   - Google Fonts, CSS custom properties, styles
+   - Brand font import, CSS custom properties, styles
 4. <body>
    - Gradient bar (top)
    - HTML sections with inline HubL fields
@@ -541,7 +526,7 @@ HubSpot landing pages render in actual browsers, so you have **full CSS support*
 - Flexbox and CSS Grid — fully supported
 - CSS custom properties (variables) — supported
 - `border-radius` — fully supported
-- `linear-gradient` — fully supported (use for the [Company] gradient)
+- `linear-gradient` — fully supported (use for the brand gradient, if the brand has one)
 - `background-clip: text` — supported (for gradient text effect)
 - Google Fonts via `@import` — supported
 - Media queries — supported
@@ -556,7 +541,8 @@ Place styles inside a `<style>` tag in the `<head>`, after `{{ standard_header_i
 <head>
   {{ standard_header_includes }}
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+    /* Brand font import — use the font and weights from brain/brand-guide/brand-guide.md, e.g.: */
+    @import url('https://fonts.googleapis.com/css2?family=YOUR-BRAND-FONT:wght@400;500;600;700&display=swap');
 
     /* CSS custom properties and styles */
   </style>
@@ -584,15 +570,15 @@ Follow the brand guide responsive approach:
 
 ### Button Styles
 
-Both teal (`#50F6E8`) and purple (`#6A2AFF`) are approved primary button colors per `brain/brand-guide/brand-guide.md`. The HubSpot landing page template defaults to purple because teal-on-dark can read as informational rather than actionable inside HubSpot's content area, and purple separates the CTA from adjacent teal accents (eyebrows, tags, gradient text). Use teal instead when the page has no other teal elements competing for attention.
+The brand guide should name a default CTA color for landing pages (see `brain/brand-guide/brand-guide.md`). When a brand approves more than one accent for buttons, be deliberate about which one is the default: some accent colors read as informational rather than actionable inside a CMS content area, or compete with adjacent accents (eyebrows, tags, gradient text). Use the alternate accent when the default competes with nearby accents on the page.
 
 ```css
-.od-btn-primary {
+.btn-primary {
   display: inline-block;
   padding: 8px 24px;
-  background-color: #6A2AFF;
-  color: #F9F9F9;
-  font-family: 'Inter', sans-serif;
+  background-color: var(--accent);
+  color: var(--text);
+  font-family: var(--font);
   font-size: 18px;
   font-weight: 500;
   line-height: 150%;
@@ -602,24 +588,24 @@ Both teal (`#50F6E8`) and purple (`#6A2AFF`) are approved primary button colors 
   cursor: pointer;
   transition: all 0.3s;
 }
-.od-btn-primary:hover { background-color: #8B55FF; }
+.btn-primary:hover { background-color: var(--accent-2); /* or a hover shade per brand-guide */ }
 
-.od-btn-secondary {
+.btn-secondary {
   display: inline-block;
   padding: 8px 24px;
-  background-color: #0F0F0F;
-  color: #F9F9F9;
-  font-family: 'Inter', sans-serif;
+  background-color: var(--canvas);
+  color: var(--text);
+  font-family: var(--font);
   font-size: 18px;
   font-weight: 500;
   line-height: 150%;
-  border: 1px solid #F9F9F9;
+  border: 1px solid var(--text);
   border-radius: 12px;
   text-decoration: none;
   cursor: pointer;
   transition: all 0.3s;
 }
-.od-btn-secondary:hover { background-color: #2A2A2A; }
+.btn-secondary:hover { background-color: var(--surface); }
 ```
 
 ### Form Styling
@@ -716,6 +702,12 @@ HubSpot's new form renderer (v2/Next) uses `hsfc-*` prefixed classes and CSS cus
 
 This takes the reCAPTCHA out of the form flow (while keeping it functionally inside the `<form>` element) so the privacy text appears between the submit button and the reCAPTCHA badge.
 
+**Never use bare `[data-hsfc-id]` as a CSS selector** in form overrides — HubSpot tags child elements (`.hsfc-Row`, `.hsfc-NavigationRow`, `.hsfc-EmailField`, etc.) with `data-hsfc-id` too, so a bare attribute selector cascades down and breaks row-level layouts. Name specific values instead: `[data-hsfc-id="Renderer"], [data-hsfc-id="Form"], [data-hsfc-id="Step"]`.
+
+**Horizontal row layouts:** when laying out hsfc form rows horizontally with flex, explicitly set `width: auto !important` on `.hsfc-Row` and `.hsfc-NavigationRow`. HubSpot's own un-prefixed `[data-hsfc-id="Renderer"] .hsfc-Row { width: 100% }` rule will beat your `flex-basis` because CSS spec says explicit `width` wins over `flex-basis` for the main axis of a flex item.
+
+**Hiding field labels** (placeholder-only pattern): use a broad `.form-container label, .form-container legend` selector rather than targeting `.hsfc-Label` or other specific classes. The exact class HubSpot emits can shift between portal versions — a broad selector is more resilient.
+
 #### Legacy Renderer (hs-form / hs-input)
 
 Some HubSpot portals still use the legacy form renderer. Keep these overrides in the `<head>` `<style>` block as fallback:
@@ -725,41 +717,45 @@ Some HubSpot portals still use the legacy form renderer. Keep these overrides in
 .hs-form input[type="email"],
 .hs-form textarea,
 .hs-form select {
-  background-color: #191919 !important;
-  border: 1px solid #454545 !important;
+  background-color: var(--surface) !important;
+  border: 1px solid var(--border) !important;
   border-radius: 12px !important;
-  color: #F9F9F9 !important;
-  font-family: 'Inter', sans-serif !important;
+  color: var(--text) !important;
+  font-family: var(--font) !important;
   font-size: 14px !important;
   padding: 12px 16px !important;
 }
 .hs-form input:focus,
 .hs-form textarea:focus {
-  border-color: #8B55FF !important;
+  border-color: var(--accent) !important;
   outline: none !important;
 }
 .hs-form label {
-  color: #E2E2E2 !important;
-  font-family: 'Inter', sans-serif !important;
+  color: var(--text-muted) !important;
+  font-family: var(--font) !important;
   font-size: 14px !important;
   font-weight: 400 !important;
 }
 .hs-form .hs-button {
-  background-color: #6A2AFF !important;
-  color: #F9F9F9 !important;
+  background-color: var(--accent) !important;
+  color: var(--text) !important;
   border: none !important;
   border-radius: 12px !important;
   padding: 8px 24px !important;
-  font-family: 'Inter', sans-serif !important;
+  font-family: var(--font) !important;
   font-size: 18px !important;
   font-weight: 500 !important;
   cursor: pointer !important;
   transition: all 0.3s !important;
 }
 .hs-form .hs-button:hover {
-  background-color: #8B55FF !important;
+  background-color: var(--accent-2) !important; /* or a hover shade per brand-guide */
 }
 ```
+
+#### Subscription Types & Consent
+
+When a landing-page form needs to attach a subscription type, keep the form's Privacy/Consent setting on "None (not applicable)" and use a HubSpot workflow triggered by form submission to perform the Subscribe action. The form-level legitimate-interest consent option attaches the subscription type but injects a visible GDPR disclosure blurb that fights clean landing-page UX.
 
 ---
 
@@ -790,10 +786,10 @@ marketing/templates/landing-page-templates/
 
 ### What's Shared (don't modify unless updating brand)
 
-- `<head>` section: `{{ standard_header_includes }}`, Inter font import, CSS custom properties
+- `<head>` section: `{{ standard_header_includes }}`, brand font import, CSS custom properties
 - Reset styles (box-sizing, body defaults, img, link styles)
-- Reusable CSS classes: `.page-wrap`, `.gradient-bar`, `.btn-primary`, `.btn-secondary`, `.od-tag`, `.od-card`, `.section-label`
-- HubSpot form overrides (`.od-card .hs-form` styles)
+- Reusable CSS classes: `.page-wrap`, `.gradient-bar`, `.btn-primary`, `.btn-secondary`, `.tag`, `.card`, `.section-label`
+- HubSpot form overrides (`.card .hs-form` styles)
 - Top and bottom gradient bars
 - `{{ standard_footer_includes }}`
 
@@ -818,7 +814,7 @@ marketing/templates/landing-page-templates/
 - For fixed layout: HTML sections with inline HubL fields (`{% text %}`, `{% rich_text %}`, `{% image %}`, `{% form %}`)
 - For drag-and-drop: `{% dnd_area %}` with sections using the `dnd_section` → `dnd_column` → `dnd_module` hierarchy
 - CSS custom properties and responsive styles in `<style>` block
-- Google Fonts import for Inter
+- Brand font import (see brand-guide)
 - `<!-- EDITABLE: -->` comments marking content the marketer should customize
 - `[PLACEHOLDER]` brackets for variable content
 
@@ -848,11 +844,11 @@ marketing/templates/landing-page-templates/
 - [ ] Preview in HubSpot page editor
 - [ ] Check all drag-and-drop sections are editable
 - [ ] Verify responsive behavior at 1024px and 768px breakpoints
-- [ ] Confirm brand colors render correctly (dark background, gradient accents)
+- [ ] Confirm brand colors render correctly against the brand guide (canvas, surfaces, accents)
 - [ ] Test form submission (if form section included)
 - [ ] Verify all links and CTAs work
 - [ ] Check page load speed (no unnecessary assets)
-- [ ] Validate Inter font loads correctly
+- [ ] Validate the brand font loads correctly
 - [ ] Test in Chrome, Firefox, Safari, Edge
 
 ---
@@ -864,12 +860,12 @@ marketing/templates/landing-page-templates/
 - [ ] Template annotations present (`templateType: page`, `isAvailableForNewContent`, `label`)
 - [ ] `{{ standard_header_includes }}` in `<head>`
 - [ ] `{{ standard_footer_includes }}` before `</body>`
-- [ ] Google Fonts Inter imported
-- [ ] CSS custom properties defined in `:root`
-- [ ] Dark-first design: `#0F0F0F` background, `#F9F9F9` text
-- [ ] Gradient used sparingly for accent (`#50F6E8 → #8B55FF → #FF7CA9`)
-- [ ] Purple `#6A2AFF` for primary buttons
-- [ ] Card pattern uses `#131313` bg, `#454545` border, `32px` radius
+- [ ] Brand font imported (see brand-guide)
+- [ ] CSS custom properties defined in `:root`, values filled from brand-guide
+- [ ] Canvas background and text colors match the brand guide
+- [ ] Gradient/accent used sparingly per brand-guide rules
+- [ ] Primary buttons use the brand guide's default CTA color
+- [ ] Card pattern uses the brand guide's surface, border, and radius values
 - [ ] Max content width `1080px`
 - [ ] Section padding follows brand guide (64px vertical, 32px horizontal)
 - [ ] Responsive media queries for tablet (1024px) and mobile (768px)
@@ -880,7 +876,7 @@ marketing/templates/landing-page-templates/
 ### Fixed Layout Templates (additional)
 - [ ] HubL editable fields (`{% text %}`, `{% rich_text %}`, `{% image %}`, `{% form %}`) used for all marketer-editable content
 - [ ] Top and bottom gradient bars present
-- [ ] HubSpot form overrides included (`.od-card .hs-form` or `.form-card .hs-form` styles)
+- [ ] HubSpot form overrides included (`.card .hs-form` or `.form-card .hs-form` styles)
 - [ ] If created from base template: shared elements (head, gradient bars, footer includes) preserved
 
 ### Drag-and-Drop Templates (additional)
@@ -894,9 +890,9 @@ marketing/templates/landing-page-templates/
 
 ### Site Header (matches [your-site] production)
 
-**Canonical spec lives in `/brain/brand-guide/brand-guide.md` under "Site Header".** The header is always translucent (`rgba(15, 15, 15, 0.4)`) with `backdrop-filter: blur(12px)`. Never use an opaque background and never use legacy blur values.
+**Canonical spec lives in `/brain/brand-guide/brand-guide.md` under "Site Header".** The header should be translucent (the canvas color at partial alpha) with `backdrop-filter: blur()`, matching your production site. Never use an opaque background if production uses a translucent one.
 
-The header uses a sticky wrapper div (not sticky on the `<header>` itself) and `box-sizing: content-box` with an explicit `height: 43px` to match production dimensions. Logo is `143px × 32px`.
+The header uses a sticky wrapper div (not sticky on the `<header>` itself) and `box-sizing: content-box` with an explicit height to match production dimensions. Match logo dimensions to your production site (the example below uses `143px × 32px`).
 
 **CSS:**
 ```css
@@ -909,10 +905,10 @@ The header uses a sticky wrapper div (not sticky on the `<header>` itself) and `
   box-sizing: content-box;
   height: 43px;
   padding: 24px 48px;
-  background-color: rgba(15, 15, 15, 0.4);
+  background-color: color-mix(in srgb, var(--canvas) 40%, transparent); /* canvas at ~40% alpha — match production */
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
-  box-shadow: 0px 4px 10px 0px rgba(15, 15, 15, 0.3);
+  box-shadow: 0px 4px 10px 0px color-mix(in srgb, var(--canvas) 30%, transparent);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -943,51 +939,55 @@ The header uses a sticky wrapper div (not sticky on the `<header>` itself) and `
 ### Gradient Text (for hero headlines or emphasis)
 ```css
 .gradient-text {
-  background: linear-gradient(90deg, #50F6E8 0.48%, #8B55FF 47.12%, #FF7CA9 100%);
+  background: var(--gradient-text); /* text-effect gradient from brand-guide */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 ```
 
+### Decorative Background Blooms
+
+If the hero uses a radial-gradient bloom or similar oversized decoration, don't put `overflow: hidden` on the hero section — it crops the bloom visibly. Instead, put `overflow-x: hidden` on `body` and fade the radial gradient to full transparency well inside its bounding box (e.g., transparent by 50% for a 1400px bloom) so the fade completes before any clipping surface.
+
 ### Tags & Pills (two variants — both 8px radius)
 
 **Hard rule:** All tags use `border-radius: 8px`. **Never use `border-radius: 999px` (fully rounded pill shapes) — not on brand.** See `/brain/brand-guide/brand-guide.md` "Tags & Pills" for full use-case guidance.
 
-**Variant A — Solid (`.od-tag`)** — filled cyan, bold and loud. Use for card-tier flags, "NEW"/"BETA" badges, standalone category markers where the tag is the primary attention grabber.
+**Variant A — Solid (`.tag`)** — filled with the accent color, bold and loud. Use for card-tier flags, "NEW"/"BETA" badges, standalone category markers where the tag is the primary attention grabber.
 
 ```css
-.od-tag {
+.tag {
   display: inline-block;
   padding: 4px 12px;
   font-size: 12px;
   font-weight: 600;
-  color: #0F0F0F;
-  background-color: #50F6E8;
+  color: var(--canvas);
+  background-color: var(--accent);
   border-radius: 8px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 ```
 
-**Variant B — Outlined (`.od-tag--outline`)** — cyan border + translucent tint, subtle. Use for hero eyebrows, pre-CTA kickers, section markers where the tag should feel secondary to a nearby headline or button.
+**Variant B — Outlined (`.tag--outline`)** — accent border + translucent tint, subtle. Use for hero eyebrows, pre-CTA kickers, section markers where the tag should feel secondary to a nearby headline or button.
 
 ```css
-.od-tag--outline {
+.tag--outline {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 4px 12px;
   font-size: 11px;
   font-weight: 600;
-  color: #50F6E8;
-  background: rgba(80, 246, 232, 0.10);
-  border: 1px solid rgba(80, 246, 232, 0.20);
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
   border-radius: 8px;
   text-transform: uppercase;
   letter-spacing: 0.8px;
 }
-.od-tag--outline svg { width: 12px; height: 12px; flex-shrink: 0; }
+.tag--outline svg { width: 12px; height: 12px; flex-shrink: 0; }
 ```
 
 **Picking a variant:** if a CTA button is nearby, use outlined. If the tag is the loudest element in its local area, use solid.
@@ -1050,7 +1050,7 @@ When the user provides a Figma URL or references a landing page design:
 3. **Test responsive breakpoints** — Run `agent-browser set viewport <width> <height>` to test at desktop (1440px), tablet (1024px), and mobile (768px, 375px). Screenshot at each breakpoint.
 4. **Test interactions** — Run `agent-browser click` to test anchor link CTAs (e.g., scroll-to-form buttons), navigation, and any interactive elements.
 5. **Accessibility snapshot** — Run `agent-browser snapshot -i` to verify heading hierarchy, form labels, link text, and overall structure.
-6. **Check network** — Run `agent-browser network requests` to verify font loading (Inter), image requests, and overall resource count.
+6. **Check network** — Run `agent-browser network requests` to verify font loading (the brand font), image requests, and overall resource count.
 
 #### Live Page Inspection (post-upload) — ALWAYS DO THIS
 
@@ -1090,14 +1090,4 @@ Example: Before building a new landing page, run `npx tsx .claude/skills/analyti
 
 ## Learnings
 
-<!-- Updated by /reflect. Promote stable patterns to the main skill body. -->
-
-- **[HIGH]** Never place `{% rich_text %}` (or `{% text %}` / `{% module %}`) inside `<h1>`/`<h2>`/etc. — HubSpot wraps the output in a `<div>`, and div-inside-heading is invalid HTML. For headings that need personalization tokens, render in `<div role="heading" aria-level="1">` styled to match your heading rules; keep non-editable accent spans (e.g., gradient words) as separate `{% text %}` fields inside the same container. *(Session 81, 2026-04-14)*
-- **[HIGH]** Don't bake personalization tokens (`{{ contact.firstname }}`, etc.) into the `html=` default of a `rich_text` field — the token won't render correctly from the template default. Ship a plain default and insert the token via the HubSpot page editor's Insert → Personalize menu. *(Session 81, 2026-04-14)*
-- **[MEDIUM]** Hero bloom pattern: don't put `overflow: hidden` on the hero section — it crops the bloom visibly. Instead, put `overflow-x: hidden` on `body` and fade the radial gradient to full transparency well inside its bounding box (e.g., transparent by 50% for a 1400px bloom) so the fade completes before any clipping surface. *(Session 81, 2026-04-14)*
-- **[HIGH]** Never put `{% %}` HubL syntax inside HTML comments. HubSpot's linter parses them as real tags even inside `<!-- -->`, causing cascading false errors (missing standard_header_includes, broken dnd_area). Keep developer notes in skill files or use plain text descriptions in comments. *(Session 84, 2026-04-16)*
-- **[HIGH]** Never use bare `[data-hsfc-id]` as a CSS selector in form overrides — HubSpot tags child elements (`.hsfc-Row`, `.hsfc-NavigationRow`, `.hsfc-EmailField`, etc.) with `data-hsfc-id` too, so a bare attribute selector cascades down and breaks row-level layouts. Name specific values instead: `[data-hsfc-id="Renderer"], [data-hsfc-id="Form"], [data-hsfc-id="Step"]`. *(Session 97, 2026-04-22)*
-- **[HIGH]** When laying out hsfc form rows horizontally with flex, explicitly set `width: auto !important` on `.hsfc-Row` and `.hsfc-NavigationRow`. HubSpot's own un-prefixed `[data-hsfc-id="Renderer"] .hsfc-Row { width: 100% }` rule will beat your `flex-basis` because CSS spec says explicit `width` wins over `flex-basis` for the main axis of a flex item. *(Session 97, 2026-04-22)*
-- **[MEDIUM]** For single-field capture forms (newsletter subscribe, early-access waitlist), use a centered single-column hero layout — not the demo-request-style split-column form card. One field doesn't balance against a dense text column; centered matches how Substack / TLDR / Every handle the pattern. *(Session 97, 2026-04-22)*
-- **[MEDIUM]** Hide hsfc field labels with a broad `.form-container label, .form-container legend` selector rather than targeting `.hsfc-Label` or other specific classes. The placeholder-only pattern requires sr-only-style label hiding, but the exact class HubSpot emits can shift between portal versions — broad selector is more resilient. *(Session 97, 2026-04-22)*
-- **[HIGH]** When a landing-page form needs to attach a subscription type, keep form Privacy/Consent set to "None (not applicable)" and use a HubSpot workflow triggered by form submission to perform the Subscribe action. Form-level "Legitimate Interest" attaches the subscription type but injects a visible GDPR disclosure blurb that fights clean landing-page UX. *(Session 98, 2026-04-22)*
+<!-- Updated by /reflect in your instance. Promote stable patterns to the main skill body. Ships empty. -->

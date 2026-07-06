@@ -398,4 +398,4 @@ For implementation, see the [tools registry](../../tools/REGISTRY.md). Key RevOp
 
 <!-- Updated by /reflect. Promote stable patterns to the main skill body. -->
 
-- **[MEDIUM]** ZeroBounce can false-positive on enterprise domains with strict MX configs or greylisting. Always spot-check flagged high-value contacts (F500, named targets, active deal contacts) against LinkedIn or the company directory before hard-suppressing — some "invalid" results are real CRM typos (catch those), but some are real addresses behind strict mail servers. *(Session 98, 2026-04-22)*
+- **[MEDIUM]** ZeroBounce can false-positive on enterprise domains with strict MX configs or greylisting. Always spot-check flagged high-value contacts (F500, named targets, active deal contacts) against LinkedIn or the company directory before hard-suppressing — some "invalid" results are real CRM typos (catch those), but some are real addresses behind strict mail servers.

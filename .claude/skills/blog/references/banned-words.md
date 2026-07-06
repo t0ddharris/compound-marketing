@@ -27,13 +27,13 @@ These are dead giveaways for AI-generated content. Zero tolerance — rewrite ev
 
 ## 2. Brand Words We Avoid (Hard Ban)
 
-From `brain/positioning-and-messaging.md` — these weaken company messaging or are too generic.
+Pull the specific list from `brain/positioning-and-messaging.md` (the "words we avoid" / messaging guardrails section) and scan for those terms here. These are words that weaken the company's messaging or are too generic for the category. Common categories to watch:
 
 | Avoid | Why | Use Instead |
 |-------|-----|-------------|
-| "AI-powered security" (alone) | Too generic — every vendor claims this | "AI threat detection" or "AI-native detection" |
-| "traditional tools" / "legacy security" | Dilutes message; focus on the problem, not bashing competitors | Name the specific problem: "detection gaps," "blind spots for non-human adversaries" |
-| "what you can't see" (as sole framing) | Problem is broader than invisible threats | "detection gaps across AI agent attack vectors" |
+| Generic category claims every competitor makes | Doesn't differentiate | The company's specific, differentiated framing |
+| "traditional tools" / "legacy [category]" | Dilutes message; focus on the problem, not bashing competitors | Name the specific problem the buyer feels |
+| Vague benefit framing that could apply to any product | Reads as filler | Concrete, specific outcome language from the brain |
 
 ---
 
@@ -254,4 +254,4 @@ During Step 4 (Quality Enforcement), scan in this order:
 4. **Read opening paragraph:** Check against AI Opening Phrases list
 5. **Read closing paragraph:** Check against AI Conclusion Phrases list
 6. **Scan for filler words:** very, really, just, basically, actually, incredibly
-7. **Check brand compliance:** Verify "AI threat detection" (not "AI-powered security"), proper framing of detection gaps for non-human adversaries
+7. **Check brand compliance:** Verify the draft uses the company's approved terms and framing from `brain/positioning-and-messaging.md`, not generic category language

@@ -14,16 +14,9 @@ Minimums. These are non-negotiable; the skill should never ship code that fails 
 
 WCAG AA minimum: 4.5:1 for body text, 3:1 for large text (18px+ bold or 24px+ regular).
 
-brand palette contrast notes:
-- White (`#F9F9F9`) on Black (`#0F0F0F`): ~19:1. Fine.
-- Teal (`#50F6E8`) on Black: ~13:1. Fine for text.
-- **Grey (`#A39BA0`) on Black: ~7:1.** Fine for body.
-- **Grey Lighter (`#CBCACB`) on Black: ~11:1.** Fine.
-- Black (`#0F0F0F`) on Teal: inverts. Fine.
-- **Purple (`#8B55FF`) on Black: ~4:1.** Fails body-text AA — only use for large text or decoration.
-- **Pink (`#FF7CA9`) on Black: ~7:1.** Fine.
+Build a contrast matrix for your brand palette the first time you work with it, and record it in `brain/brand-guide/brand-guide.md`: check every text color against every surface it appears on, and note which pairings pass AA for body text, which only pass for large text, and which are decoration-only. Common failure: mid-saturation purples and mid-greys on dark canvases sit near ~4:1 and fail body-text AA while looking fine to the eye.
 
-When in doubt, run the swatch through a contrast checker. Never ship teal body text — it's an accent color.
+When in doubt, run the swatch through a contrast checker. Never ship accent-colored body text — accents are for emphasis and interactive elements.
 
 ## Focus rings
 
