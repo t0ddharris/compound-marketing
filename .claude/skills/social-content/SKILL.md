@@ -13,6 +13,8 @@ You are an expert social media strategist. Your goal is to help create engaging 
 **Check for product marketing context first:**
 Read `/brain/positioning-and-messaging.md`, `/brain/truth.md`, and `/brain/audience-language.md` before asking questions. Use that context and only ask for information not already covered or specific to this task.
 
+Also read `/brain/voice-and-tone.md` and `/brain/voice-samples.md` if they exist — social posts live or die on sounding like a person, and these files define that voice. If both are missing or empty, write in a clean professional voice and suggest running `/tone-mapping`.
+
 Gather this context (ask if not provided):
 
 ### 1. Goals
@@ -139,19 +141,15 @@ If you catch yourself writing any of these, rewrite the sentence in a natural, h
 
 ### Hashtag Menu
 
-Pick from these based on the post's topic. Never use more than 2 per post.
+Build a menu for your company from three categories, then pick 1-2 per post based on topic. Derive candidates from `/brain/positioning-and-messaging.md` (category, domain, personas) and record the menu here once validated.
 
 | Category | Hashtags (pick 1-2) |
 |----------|-------------------|
-| **Core tech** | #AI, #AISecurity, #LLMSecurity, #AgentSecurity |
-| **Domain** | #Cybersecurity, #ThreatDetection, #AIThreats |
-| **Audience** | #SecOps, #CISO, #SecurityEngineering, #AppSec |
+| **Core category** | [FILL IN — your product category's hashtags, e.g., the terms buyers search] |
+| **Domain** | [FILL IN — the broader industry/problem-space hashtags] |
+| **Audience** | [FILL IN — role and community hashtags your buyers follow] |
 
-**Pairing examples:**
-- AI agent threat blog promo → `#AISecurity #Cybersecurity`
-- LLM security deep-dive → `#LLMSecurity #ThreatDetection`
-- General product post → `#AISecurity #SecOps`
-- CISO-focused content → `#CISO #AIThreats`
+**Pairing rule:** one broad (domain) + one specific (category or audience) per post, matched to the post's topic and target reader.
 
 **LinkedIn:** Skip hashtags. LinkedIn's algorithm doesn't weight them meaningfully, and they clutter short posts.
 
@@ -391,12 +389,12 @@ This is a quick pass, not a full Seven Sweeps. Social posts are short — focus 
 
 <!-- Updated by /reflect. Promote stable patterns to the main skill body. -->
 
-- **[HIGH]** Company account posts use "we" throughout. Never mix company voice with personal attribution (e.g., naming an author) in the same post. *(Session 73, 2026-04-09)*
-- **[HIGH]** For blog promo posts, lead with a question or tension, not narration. "How much fits?" not "We did the math." *(Session 73, 2026-04-09)*
-- **[HIGH]** Never cite specific numbers from the blog in social posts unless they are self-evident without the blog's context. If a stat requires setup to understand, tease the gap instead. *(Session 73, 2026-04-09)*
-- **[MEDIUM]** When a draft or angle is rejected, offer 3-5 short angle concepts (2-3 sentences each, labeled A-E) before drafting the next version. Don't immediately re-draft in a single direction. *(Session 86, 2026-04-17)*
-- **[HIGH]** When promoting an event that has its own LinkedIn event page, keep social promos short and warm. Don't repeat date, venue, or description — the event page already carries them. *(Session 91, 2026-04-21)*
-- **[HIGH]** When an event has both a LinkedIn event page and a landing page, split the link routing across posts: LI event page for discovery/social-proof/day-of posts, landing page for conversion/urgency posts. Configure the LI event's own CTA button to point at the landing page so LinkedIn RSVPs still reach HubSpot for lead capture. *(Session 91, 2026-04-21)*
-- **[MEDIUM]** Publish the LinkedIn event at the start of the campaign, not the end. Early publication lets the event accrue RSVP social proof that strengthens every subsequent post. *(Session 91, 2026-04-21)*
-- **[HIGH]** Light cleverness is fine. Self-congratulating cleverness is not. AI defaults to narrating its own jokes ("the metaphor writes itself"), winking at wordplay ("felt appropriate"), and manufacturing conceits that call attention to themselves. A fun detail should land on its own; if you have to frame it or point at it, cut the framing. When in doubt, go straightforward. *(Session 101, 2026-04-28)*
-- **[HIGH]** Every post must be self-contained in a feed. Don't assume the reader has context from the campaign, the event page, or surrounding posts. If the post references an event, name it. If it references a day or session, anchor it. A post that requires context from outside itself to make sense is broken. *(Session 103, 2026-04-28)*
+- **[HIGH]** Company account posts use "we" throughout. Never mix company voice with personal attribution (e.g., naming an author) in the same post.
+- **[HIGH]** For blog promo posts, lead with a question or tension, not narration. "How much fits?" not "We did the math."
+- **[HIGH]** Never cite specific numbers from the blog in social posts unless they are self-evident without the blog's context. If a stat requires setup to understand, tease the gap instead.
+- **[MEDIUM]** When a draft or angle is rejected, offer 3-5 short angle concepts (2-3 sentences each, labeled A-E) before drafting the next version. Don't immediately re-draft in a single direction.
+- **[HIGH]** When promoting an event that has its own LinkedIn event page, keep social promos short and warm. Don't repeat date, venue, or description — the event page already carries them.
+- **[HIGH]** When an event has both a LinkedIn event page and a landing page, split the link routing across posts: LI event page for discovery/social-proof/day-of posts, landing page for conversion/urgency posts. Configure the LI event's own CTA button to point at the landing page so LinkedIn RSVPs still reach HubSpot for lead capture.
+- **[MEDIUM]** Publish the LinkedIn event at the start of the campaign, not the end. Early publication lets the event accrue RSVP social proof that strengthens every subsequent post.
+- **[HIGH]** Light cleverness is fine. Self-congratulating cleverness is not. AI defaults to narrating its own jokes ("the metaphor writes itself"), winking at wordplay ("felt appropriate"), and manufacturing conceits that call attention to themselves. A fun detail should land on its own; if you have to frame it or point at it, cut the framing. When in doubt, go straightforward.
+- **[HIGH]** Every post must be self-contained in a feed. Don't assume the reader has context from the campaign, the event page, or surrounding posts. If the post references an event, name it. If it references a day or session, anchor it. A post that requires context from outside itself to make sense is broken.

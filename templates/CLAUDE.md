@@ -28,6 +28,7 @@ When the user provides direction, raw thoughts, or rough language, **never echo 
    - ICP details: `/brain/positioning-and-messaging.md` (ICP section)
    - Competitive positioning: `/brain/positioning-and-messaging.md` (Competitive POV section)
    - Voice and tone: `/brain/voice-and-tone.md` if it exists. Match the user's sentence rhythm, vocabulary register, conviction level, and personality markers. If the file is missing or empty, write in a clean professional voice and suggest running `/tone-mapping`.
+   - Voice calibration samples: `/brain/voice-samples.md` if it exists. Reuse the signature moves and argument structures it documents; its quoted examples are the target register for all drafts.
 
 3. **Use placeholders for missing information.** If a fact is not in the brain, use `[FILL IN]` or `[VERIFY]` instead of guessing.
 

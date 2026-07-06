@@ -27,6 +27,7 @@ Read every file in `brain/` and count `[FILL IN]` and `[VERIFY]` placeholders in
 | `capabilities.md` | Core |
 | `use-cases.md` | Core |
 | `voice-and-tone.md` | Brand |
+| `voice-samples.md` | Brand |
 | `brand-guide/brand-guide.md` | Brand |
 | `audience-language.md` | Supporting |
 | `customer-journey.md` | Supporting |
@@ -61,6 +62,7 @@ Core Files
 
 Brand
   voice-and-tone.md            ░░░░░░░░░░  Empty — run /tone-mapping
+  voice-samples.md             ░░░░░░░░░░  Empty — run /tone-mapping
   brand-guide.md               ████████░░  3 fields remaining
 
 Supporting Files
@@ -70,7 +72,7 @@ Supporting Files
   qualifying-questions.md      ░░░░░░░░░░  Empty
   tactical-assets.md           ░░░░░░░░░░  Empty
 
-Overall: 1 of 13 files complete
+Overall: 1 of 14 files complete
 ```
 
 ### Step 4: Recommend next actions
@@ -99,6 +101,7 @@ For each recommendation, specify the skill to run:
 | `capabilities.md` | `/product-marketing` | Product features organized by messaging pillar |
 | `use-cases.md` | `/product-marketing` | Customer scenarios, triggers, outcomes |
 | `voice-and-tone.md` | `/tone-mapping` | 3-5 real writing samples (LinkedIn posts, blog posts, emails) |
+| `voice-samples.md` | `/tone-mapping` (Step 6, after the profile) | 5+ real writing samples — more samples, better calibration |
 | `brand-guide.md` | `/design-extract` | Your website URL, or brand colors/fonts manually |
 | `audience-language.md` | `/product-marketing` | Sales call transcripts or customer conversations |
 | `customer-journey.md` | `/product-marketing` | Sales process knowledge, common objections, deal patterns |

@@ -2,7 +2,7 @@
 
 Owned by: **Product Marketer**
 
-> How the brand sounds in writing. All content-producing skills (blog, social-content, copywriting, email-sequence, case-studies, copy-editing) should read this file and match these patterns.
+> How the brand sounds in writing. All content-producing skills (blog, social-content, copywriting, email-sequence, case-studies, copy-editing) read this file and match these patterns. Its companion, `voice-samples.md`, holds quoted calibration examples and signature moves.
 >
 > **Generate this file by running `/tone-mapping` with 3-5 real writing samples.**
 

@@ -28,4 +28,5 @@ Everything in this folder is the authoritative source for product facts, positio
 | File | What It Contains |
 |------|-----------------|
 | [[voice-and-tone.md]] | Voice profile: sentence rhythm, vocabulary register, conviction level, humor, formatting habits |
+| [[voice-samples.md]] | Voice calibration samples: signature moves, argument structures, quoted examples from real writing |
 | [[brand-guide/brand-guide.md]] | Visual brand system: colors, typography, gradients, spacing, buttons, card patterns |

@@ -17,6 +17,7 @@ Before writing any case study, consult the brain files:
 - **Value props:** `/brain/positioning-and-messaging.md` — Pull key differentiators from here
 - **Audience language:** `/brain/audience-language.md` — Use the customer's vocabulary, not vendor-speak
 - **Journey intelligence:** `/brain/customer-journey.md` — Understand objections, stall points, and what accelerates deals
+- **Voice:** `/brain/voice-and-tone.md` and `/brain/voice-samples.md` (if they exist) — Narrative voice for the framing and connective prose (customer quotes keep the customer's own voice)
 
 If any required information is missing from the brain, mark it `[VERIFY]` and ask.
 

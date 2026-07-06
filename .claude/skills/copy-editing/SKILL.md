@@ -1,6 +1,6 @@
 ---
 name: copy-editing
-version: 1.0.0
+version: 1.1.0
 description: "When the user wants to edit, review, or improve existing copy — including essays, posts, presentations, email copy, or any other written content. Also use when the user mentions 'edit this copy,' 'review my copy,' 'copy feedback,' 'proofread,' 'polish this,' 'make this better,' 'copy sweep,' 'sharper,' 'tighter,' 'improve the wording,' 'refine the language,' or 'make this hit harder.' This skill provides a systematic approach to editing copy through multiple focused passes."
 ---
 
@@ -13,6 +13,8 @@ You are an expert copy editor. Your goal is to systematically improve existing c
 **Check for voice and audience context first:**
 Read `/brain/positioning-and-messaging.md` and `/brain/truth.md` before editing. Use the brand voice and product context to inform your edits.
 
+Also read `/brain/voice-and-tone.md` and `/brain/voice-samples.md` if they exist. The voice profile and calibration samples define how the author actually sounds — edits must preserve that voice, not sand it down to a generic register. If both files are missing or empty, edit toward a clean professional voice and suggest running `/tone-mapping`.
+
 Good copy editing isn't about rewriting — it's about enhancing. Each pass focuses on one dimension, catching issues that get missed when you try to fix everything at once.
 
 **Key principles:**
@@ -24,11 +26,13 @@ Good copy editing isn't about rewriting — it's about enhancing. Each pass focu
 
 ---
 
-## Sweep 0: Humanizer Pass
+## Sweep 0: Tagore Pass
 
-Before starting the editorial sweeps, run the `humanizer` skill on the draft to catch and rewrite AI-tell patterns automatically (banned vocabulary, filler words, em dash overuse, negation pivots, promotional language, structural tells, and 20+ other patterns).
+Before starting the editorial sweeps, run the `tagore` skill on the draft to catch and rewrite AI-tell patterns automatically (banned vocabulary, filler words, em dash overuse, negation pivots, promotional language, structural tells, and 20+ other patterns).
 
-Review the rewrite to ensure meaning and voice are preserved. The humanizer handles mechanical anti-slop checks so the sweeps below can focus on judgment calls: clarity, voice, emotional impact, and argument structure.
+Review the rewrite to ensure meaning and voice are preserved. Tagore handles mechanical anti-slop checks so the sweeps below can focus on judgment calls: clarity, voice, emotional impact, and argument structure.
+
+**When replacing a negation pivot** (X-not-Y, negation-then-correction), the replacement must stand alone — no hidden dependencies on earlier context (back-references to prior pieces, phrases that only click if you remember an earlier paragraph). If the replacement requires context to land, keep rewriting.
 
 ---
 
@@ -225,9 +229,9 @@ For every statement, ask "Okay, so what?" If the copy doesn't answer that questi
 
 Use these for faster reviews when a full seven-sweep process isn't needed.
 
-### Quick-Pass Checks (Post-Humanizer)
+### Quick-Pass Checks (Post-Tagore)
 
-The `humanizer` skill (Sweep 0) handles banned vocabulary, filler words, AI writing tics, negation pivots, and em dash overuse. These quick checks catch what remains:
+The `tagore` skill (Sweep 0) handles banned vocabulary, filler words, AI writing tics, negation pivots, and em dash overuse. These quick checks catch what remains:
 
 **Cross-section phrase repetition:**
 - Scan the full document for key phrases that appear more than twice across sections
@@ -259,7 +263,9 @@ The `humanizer` skill (Sweep 0) handles banned vocabulary, filler words, AI writ
 - [ ] Understand the goal of this copy
 - [ ] Know the target audience
 - [ ] Read brain/positioning-and-messaging.md and brain/truth.md
+- [ ] Read brain/voice-and-tone.md and brain/voice-samples.md (if they exist)
 - [ ] Read through once without editing
+- [ ] If the copy was already approved by multiple stakeholders, limit edits to grammar and clarity fixes — don't offer creative rewrites of consensus language
 
 ### Clarity (Sweep 1)
 - [ ] Every sentence is immediately understandable
@@ -294,7 +300,7 @@ The `humanizer` skill (Sweep 0) handles banned vocabulary, filler words, AI writ
 - [ ] Objections addressed near CTA
 - [ ] Next steps are crystal clear
 
-### Post-Humanizer Checks
+### Post-Tagore Checks
 - [ ] No key phrase appears more than twice across sections
 - [ ] No repetitive rhythm patterns
 
@@ -312,7 +318,4 @@ The `humanizer` skill (Sweep 0) handles banned vocabulary, filler words, AI writ
 
 ## Learnings
 
-<!-- Updated by /reflect. Promote stable patterns to the main skill body. -->
-
-- **[MEDIUM]** When copy has been approved by multiple stakeholders, limit edits to grammar and clarity fixes. Don't offer creative rewrites of consensus language; the team already negotiated the words. *(Session 74, 2026-04-10)*
-- **[HIGH]** When removing an X-not-Y or negation-then-correction slop pattern, the replacement must stand alone — no hidden dependencies on earlier context (back-references to prior posts, phrases that only click if you remember an earlier paragraph). If the replacement requires context, keep rewriting. *(Session 1, 2026-04-12)*
+<!-- Updated by /reflect in your instance. Promote stable patterns to the main skill body. Ships empty. -->
