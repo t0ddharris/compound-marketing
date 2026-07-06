@@ -176,10 +176,10 @@ Mirror the words buyers use to describe their problems. Pull from support ticket
 Features describe what the product does. Buyers care about what it means for them. Apply the chain: Feature → Capability → Benefit → Business Outcome.
 
 Example:
-- Feature: Behavioral analysis engine
-- Capability: Monitors AI agent actions at the API boundary without modifying the agent
-- Benefit: No modifications to monitored systems, no latency overhead, no vendor lock-in
-- Business Outcome: Deploy AI threat detection across every agent in production in hours, not months
+- Feature: [A specific capability of the product]
+- Capability: [What that feature technically enables]
+- Benefit: [What that means for the user day-to-day]
+- Business Outcome: [The measurable business result the buyer cares about]
 
 ### 5. The Economic Buyer Test
 Before finalizing any messaging: would this survive a 30-second pitch to a VP Engineering who has 4 other vendors on the shortlist? If it sounds like everyone else, rewrite.

@@ -1,3 +1,9 @@
+---
+name: html-to-pdf
+version: 1.0.0
+description: "Export HTML pages to print-quality vector PDFs using Playwright's page.pdf() API. Trigger with /html-to-pdf or when the user wants to export an HTML page to PDF, create a print-ready PDF from HTML, or generate a PDF of a handout, card, flyer, or any HTML design."
+---
+
 # HTML to PDF — Print-Quality Export
 
 Export HTML pages to high-quality, print-ready vector PDFs using Playwright's `page.pdf()` API.

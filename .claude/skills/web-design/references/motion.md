@@ -4,7 +4,7 @@ Movement is communication. It clarifies cause-and-effect, shows state change, an
 
 ## Defaults
 
-- **Global transition: `all 0.3s`** — production value used across [your-site-repo].
+- **Global transition: `all 0.3s`** is a sane default — but match whatever production value your site already uses. Consistency beats the "right" number.
 - **Easing: `ease` or `ease-out`** for most UI. Never `ease-in` for things appearing (looks slow starting, fast ending — wrong way). Never bounce / elastic / spring for UI.
 - **Hover → 150-300ms.** Entrance → 300-500ms. Exit → 200ms (exits should feel faster than entrances).
 
@@ -44,9 +44,9 @@ When multiple elements enter together (card grid reveal, list of bullets), stagg
 
 ## Common motion patterns
 
-- **Card hover:** border color change (`#454545` → `#A39BA0`), no scale, no translate, no shadow. Production behavior.
+- **Card hover:** border color change (default → hover values from brand-guide), no scale, no translate, no shadow.
 - **Button hover:** background color change only. No scale, no lift.
-- **Hero gradient text:** the three-color gradient itself can animate (cycle) — see existing hero for the production pattern. Keep slow (5-10s cycle) and subtle.
+- **Hero gradient text:** if the brand has a text gradient, the gradient itself can animate (cycle) — match the existing hero's production pattern. Keep slow (5-10s cycle) and subtle.
 - **Section reveal on scroll:** opacity 0 → 1, transform translateY(16px) → translateY(0), 500ms ease-out. One-shot, not on every scroll back.
 
 ## Don't

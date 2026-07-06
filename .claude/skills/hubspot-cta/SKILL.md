@@ -1,6 +1,6 @@
 ---
 name: hubspot-cta
-version: 1.0.0
+version: 1.1.0
 description: "Implement CTA buttons in HubSpot email and landing page templates. Use when the user wants to add, fix, or style CTA buttons in HubSpot templates. Also use when the user mentions 'HubSpot CTA,' 'email CTA,' 'call to action button,' 'CTA module,' or 'email_cta.' Works alongside hubspot-email and hubspot-landing-page skills."
 ---
 
@@ -11,7 +11,7 @@ You are an expert at implementing CTA (call-to-action) buttons across HubSpot em
 **This skill works alongside:**
 - **hubspot-email** — email template constraints, table-based layout, 600px max
 - **hubspot-landing-page** — landing page template constraints, full CSS support
-- **web-design** — interaction states (hover/focus/active), motion, accessibility, and polish/audit workflows for any CTA that ships on a live landing page
+- **web-design** — hover/focus/active states, motion, accessibility, and polish/audit workflows for any CTA that ships on a live landing page
 
 ## Before Building
 
@@ -43,7 +43,7 @@ Email templates use the native `email_cta` module. Place it bare in the template
 </style>
 ```
 
-**Brand colors:** Marketer sets `#6A2AFF` bg, `#F9F9F9` text, `12px` radius in the CTA editor's Styles tab. Purple is the approved default for email CTAs because teal `#50F6E8` renders inconsistently across email clients. Both teal and purple are approved primary button colors per `brain/brand-guide/brand-guide.md`; use teal on landing page CTAs when no other teal elements compete for attention, purple in email and in dense layouts.
+**Brand colors:** Marketer sets the brand guide's CTA background, text color, and button radius in the CTA editor's Styles tab. Email CTAs and landing-page CTAs may need different colors — some accents render inconsistently across email clients, and an accent competing with nearby accents loses its call-to-action weight. The brand guide (`brain/brand-guide/brand-guide.md`) should name the approved CTA color per context.
 
 **What does NOT work for email CTAs:**
 - ~~Styled `<a>` + `{% text %}`~~ — HubSpot Remix editor auto-converts to a broken module
@@ -61,16 +61,16 @@ Landing page templates use **`{% cta %}` HubL tags** that reference **Embedded H
 
 ### Blog Posts (Sanity CMS): Embedded CTA in Card Wrapper
 
-Blog posts use a **self-contained HTML card** with a HubSpot-tracked button inside. The card HTML lives at `marketing/templates/blog-cta-request-a-demo.html` and is pasted into Sanity's **Custom HTML Embed** field.
+Blog posts use a **self-contained HTML card** with a HubSpot-tracked button inside. Keep the card HTML in a template file in your instance (e.g., `templates/blog-cta.html`) and paste it into Sanity's **Custom HTML Embed** field.
 
 **How it works:**
-- The card wrapper (gradient border, pill label, heading, subtext) is static inline-styled HTML
-- The button inside is a HubSpot Embedded CTA (CTA ID: `209805481528`, "Request a Demo - for custom CTA block") with click tracking
-- The CTA styles are scoped to `.hs-inline-web-interactive-209805481528` to prevent CSS bleed into the blog page
+- The card wrapper (border, pill label, heading, subtext) is static inline-styled HTML
+- The button inside is a HubSpot Embedded CTA with click tracking (create one, note its CTA ID)
+- The CTA styles are scoped to the embed's auto-generated CTA class (it ends in the CTA ID) to prevent CSS bleed into the blog page
 
-**IMPORTANT: The HubSpot embed code's default `<style>` uses bare `a` selectors that will restyle every link on the page.** The template file already fixes this by scoping to the CTA class. If updating the embed code, always scope the styles.
+**IMPORTANT: The HubSpot embed code's default `<style>` uses bare `a` selectors that will restyle every link on the page.** Fix this in the template file by scoping to the CTA class. If updating the embed code, always scope the styles.
 
-**Usage:** Copy `marketing/templates/blog-cta-request-a-demo.html` contents into Sanity's Custom HTML Embed field. No modifications needed per-post (the HubSpot tracking link is the same CTA across all posts).
+**Usage:** Copy the card template contents into Sanity's Custom HTML Embed field. No modifications needed per-post (the HubSpot tracking link is the same CTA across all posts).
 
 ### Comparison
 
@@ -108,17 +108,17 @@ Paste this into the CTA's **Advanced > Custom CSS** when creating CTAs for email
 a {
   display: inline-block;
   padding: 14px 36px;
-  background-color: #6A2AFF;
-  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  background-color: #111111; /* placeholder — email CTA background from brand-guide */
+  font-family: Arial, Helvetica, sans-serif; /* prepend the brand font (see brand-guide) */
   font-size: 17px;
   font-weight: 500;
-  color: #F9F9F9 !important;
+  color: #FFFFFF !important; /* placeholder — CTA text color from brand-guide */
   text-decoration: none;
-  border-radius: 12px;
+  border-radius: 12px; /* placeholder — button radius from brand-guide */
   line-height: 1.2;
 }
 a:hover {
-  background-color: #8B55FF;
+  background-color: #333333; /* placeholder — hover color from brand-guide */
 }
 ```
 
@@ -132,28 +132,28 @@ Paste this into the CTA's **Advanced > Custom CSS** when creating CTAs for landi
 a {
   display: inline-block;
   padding: 12px 32px;
-  background-color: #6A2AFF;
-  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  background-color: #111111; /* placeholder — landing page CTA background from brand-guide */
+  font-family: Arial, Helvetica, sans-serif; /* prepend the brand font (see brand-guide) */
   font-size: 18px;
   font-weight: 500;
-  color: #F9F9F9 !important;
+  color: #FFFFFF !important; /* placeholder — CTA text color from brand-guide */
   text-decoration: none;
-  border-radius: 12px;
+  border-radius: 12px; /* placeholder — button radius from brand-guide */
   line-height: 150%;
   transition: background-color 0.3s;
 }
 a:hover {
-  background-color: #8B55FF;
+  background-color: #333333; /* placeholder — hover color from brand-guide */
 }
 ```
 
 ### Legacy CTA Caveat
 
 Custom CSS on CTAs is available through the **legacy CTA tool**. Accounts created after March 17, 2025 do not have access to the legacy tool. The new CTA tool has a visual style editor (colors, fonts, spacing) but no raw CSS input. If using the new tool, set:
-- Background color: `#6A2AFF`
-- Text color: `#F9F9F9`
-- Font: Inter (or Arial as fallback)
-- Border radius: 12px
+- Background color: the brand guide's CTA background
+- Text color: the brand guide's CTA text color
+- Font: the brand font (see brand-guide), or Arial as fallback
+- Border radius: the brand guide's button radius
 - Padding: match values above
 
 ---
@@ -207,36 +207,34 @@ For non-tracked buttons (anchor links, in-page navigation), use the `.btn-primar
 .btn-primary {
   display: inline-block;
   padding: 12px 32px;
-  background-color: var(--od-purple-dark);  /* #6A2AFF */
-  color: var(--od-white);                   /* #F9F9F9 */
-  font-family: var(--od-font);              /* 'Inter', sans-serif */
+  background-color: var(--btn-primary-bg);    /* primary button color from brand-guide */
+  color: var(--btn-text);                     /* button text color from brand-guide */
+  font-family: var(--brand-font);             /* the brand font (see brand-guide) */
   font-size: 18px;
   font-weight: 500;
   line-height: 150%;
   border: none;
-  border-radius: 12px;
+  border-radius: 12px; /* placeholder — button radius from brand-guide */
   text-decoration: none;
-  cursor: pointer;
   transition: background-color 0.3s;
 }
-.btn-primary:hover { background-color: var(--od-purple); /* #8B55FF */ }
+.btn-primary:hover { background-color: var(--btn-primary-hover); /* hover color from brand-guide */ }
 
 .btn-secondary {
   display: inline-block;
   padding: 12px 32px;
-  background-color: var(--od-black);        /* #0F0F0F */
-  color: var(--od-white);                   /* #F9F9F9 */
-  font-family: var(--od-font);
+  background-color: var(--btn-secondary-bg);  /* secondary button color from brand-guide */
+  color: var(--btn-text);                     /* button text color from brand-guide */
+  font-family: var(--brand-font);
   font-size: 18px;
   font-weight: 500;
   line-height: 150%;
-  border: 1px solid var(--od-white);
-  border-radius: 12px;
+  border: 1px solid var(--btn-border);        /* button border color from brand-guide */
+  border-radius: 12px; /* placeholder — button radius from brand-guide */
   text-decoration: none;
-  cursor: pointer;
   transition: all 0.3s;
 }
-.btn-secondary:hover { background-color: var(--od-grey-darkest); /* #2A2A2A */ }
+.btn-secondary:hover { background-color: var(--btn-secondary-hover); /* hover color from brand-guide */ }
 ```
 
 ---
@@ -339,14 +337,14 @@ The **CTA field type** embeds a CTA picker in a custom module — the marketer s
 - [ ] Using `{% module "cta" path="@hubspot/email_cta" %}` (NOT `{% cta %}` — page-only tag)
 - [ ] Module is NOT wrapped in a `<div>` (wrapping hides it in the editor)
 - [ ] Centering CSS in non-inlined style block: `#hs_cos_wrapper_cta { text-align: center; }` + `table { margin: 0 auto; }`
-- [ ] Brand colors documented for marketer: `#6A2AFF` bg, `#F9F9F9` text, `12px` radius (set in Styles tab)
+- [ ] Brand colors documented for marketer: CTA background, text color, and button radius per `brain/brand-guide/brand-guide.md` (set in Styles tab)
 - [ ] Tested CTA renders and is clickable in editor preview
 
 ### Landing Page CTAs
 - [ ] Using `{% cta %}` for tracked CTA buttons
 - [ ] Embedded HTML CTA created with landing page brand CSS
 - [ ] Anchor link CTAs (non-tracked) use `.btn-primary` / `.btn-secondary` class
-- [ ] Hover state works (`#8B55FF` for primary, `#2A2A2A` for secondary)
+- [ ] Hover state works (primary and secondary hover colors per the brand guide)
 - [ ] Responsive — buttons remain tappable on mobile (min 44px touch target)
 
 ### CTA Creation (in HubSpot)
@@ -378,8 +376,8 @@ Use these tools to look up HubSpot documentation on CTA behavior, module fields,
 After building templates with CTA buttons, use agent-browser to validate:
 
 1. **Open the template** — Use `agent-browser open <file-path>` to open the email or landing page HTML file.
-2. **Screenshot the CTA** — Use `agent-browser screenshot` to capture how the button renders. Verify: purple `#6A2AFF` background, white `#F9F9F9` text, 12px border-radius, correct padding.
-3. **Test hover state** — Use `agent-browser hover` on the CTA element, then screenshot to verify the hover color changes to `#8B55FF`.
+2. **Screenshot the CTA** — Use `agent-browser screenshot` to capture how the button renders. Verify: the brand guide's CTA background and text colors, button radius, and correct padding.
+3. **Test hover state** — Use `agent-browser hover` on the CTA element, then screenshot to verify the hover color changes to the brand guide's hover color.
 4. **Test mobile rendering** — Use `agent-browser set viewport 375 812` to mobile width and verify the CTA remains tappable (minimum 44px touch target) and properly sized.
 5. **Accessibility check** — Use `agent-browser snapshot -i` to verify the CTA has proper link text (not just "Click here") and is keyboard-accessible.
 

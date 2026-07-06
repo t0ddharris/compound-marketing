@@ -19,19 +19,18 @@ Before writing anything, read these files:
 1. **`/brain/truth.md`** — All product facts must originate here. Never invent claims.
 2. **`/brain/positioning-and-messaging.md`** — Messaging pillars, ICP, personas, Words We Use / Words We Avoid.
 3. **`/brain/audience-language.md`** — How our audience actually talks about their problems. Use their vocabulary.
+4. **`/brain/voice-and-tone.md`** and **`/brain/voice-samples.md`** (if they exist) — The voice profile and calibration samples. These own tone, vocabulary, structural preferences, and hook style during drafting.
 
 **Anti-hallucination rules apply.** If a fact is not in the brain, use `[VERIFY]` and ask. Source citations are mandatory: `*(source: truth.md)*`.
 
-## Author-Specific Voice Skills
+## Voice
 
-When a blog post is written in a specific person's voice (not the generic company blog voice), load the appropriate voice skill alongside this workflow:
+Posts can be written in the company voice or a named author's voice:
 
-| Author | Voice Skill | Voice Files | Winning Profile |
-|--------|------------|-------------|-----------------|
+- **Company voice:** Use `/brain/voice-and-tone.md` and `/brain/voice-samples.md`. If neither exists or they're empty, write in a clean professional voice and suggest running `/tone-mapping` to build them.
+- **Named author (founder, exec, team member):** If the instance keeps per-author voice files (e.g., `brain/voices/[name].md`), load those instead. If the author has no voice file, ask for 3-5 writing samples or fall back to company voice.
 
-| Generic company | None needed | Use `/brain/positioning-and-messaging.md` voice | N/A |
-
-**How the two skills interact:** This skill (`blog`) owns the workflow, gates, quality enforcement, SEO, images, and output package. The voice skill owns tone, vocabulary, structural preferences, and hook style. During Step 3 (drafting), write in the author's voice. During Step 4 (quality), apply this skill's full checks.
+**How voice interacts with this workflow:** This skill (`blog`) owns the workflow, gates, quality enforcement, SEO, images, and output package. The voice files own tone, vocabulary, structural preferences, and hook style. During Step 3 (drafting), write in the selected voice. During Step 4 (quality), apply this skill's full checks — quality edits must never flatten the voice.
 
 ---
 
@@ -475,7 +474,7 @@ Save to `marketing/blog/[post-slug]/blog-post.md` with this structure:
 
 **Slug:** `[slug]`
 
-**Category:** [One category — e.g., AI Threat Detection, AI Security, Cybersecurity, Cloud Security, Engineering, Kubernetes]
+**Category:** [One category — e.g., Product, Engineering, Industry Insights, How-To — use your site's blog categories]
 
 **Tags:** [3-6 tags as comma-separated list — more specific than category, used for filtering/related posts]
 

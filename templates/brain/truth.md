@@ -16,7 +16,7 @@ This file is the **allowlist** of verified facts. If it's not here, don't claim 
 ## Product
 
 - **Product name:** [FILL IN]
-- **Category:** [FILL IN — e.g., "AI Threat Detection", "Observability", "Developer Tools"]
+- **Category:** [FILL IN — e.g., "Analytics", "Observability", "Developer Tools"]
 - **One-liner:** [FILL IN — one sentence: what it does and who it's for]
 - **What it does:** [FILL IN — 1-2 sentences explaining the core functionality]
 - **Key capabilities:**

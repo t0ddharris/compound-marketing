@@ -1,6 +1,6 @@
 ---
 name: hubspot-email
-version: 1.0.0
+version: 1.1.0
 description: "Build HTML email templates for HubSpot. Use when the user wants to create, edit, or troubleshoot HubSpot email templates. Also use when the user mentions 'HubSpot email,' 'email template,' 'HubL email,' or 'email HTML.' For email sequences and drip campaigns, see email-sequence. For CTA buttons, see hubspot-cta."
 ---
 
@@ -11,9 +11,9 @@ You are an expert email developer creating HTML email templates for upload to Hu
 **Scope boundary — pull two `web-design` reference files for email.** Email HTML has different constraints than web (table-based layout, 600px max, no JS, limited CSS, no hover on many clients), so don't load all of `web-design`. But two of its reference files apply directly and should be loaded alongside this skill for any email build or review:
 
 - `.claude/skills/web-design/references/accessibility.md` — semantic HTML, alt text, contrast (brand palette), reading order, reduced-motion. Email a11y matters and this covers the gaps brand-guide doesn't.
-- `.claude/skills/web-design/references/anti-patterns.md` — brand-specific bans (no gradient accent lines, no pill shapes, no "kernel-level" copy, purple-as-default-CTA-for-email justification, no three-color gradient on non-text surfaces). All apply to email.
+- `.claude/skills/web-design/references/anti-patterns.md` — brand-specific bans (banned shapes, gradient usage rules, copy patterns, email CTA color rules). All apply to email.
 
-Skip `web-design`'s interaction/motion/responsive/composition/state files — those assume a live web environment. Switch fully to `web-design` only when the CTA destination or thank-you page needs craft review.
+Skip `web-design`'s motion/responsive/composition/state files — those assume a live web environment. Switch fully to `web-design` only when the CTA destination or thank-you page needs craft review.
 
 ## Before Building
 
@@ -52,7 +52,7 @@ When creating templates for HubSpot's "Upload external email template" feature, 
 | **No background gradients** | CSS `linear-gradient` on backgrounds is stripped | Use solid background colors. Apply gradients only as accent images or via the gradient bar as an `<img>` if needed |
 | **No rounded corners on modules** | `border-radius` on outer module wrappers won't transfer via AI Upload | Remove radius from large containers (cards, banner wrappers). Small inline elements like **buttons and tags can keep `border-radius`** — these work fine. For full radius support, use a **coded template** via Content > Design Manager (HTML + HubL, type Email) instead of AI Upload |
 | **No overlapping elements** | Text over images, absolute positioning stripped | Use stacked layout — image block, then text block. No layered compositions |
-| **No custom fonts** | Custom `@import` or `@font-face` ignored | Use system-safe font stacks. Inter won't render — fall back to `Arial, Helvetica, sans-serif` |
+| **No custom fonts** | Custom `@import` or `@font-face` ignored | Use system-safe font stacks. The brand font won't render — fall back to `Arial, Helvetica, sans-serif` |
 | **No custom modules** | HubSpot-specific modules won't transfer | Use standard HTML tables and content blocks |
 | **Images must be publicly hosted** | Local or private image URLs won't load | Use publicly accessible URLs (e.g., from your website, CDN, or HubSpot File Manager) |
 | **No JavaScript** | All `<script>` tags stripped | Never include JS — it's stripped by all email clients anyway |
@@ -60,7 +60,7 @@ When creating templates for HubSpot's "Upload external email template" feature, 
 | **No CSS floats** | `float` property unreliable in email | Use table cells for side-by-side layouts |
 | **No external stylesheets** | `<link rel="stylesheet">` won't load | All CSS must be inline or in `<style>` in `<head>` |
 | **`filter` CSS property** | Not supported in most email clients | Don't use `filter: invert()` etc. — use pre-made white icon assets instead |
-| **Social module icons** | Platform-specific social icons (Pinterest, Snapchat) not supported | Use simple image icons with links |
+| **Social module icons** | Platform-specific social icons for some niche networks not supported | Use simple image icons with links |
 
 ### What DOES Transfer Well
 - Table-based layouts
@@ -124,6 +124,17 @@ Use these HubL tags to create editable fields that appear in the email editor si
   <!-- HTML for the conditional section -->
 {% endif %}
 ```
+
+### Email Template Validator — Rejected Patterns
+
+HubSpot's email template validator rejects several patterns. Common ones:
+
+- `{% dnd_area %}` with any name other than `"main"`
+- a `class` attribute on `{% dnd_area %}`
+- `{% text %}` tags used as editable fields inside email module markup
+- module field names `body` (use `body_text`) and `name` (use something descriptive like `event_name`)
+
+When HubSpot blocks a tag type for editable fields, wrap those fields in a micro custom module and include it via `{% module "label" path="./modules/foo" %}`.
 
 ### Personalization Token — Greeting Pattern
 
@@ -194,10 +205,12 @@ Use the native CTA module. It renders correctly in the email editor, gives the m
 
 **Why this works:** The non-inlined `<style>` block stays in the `<head>` as a CSS rule. At render time, the module wrapper exists and the rules apply. `text-align: center` centers inline content; `margin: 0 auto` on the inner table centers block-level content. Works in Gmail, Apple Mail, iOS, and most modern clients. Outlook may ignore the `<style>` block (button still renders, just left-aligned).
 
-**Brand colors:** Marketer sets `#6A2AFF` bg, `#F9F9F9` text, `12px` radius in the CTA editor's Styles tab. Purple is the approved default for email CTAs (teal `#50F6E8` renders inconsistently across email clients — Outlook, dark-mode Gmail, and forwarded chains can shift it). Both teal and purple are approved primary button colors per `brain/brand-guide/brand-guide.md` — use teal on landing pages where contrast is reliable, purple in email where it is not.
+**Brand colors:** Marketer sets the CTA background, text color, and corner radius from `brain/brand-guide/brand-guide.md` in the CTA editor's Styles tab. Some brand accents render inconsistently across email clients — Outlook, dark-mode Gmail, and forwarded chains can shift saturated colors. The brand guide should name an email-safe CTA color; verify it in major clients before standardizing. Web-safe accents can stay the default on landing pages where contrast is reliable.
 
 **What you get:** CTA dashboard tracking (views, clicks, conversions), native "Link to: CTA" picker, marketer controls styling via editor UI.
 **What you don't get:** Pixel-perfect brand CSS from the template — marketer sets brand colors manually per-email.
+
+**CTA card copy:** headlines work better as imperatives that pair with the button ("See X in action" + "Book a demo") than as noun phrases ("X in action"). Flow: kicker poses the problem → imperative headline points to the solution → body proves it → button takes action. Avoid echo between the kicker, headline, and body opener — a headline that repeats the kicker's opening words is a dead giveaway.
 
 #### Comparison
 
@@ -211,13 +224,13 @@ Use the native CTA module. It renders correctly in the email editor, gives the m
 
 ## Drag-and-Drop (dnd_area) Email Templates
 
-HubSpot's email editor (Remix) always uses a drag-and-drop interface. Even coded templates get auto-converted to dnd modules — and the conversion often breaks (producing "Unknown Module" or uneditable modules). The fix: use `{% dnd_area %}` tags to **control** how HubSpot builds the module tree.
+HubSpot's email editor (Remix) always uses a drag-and-drop editor. Even coded templates get auto-converted to dnd modules — and the conversion often breaks (producing "Unknown Module" or uneditable modules). The fix: use `{% dnd_area %}` tags to **control** how HubSpot builds the module tree.
 
 ### When to Use dnd_area
 
 **Choose between classic HubL and dnd_area based on who controls the layout.**
 
-- **Classic HubL** (`{% text %}`, `{% rich_text %}`, `{% boolean %}`): template author locks the structure, marketers only fill in labelled fields. Use this for brand-critical recurring templates (newsletters, promos, announcements) where design consistency matters more than layout flexibility. All current [Company] production templates (`email-base-hubspot.html`, `livestream-email.html`, `livestream-compact-email.html`, `on-demand-followup-email.html`, `newsletter-monthly-email.html`) use classic HubL and render correctly in the Remix email editor.
+- **Classic HubL** (`{% text %}`, `{% rich_text %}`, `{% boolean %}`): template author locks the structure, marketers only fill in labelled fields. Use this for brand-critical recurring templates (newsletters, promos, announcements) where design consistency matters more than layout flexibility. Classic HubL templates render correctly in the Remix email editor.
 - **dnd_area**: template author provides a starter layout, marketers drag/drop/reorder modules per send. Use when different issues need different structures, or when multiple non-technical marketers need layout flexibility without touching code.
 
 For a single-marketer workflow with tight design control ([Company] today), classic HubL is usually the right default. Reach for dnd_area when layout flexibility per send is more valuable than brand-lockdown consistency.
@@ -255,13 +268,17 @@ Static HTML (not editable)
 ├── Footer (logo, social, CAN-SPAM, unsubscribe)
 ```
 
+**Pre-place a starter layout.** For recurring `dnd_area` newsletter templates, pre-place default `{% dnd_module %}` tags inside the `dnd_area` with realistic starter content (e.g. Featured + 2 Blog Posts + 1 Event + Dev Corner). This gives the marketer a working starting layout instead of an empty canvas.
+
+**Section markers on repeatable modules.** For repeatable dnd custom modules (blog post, event, industry item), add a `show_section_marker` boolean field. Turn it ON for the first item in a group and OFF for the rest, so they stack cleanly under one marker and one leading divider. This prevents duplicate 'LATEST POSTS'-style headers when the marketer drops multiple instances.
+
 ### Static-vs-dnd Horizontal Alignment Gotcha
 
-**The bug:** In a template mixing a static masthead/footer with a `dnd_area`, the dnd module content renders **~10px to the right** of the static sections — even when both use the same internal padding (e.g. `padding: 0 40px`). Visible as a misaligned divider/separator line or an off-axis share-row box.
+**The bug:** In a template mixing a static masthead/footer with a `dnd_area`, the dnd module content renders **~10px to the right** of the static sections — even when both use the same inner padding (e.g. `padding: 0 40px`). Visible as a misaligned divider/separator line or an off-axis share-row box.
 
-**Why it happens:** HubSpot's `dnd_area_stylesheet` (injected via `{{ dnd_area_stylesheet }}`) adds default horizontal padding to the `.dnd-section` / `.dnd-column` / `.dnd-module` wrappers it generates. Those wrappers sit between your email-container `<td>` and your module's HTML, so the effective left offset of module content is `(module internal padding) + (wrapper padding)`, while static masthead/footer content is just `(td padding)`.
+**Why it happens:** HubSpot's `dnd_area_stylesheet` (injected via `{{ dnd_area_stylesheet }}`) adds default horizontal padding to the `.dnd-section` / `.dnd-column` / `.dnd-module` wrappers it generates. Those wrappers sit between your email-container `<td>` and your module's HTML, so the effective left offset of module content is `(module inner padding) + (wrapper padding)`, while static masthead/footer content is just `(td padding)`.
 
-**What does NOT fix it** (tried and failed on the Mind the Gap build, 2026-04-22):
+**What does NOT fix it** (tried and failed on a real newsletter build):
 - `padding={'top':0,'bottom':0,'left':0,'right':0}` on `dnd_section` / `dnd_column`
 - `hs_wrapper_css={'padding':'0'}` on every `dnd_module`
 - `full_width=False` on `dnd_area` and `dnd_section` (still a good idea for other reasons, but doesn't fix the offset)
@@ -269,7 +286,7 @@ Static HTML (not editable)
 
 **What DOES fix it — adjust the static sections, not the dnd wrappers.** Measure the offset live in devtools (in the company's case: ~10px), then bump the left (and usually right) padding on every static `<td>` by that amount so it aligns with the module content. The dnd wrapper's offset is fixed — you match it from the static side.
 
-Concrete pattern that worked for Mind the Gap (modules use 40px internal L/R padding, wrapper adds ~10px each side):
+Concrete pattern that worked (modules use 40px inner L/R padding, wrapper adds ~10px each side):
 ```html
 <!-- Masthead: left 50 (not 40) to match dnd module content -->
 <td style="padding: 48px 40px 32px 50px;">...masthead...</td>
@@ -282,6 +299,12 @@ Concrete pattern that worked for Mind the Gap (modules use 40px internal L/R pad
 ```
 
 **Rule of thumb:** don't fight HubSpot's dnd wrapper. Measure the offset once, then pad the static sections to match. This keeps all the module padding logic untouched and doesn't rely on CSS override tricks that don't actually work.
+
+**Diagnose 'shifted' or 'off' before fixing.** When a user flags an email as 'shifted' or 'off,' identify the specific element first. 'Shifted right' can mean viewport-level centering (usually a client or editor-preview quirk, not a bug) or element-level misalignment between static and dnd sections (the real bug, above). Ask which — don't guess. The wrong assumption burns test-send round-trips.
+
+### Pre-placed vs. Dragged Module Width
+
+Pre-placed `{% dnd_module %}` content is wrapped by HubSpot's editor with different default styles than modules the marketer drags in at runtime. If pre-placed content renders at a different width than dragged content, try `hs_wrapper_css={'padding':'0'}` on the `{% dnd_module %}`, or check whether the `{% dnd_area %}` needs `full_width=False` to stay inside its parent container's `max-width`.
 
 ### Module Paths for dnd Email
 
@@ -297,18 +320,21 @@ Only use modules confirmed to work in dnd email context:
 
 **Do NOT use `@hubspot/rich_text_email`** — this path does not exist and produces "Unknown Module" errors.
 
+**Module folder convention.** Place custom modules for a `dnd_area` template in a `modules/` subfolder next to the template and reference them as `dnd_module path="./modules/name"`. This mirrors the repo layout to the Design Manager folder structure and makes uploads predictable.
+
 ### Syntax Examples
 
 **Rich text content with default HTML:**
 ```jinja
+{# Example values — use the email background and body text colors from /brain/brand-guide/brand-guide.md #}
 {% dnd_section
-    background_color={'color':'#0F0F0F'},
+    background_color={'color':'#111111'},
     padding={'top':'0','bottom':'0','left':'24','right':'24'}
 %}
   {% dnd_column width=12 %}
     {% dnd_module
         path='@hubspot/email_body',
-        html='<div style="font-size: 16px; color: #E2E2E2;">Default content here</div>'
+        html='<div style="font-size: 16px; color: #FFFFFF;">Default content here</div>'
     %}
     {% end_dnd_module %}
   {% end_dnd_column %}
@@ -317,8 +343,9 @@ Only use modules confirmed to work in dnd email context:
 
 **CTA button (native editor):**
 ```jinja
+{# Example background — use the email background color from /brain/brand-guide/brand-guide.md #}
 {% dnd_section
-    background_color={'color':'#0F0F0F'},
+    background_color={'color':'#111111'},
     padding={'top':'36','bottom':'0','left':'24','right':'24'}
 %}
   {% dnd_column width=12, horizontal_alignment='CENTER' %}
@@ -327,7 +354,7 @@ Only use modules confirmed to work in dnd email context:
   {% end_dnd_column %}
 {% end_dnd_section %}
 ```
-Marketer sets brand colors manually in Button module style tab: `#6A2AFF` bg, `#F9F9F9` text, `12px` radius.
+Marketer sets brand colors manually in Button module style tab: the brand guide's email CTA background, button text color, and corner radius.
 
 **Image module:**
 ```jinja
@@ -341,8 +368,9 @@ Marketer sets brand colors manually in Button module style tab: `#6A2AFF` bg, `#
 ### dnd_section Parameters
 
 ```jinja
+{# Example background — use the card/surface color from /brain/brand-guide/brand-guide.md #}
 {% dnd_section
-    background_color={'color':'#131313'},
+    background_color={'color':'#111111'},
     padding={'top':'0','bottom':'0','left':'24','right':'24'},
     max_width=600
 %}
@@ -422,6 +450,7 @@ Keep media queries in a **separate** `<style>` block (without the inline ID) so 
 - `@import` Google Fonts as progressive enhancement — they render in Apple Mail, iOS, some Android — but **always** include fallback
 - For AI Upload: don't rely on custom fonts at all
 - Minimum body text: 14px. Recommended: 16px for readability on mobile
+- **Link colors on light backgrounds must pass WCAG AA (4.5:1).** Many brand accents fail on white — define a darker, accessible variant of the accent for links on light backgrounds, and record it in the brand guide
 
 ### Images
 - All images must be **publicly accessible URLs**
@@ -430,15 +459,23 @@ Keep media queries in a **separate** `<style>` block (without the inline ID) so 
 - Don't use CSS `filter` on images — use pre-made assets in the correct color
 - Compress images for fast load times
 - **60/40 rule:** Approximately 60% text, 40% images for deliverability
+- **Hugging the left edge:** wrap an image inside a `<td>` in a zero-whitespace table (`<td style="padding:0; line-height:0; font-size:0;">`) when it must sit flush-left with other siblings. A plain `<a><img></a>` inside a `<td>` picks up a leading space from surrounding HTML whitespace in some clients, offsetting the image to the right of other left-aligned elements.
+
+### Icons
+
+For newsletter and digest-style emails, use line icons (e.g. Lucide) paired with uppercase section labels rather than emoji. Emoji looks dated and can't match brand voice; line icons give a clean, modern, TLDR-like feel.
+
+**Icon workflow:** download the Lucide SVG from `unpkg.com/lucide-static@latest/icons/{name}.svg`, bake the brand accent hex in place of `currentColor` with `sed 's/stroke="currentColor"/stroke="#RRGGBB"/'` (use the accent hex from the brand guide), then rasterize to a 40×40 PNG with `rsvg-convert -w 40 -h 40`. Store both the SVG and PNG side by side in `marketing/icons/{category}/`, and reference the PNG in email (SVG support is unreliable across clients).
 
 ### Buttons
 - Use the **bulletproof button** pattern (table-based) for Outlook compatibility:
 ```html
+<!-- Placeholder colors — use the email CTA background and button text colors from the brand guide -->
 <table role="presentation" cellspacing="0" cellpadding="0" border="0">
   <tr>
-    <td style="background-color: #6A2AFF; border-radius: 12px; text-align: center;">
+    <td style="background-color: #333333; border-radius: 12px; text-align: center;">
       <a href="[URL]" target="_blank"
-         style="display: inline-block; padding: 14px 36px; font-family: Arial, Helvetica, sans-serif; font-size: 17px; font-weight: 500; color: #F9F9F9; text-decoration: none;">
+         style="display: inline-block; padding: 14px 36px; font-family: Arial, Helvetica, sans-serif; font-size: 17px; font-weight: 500; color: #FFFFFF; text-decoration: none;">
         Button Text
       </a>
     </td>
@@ -461,7 +498,7 @@ Gmail App on iOS is a massive platform and the hardest dark mode problem in emai
 - `background-image` (including `linear-gradient()`) — this is the only known way to preserve a background color
 - Actual images (`<img>` tags) — these render as-is
 
-**Techniques we tested and their results (Session 31):**
+**Techniques we tested and their results:**
 
 | Technique | Fixes Backgrounds? | Fixes Text? | Verdict |
 |-----------|-------------------|-------------|---------|
@@ -478,8 +515,6 @@ Gmail App on iOS is a massive platform and the hardest dark mode problem in emai
 - If you build a dark email, accept that Gmail iOS users will see a color-shifted version. Test in HubSpot's "Preview in email client" → Gmail App Dark (iOS 18) to verify it's at least readable.
 - Consider whether a light-themed template would serve better if Gmail iOS is a priority audience.
 - Do NOT add `background-image` gradient hacks, `<font>` tags, or `color-scheme` meta tags to "fix" Gmail dark mode — we tested all of these and none produce an acceptable result for dark emails. They create partial fixes that look worse than Gmail's native full inversion.
-
-**Full investigation documented at:** `marketing/plans/gmail-ios-dark-mode-fix.md`
 
 ### Dark Mode — Other Clients
 
@@ -499,23 +534,27 @@ Gmail App on iOS is a massive platform and the hardest dark mode problem in emai
 
 ## [Company] Brand Adaptation for Email
 
-Since email clients have limited CSS support, adapt the brand system:
+Since email clients have limited CSS support, adapt the brand system. Pull every color value from `/brain/brand-guide/brand-guide.md` — never hardcode them into the skill or reuse values from a previous build:
 
 | Brand Element | Website | Email Adaptation |
 |--------------|---------|-----------------|
-| Background | `#0F0F0F` | `#0F0F0F` — works in email |
-| Font | Inter | `Arial, Helvetica, sans-serif` (with `@import` Inter as progressive enhancement) |
+| Background | Brand background color | Solid hex from the brand guide — works in email |
+| Font | The brand font (see brand-guide) | `Arial, Helvetica, sans-serif` or another web-safe fallback stack (with `@import` of the brand font as progressive enhancement) |
 | Gradient accent bar | CSS `linear-gradient` | Use a **pre-made gradient image** (hosted PNG/SVG) or a thin `<img>` element |
-| Gradient text | `background-clip: text` | Not supported — use white `#F9F9F9` text instead |
-| Purple CTA button | `#6A2AFF` solid | Styled `<a>` with `{% text %}` fields for URL and copy (see CTA section above) |
-| Cyan tag | `#50F6E8` bg, `#0F0F0F` text | Works with inline styles |
-| Card surfaces | `#131313` with `border-radius: 32px` | Use `#131313` bg. Radius works except Outlook (graceful degradation) |
-| Border | `1px solid #454545` | Works inline on `<td>` |
-| Social icons | CSS `filter: invert()` | **Don't use filter.** Host white icon PNGs and reference directly |
+| Gradient text | `background-clip: text` | Not supported — use a solid text color from the brand guide instead |
+| CTA button | Brand CTA color, solid | Styled `<a>` with `{% text %}` fields for URL and copy (see CTA section above) |
+| Accent tag | Solid accent bg + contrasting text | Works with inline styles — solid `background-color` and `color` on the tag element are reliable across clients |
+| Card surfaces | Card surface color with `border-radius` | Use the brand guide's card color as a solid bg. Radius works except Outlook (graceful degradation) |
+| Border | `1px solid` brand border color | Works inline on `<td>` |
+| Social icons | CSS `filter: invert()` | **Don't use filter.** Host icon PNGs in the correct color and reference directly |
+
+### CTA Card Blocks
+
+Only simple card-style CTA blocks from the brand guide translate to email. Variants that rely on CSS gradient backgrounds and ambient glows get stripped by email clients — adapt the brand's card CTA pattern with solid background colors and a bulletproof button (see Buttons above).
 
 ### Gradient Bar as Image
 Since CSS gradients don't work in email backgrounds, create the signature gradient as a hosted image:
-- Create a 600x4px PNG with the cyan→purple→pink gradient
+- Create a 600x4px PNG with the brand gradient (colors from the brand guide)
 - Host it publicly (website or HubSpot File Manager)
 - Reference as `<img src="[gradient-bar-url]" width="600" height="4" style="display: block;" />`
 
@@ -530,11 +569,12 @@ All [Company] HubSpot email templates use a **base template** pattern. The share
 ```
 marketing/templates/email-templates/
 ├── email-base-hubspot.html              ← Base (DO NOT upload — starting point only)
-├── livestream-email.html                ← Full-length livestream promo (classic coded, HubL fields)
-├── livestream-compact-email.html        ← Two-column compact livestream variant
+├── [variant]-email.html                 ← One file per email type (classic coded, HubL fields)
 └── _previews/                           ← Static HTML previews (not for upload)
-    └── livestream-compact-preview.html
+    └── [variant]-preview.html
 ```
+
+**Iterate locally against `_previews/*.html` before pushing to HubSpot.** HubSpot round-trips are slow and obscure layout cause-and-effect. Keep the preview faithful to HubSpot's dnd_area wrapping (`<td class="dnd-section">` → `<td class="dnd-column">` → `<td class="dnd-module">`); if a preview doesn't mirror that nesting, fix the preview before debugging layout issues in HubSpot.
 
 ### Creating a New Email Variant
 
@@ -557,7 +597,7 @@ marketing/templates/email-templates/
 
 ### What Changes Per Variant
 - The content area between the gradient bar and CTA
-- Any variant-specific responsive CSS classes (e.g., `.date-col` for the livestream)
+- Any variant-specific responsive CSS classes (e.g., `.date-col` for a two-column date layout)
 - The preview text default value
 
 ---
@@ -655,6 +695,15 @@ Every email template should follow this structure:
 
 ---
 
+## Subscription Types & List Filtering (Sending)
+
+These rules govern who actually receives an email — separate from how the template is built.
+
+- **Set the email's Subscription type correctly.** HubSpot's send engine auto-filters recipients by the Subscription type field on the email itself, so list-level opt-in filters are redundant: the list defines the candidate pool, the Subscription type field is the actual gate. The type also determines which unsubscribe link the recipient sees and which subscription gets decremented on unsubscribe. Wrong type = unsubscribes hit the wrong list, a compliance and trust risk.
+- **Active-list 'subscriber' filters must account for the tri-state model.** HubSpot's `Opted out of email: [subscription name]` property is null by default (Subscribed / Unsubscribed / Not Specified). A filter for 'subscribers' must use `is none of Yes` AND check the 'Include records where property is empty' box — otherwise never-unsubscribed contacts are excluded from the list.
+
+---
+
 ## MCP Tools: HubSpot Dev, Figma & agent-browser
 
 ### HubSpot Dev MCP (Documentation & CMS)
@@ -738,20 +787,4 @@ Example: Before building a new email template, run `npx tsx .claude/skills/analy
 
 ## Learnings
 
-<!-- Updated by /reflect. Promote stable patterns to the main skill body. -->
-
-- **[HIGH]** Light-themed emails need a non-brand link color. brand teal `#50F6E8` fails WCAG AA on white (~1.4:1). Use `#0D9488` (teal-600, 4.68:1 AA) for links on white backgrounds. *(Session 77, 2026-04-13)*
-- **[HIGH]** For newsletter/digest-style emails, use line icons from Lucide (not emoji) paired with uppercase section labels. Emoji looks dated and can't match brand voice; Lucide gives a clean, modern, TLDR-like feel. *(Session 77, 2026-04-13)*
-- **[MEDIUM]** Email icon workflow: download Lucide SVG from `unpkg.com/lucide-static@latest/icons/{name}.svg`, bake color with `sed 's/stroke="currentColor"/stroke="#HEX"/'`, rasterize to 40×40 PNG with `rsvg-convert -w 40 -h 40`. Store both SVG and PNG side-by-side in `marketing/icons/{category}/`. *(Session 77, 2026-04-13)*
-- **[HIGH]** When building CTA sections in email templates, reference `brain/brand-guide/brand-guide.md` CTA block patterns first — don't default to a bare intro + button. Variant A (Dark Card) is typically the only brand-guide CTA pattern that translates to email; variants B/D/E rely on CSS gradient backgrounds and ambient glows that email clients strip. For light-themed emails, adapt Variant A per the brand's Light Mode Accent Strategy: white card with `rgba(0,0,0,0.10)` border, Tonik Blue `#444AD9` outlined tag kicker, purple `#6A2AFF` bulletproof button. *(Session 93, 2026-04-22)*
-- **[MEDIUM]** For repeatable dnd custom modules (blog post, event, industry item), add a `show_section_marker` boolean field. Turn ON for the first item in a group, OFF for subsequent items so they stack cleanly under one marker + one leading divider. Prevents duplicate "LATEST POSTS"-style headers when the marketer drops multiple instances. *(Session 93, 2026-04-22)*
-- **[MEDIUM]** For recurring dnd_area newsletter templates, pre-place default `dnd_module` tags inside the dnd_area with realistic starter content (e.g. Featured + 2 Blog Posts + 1 Event + Dev Corner). Gives the marketer a working starting layout instead of an empty canvas. *(Session 93, 2026-04-22)*
-- **[MEDIUM]** Module path convention for dnd_area templates: place custom modules in a `modules/` subfolder next to the template; reference as `dnd_module path="./modules/name"`. Matches repo layout to Design Manager folder structure and makes uploads predictable. *(Session 93, 2026-04-22)*
-- **[HIGH]** HubSpot email template validator rejects: `{% dnd_area %}` with any name other than `"main"`, `class` attribute on `dnd_area`, `{% text %}` tags anywhere in email templates, module field names `body` (use `body_text`) and `name` (use something descriptive like `event_name`). When HubSpot blocks a tag type for editable fields, wrap the fields in a micro custom module and include via `{% module "label" path="./modules/foo" %}`. *(Session 94, 2026-04-22)*
-- **[HIGH]** Before pushing HubL email template changes to HubSpot, iterate locally against `_previews/*.html`. HubSpot round-trips are slow and obscure layout cause-and-effect. If a preview file exists but doesn't mirror HubSpot's dnd_area wrapping (`<td class="dnd-section">` → `<td class="dnd-column">` → `<td class="dnd-module">`), make it faithful before debugging layout issues. *(Session 94, 2026-04-22)*
-- **[HIGH]** Wrap images inside email `<td>`s in a zero-whitespace table (`<td style="padding:0; line-height:0; font-size:0;">`) when they need to hug the left edge. Plain `<a><img></a>` inside a `<td>` picks up a leading space from surrounding HTML whitespace in some email clients, offsetting the image right of other left-aligned siblings. *(Session 95, 2026-04-22)*
-- **[HIGH]** When a user flags an email as "shifted" or "off," identify the specific element before fixing. "Shifted right" can mean viewport-level centering (usually a client/editor-preview quirk, not a bug) or element-level misalignment between static and dnd sections (the real bug). Ask which, don't guess — the wrong assumption burns test-send round-trips. *(Session 95, 2026-04-22)*
-- **[MEDIUM]** Pre-placed `{% dnd_module %}` content in an email template is wrapped by HubSpot's editor with different default styles than modules the marketer drags in at runtime. If pre-placed content renders at a different width than dragged content, try `hs_wrapper_css={'padding':'0'}` on the `{% dnd_module %}` or check whether the `{% dnd_area %}` needs `full_width=False` to stay inside its parent container's `max-width`. *(Session 94, 2026-04-22)*
-- **[HIGH]** HubSpot's `Opted out of email: [subscription name]` property is null by default (tri-state model: Subscribed / Unsubscribed / Not Specified). Active-list filters for "subscribers" must use `is none of Yes` AND check the "Include records where property is empty" box, otherwise never-unsubscribed contacts are excluded from the list. *(Session 99, 2026-04-23)*
-- **[HIGH]** HubSpot's email send engine auto-filters recipients by the Subscription type field on the email itself. List-level opt-in filters are redundant — the list defines the candidate pool, the Subscription type field is the actual gate. Always set the Subscription type correctly; it determines which unsubscribe link the recipient sees and which subscription gets decremented on unsubscribe. Wrong type = unsubscribes hit the wrong list, compliance + trust risk. *(Session 99, 2026-04-23)*
-- **[MEDIUM]** CTA card headlines work better as imperatives that pair with the button ("See X in action" + "Book a demo") than as noun phrases ("X in action"). Flow: kicker poses the problem → imperative headline points to the solution → body proves it → button takes action. Avoid echo between kicker/headline/body openers ("See how X..." right after "See X in action" is a dead giveaway). *(Session 99, 2026-04-23)*
+<!-- Updated by /reflect in your instance. Promote stable patterns to the main skill body. Ships empty. -->

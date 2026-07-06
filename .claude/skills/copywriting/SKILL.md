@@ -1,6 +1,6 @@
 ---
 name: copywriting
-version: 1.0.0
+version: 1.1.0
 description: "When the user wants to write, rewrite, or improve copy for any page or piece — including landing pages, about pages, or long-form content. Also use when the user says 'write copy for,' 'improve this copy,' 'rewrite this,' 'headline help,' or 'CTA copy.'"
 ---
 
@@ -13,16 +13,18 @@ You are an expert conversion copywriter. Your goal is to write copy that is clea
 **Check for voice and audience context first:**
 Read `/brain/positioning-and-messaging.md` and `/brain/truth.md` before asking questions. Use that context and only ask for information not already covered or specific to this task.
 
+Also read `/brain/voice-and-tone.md` and `/brain/voice-samples.md` if they exist. The voice profile defines how the writing should sound; the calibration samples show signature moves to reuse. If both are missing or empty, write in a clean professional voice and suggest running `/tone-mapping`.
+
 **Reference files (consult during writing):**
-- `/references/copy-frameworks.md` — Headline formulas, section structure templates, page archetypes
-- `/references/natural-transitions.md` — Transition phrases that connect ideas without triggering AI detection
-- `/references/hook-formulas.md` — Opening line patterns for hooks
-- `/references/visual-style.md` — Visual identity for any diagrams or graphics included in the piece
+- [references/copy-frameworks.md](references/copy-frameworks.md) — Headline formulas, section structure templates, page archetypes
+- [references/natural-transitions.md](references/natural-transitions.md) — Transition phrases that connect ideas without triggering AI detection
+- [references/hook-formulas.md](references/hook-formulas.md) — Opening line patterns for hooks
+- `/brain/brand-guide/brand-guide.md` — Visual identity for any diagrams or graphics included in the piece
 
 Gather this context (ask if not provided):
 
 ### 1. Page Purpose
-- What type of page or piece? (landing page, about page, Substack post, feature page)
+- What type of page or piece? (landing page, about page, newsletter post, feature page)
 - What is the ONE primary action you want visitors/readers to take?
 
 ### 2. Audience
@@ -114,9 +116,9 @@ Analogies make abstract concepts concrete and memorable.
 - "Never {unpleasant event} again"
 - "{Question highlighting main pain point}"
 
-**For comprehensive headline formulas**: See [references/copy-frameworks.md](/references/copy-frameworks.md)
+**For comprehensive headline formulas**: See [references/copy-frameworks.md](references/copy-frameworks.md)
 
-**For natural transition phrases**: See [references/natural-transitions.md](/references/natural-transitions.md)
+**For natural transition phrases**: See [references/natural-transitions.md](references/natural-transitions.md)
 
 **Subheadline**
 - Expands on headline
@@ -158,7 +160,7 @@ Analogies make abstract concepts concrete and memorable.
 
 ## Voice and Tone
 
-Before writing, establish:
+If `/brain/voice-and-tone.md` exists, it is the authority on voice — apply its dimensions, do/don't table, and calibration sentences, and use `/brain/voice-samples.md` for signature moves. Only establish voice from scratch when those files are missing:
 
 **Formality level:**
 - Casual/conversational
@@ -207,7 +209,7 @@ Before presenting the draft to the user, run a copy-editing pass:
 
 1. **Tagore pass**: Run the `tagore` skill on the draft. Full pipeline: 29-pattern scan, 8 core principles, pre-delivery checklist, 8-dimension scoring (must pass 56/80), self-audit, and final rewrite. Review to ensure voice is preserved.
 2. **Clarity**: Every sentence immediately understandable. No jargon without context.
-3. **Voice**: Consistent tone throughout. Matches the brand voice in positioning-and-messaging.md.
+3. **Voice**: Consistent tone throughout. Matches `/brain/voice-and-tone.md` (or the brand voice in positioning-and-messaging.md if no voice profile exists).
 4. **So What**: Every claim answers "why should I care?"
 5. **Specificity**: Vague words replaced with concrete ones. Numbers and timeframes where possible.
 6. **Cross-section phrase repetition**: Scan the full draft for any key phrase appearing more than twice. The headline owns the phrase — vary or cut everywhere else.

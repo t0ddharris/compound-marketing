@@ -37,9 +37,9 @@ Transient props (`$variant`) prevent prop leaking to DOM. Use them for all style
 Never hardcode hex values in components. Pull from the theme:
 
 ```tsx
-background: ${({ theme }) => theme.colors.cyan};        // #50F6E8
-color: ${({ theme }) => theme.colors.white};            // #F9F9F9
-border: 1px solid ${({ theme }) => theme.colors.grey_darker};
+background: ${({ theme }) => theme.colors.accent};
+color: ${({ theme }) => theme.colors.text};
+border: 1px solid ${({ theme }) => theme.colors.border};
 ```
 
 If a color you need isn't in the theme, add it to `theme.ts` with a semantic name — don't inline.
@@ -63,7 +63,7 @@ Use this pattern for any component that needs different behavior, not just diffe
 - Use a thin border between groups (`border-top: 1px solid ${grey_darker}`)
 - Use a subtle background tint (`background: rgba(255,255,255,0.02)`)
 
-Never nest a `.card` container inside another `.card` container. It reads as indecision and breaks the 32px border-radius rhythm.
+Never nest a `.card` container inside another `.card` container. It reads as indecision and breaks the card radius rhythm.
 
 ## Section pattern
 
@@ -82,7 +82,7 @@ Every full-page section follows the same skeleton:
 ```
 
 - `Section` handles full-bleed background + top/bottom padding
-- `SectionInner` caps at 1080px and applies side padding
+- `SectionInner` caps at the brand's max content width and applies side padding
 - Every level of the tree uses the gap/spacing scale, no one-off values
 
 ## When to create a new component
@@ -114,16 +114,16 @@ Net-new HubSpot landing pages don't have React components, but the same spacing/
 
 ```css
 :root {
-  --od-black: #0F0F0F;
-  --od-white: #F9F9F9;
-  --od-cyan: #50F6E8;
-  --od-purple: #8B55FF;
-  --od-purple-darker: #6A2AFF;
-  --od-gradient: linear-gradient(90deg, #50F6E8 0%, #8B55FF 100%);
-  --od-gradient-text: linear-gradient(90deg, #50F6E8 0.48%, #8B55FF 47.12%, #FF7CA9 100%);
-  --od-radius-tag: 5px;
-  --od-radius-btn: 12px;
-  --od-radius-card: 32px;
+  /* Fill values from brain/brand-guide/brand-guide.md */
+  --canvas: /* primary background */;
+  --text: /* primary text */;
+  --accent: /* primary accent */;
+  --accent-2: /* secondary accent, if any */;
+  --gradient: /* decorative gradient, if the brand has one */;
+  --gradient-text: /* text-effect gradient, if the brand has one */;
+  --radius-tag: /* tag radius */;
+  --radius-btn: /* button radius */;
+  --radius-card: /* card radius */;
 }
 ```
 

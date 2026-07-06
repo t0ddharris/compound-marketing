@@ -57,7 +57,7 @@ Used when asked to "audit," "check," or "review" a page for correctness.
 Used when asked "what's wrong with this" or "does this feel right."
 1. Load `anti-patterns.md` and `component-composition.md`.
 2. Compare the page against brand-guide and landing-page patterns.
-3. Call out specific issues: hierarchy, spacing rhythm, alignment, interaction clarity, visual weight. Reference concrete brand-guide values when relevant (e.g., "tag should be `.od-tag--outline--sm` at 2px 8px per brand-guide").
+3. Call out specific issues: hierarchy, spacing rhythm, alignment, interaction clarity, visual weight. Reference concrete brand-guide values when relevant (e.g., "tag should be the brand-guide's small outlined variant at its specified padding").
 4. Rank issues — lead with the one that would most improve the page.
 
 ### Polish (pre-ship pass)
@@ -70,36 +70,35 @@ Used before a page ships or when asked to "polish" / "tighten" / "finalize."
 ### Typeset (typography pass)
 Used when asked to fix fonts, hierarchy, or "the text feels wrong."
 1. Reference brand-guide type scale directly. Never invent sizes.
-2. Check: heading level → correct size, weight 600 for titles, weight 500 for buttons, 400 for body. Letter-spacing negative on titles (`-1.72px` desktop / `-0.8px` mobile), positive on body (`0.4px` / `0.3px`).
-3. Mini titles must be `uppercase`. Gradient headlines use three-color gradient **only** via `background-clip: text`.
+2. Check every heading level against the brand-guide's size, weight, and letter-spacing values. Titles, buttons, and body each have defined weights — verify, don't assume.
+3. Apply any brand-guide casing rules (e.g., uppercase mini titles). Gradient/accent headline treatments only where the brand guide allows, and text-effect gradients **only** via `background-clip: text`.
 4. Mobile sizes are smaller — don't use desktop scale on mobile.
 
 ### Layout (spacing / rhythm pass)
 Used when asked to fix spacing, alignment, or "rhythm feels off."
-1. Check max-width: `1080px` centered.
-2. Section padding: desktop `64px 32px`, mobile `32px 16px`.
-3. All gaps come from the scale. If a gap is `20px`, it's probably wrong — round to `16px` or `24px` with a reason.
+1. Check max content width and centering against the brand-guide layout values.
+2. Check section padding (desktop and mobile) against the brand-guide values.
+3. All gaps come from the brand-guide spacing scale. If a gap isn't on the scale, it's probably wrong — round to the nearest scale value or document a reason.
 4. Vertical rhythm between sections should be consistent. A short section followed by a very tall section with the same padding often reads as broken — adjust the smaller section up.
-5. Card border-radius is always `32px`. Buttons `12px`. Tags `5px`. No `999px`.
+5. Border-radius values come from brand-guide (cards, buttons, tags each have one). No `999px` pills unless the brand guide defines them.
 
 ## Design verification is mandatory
 
-**Every design change to a shipped page must be verified with `agent-browser` before declaring it done.** This is a hard rule (see memory: HubSpot form renderer incident). Class names in source != class names in the live DOM. Snapshot the live page, confirm the change rendered, confirm nothing else regressed.
+**Every design change to a shipped page must be verified with `agent-browser` before declaring it done.** Class names in source != class names in the live DOM (dynamically-loaded CSS, form renderers, and CMS wrappers all rewrite markup at runtime). Snapshot the live page, confirm the change rendered, confirm nothing else regressed.
 
 ## Non-negotiables (fast lookup)
 
-Pulled forward from brand-guide + project memory. If you see any of these in a page, fix them:
+Universal rules, plus wherever the brand guide defines a value, that value wins. If you see any of these in a page, fix them:
 
-- **No gradient accent lines / dividers / rules.** Gradient only on text via `background-clip: text`. (Hard rule from memory.)
-- **No three-color gradient on non-text surfaces.** Two-color `#50F6E8 → #8B55FF` for UI decorations; three-color for text effects only.
-- **No pill shapes (`border-radius: 999px`).** Tags are `8px`, buttons `12px`, cards `32px`.
-- **No tag variants outside the three in brand-guide** (`.od-tag`, `.od-tag--outline`, `.od-tag--outline--sm`). No pink/purple tags.
+- **No invented brand values.** Colors, gradients, type sizes, radii, spacing, and borders come from brand-guide. If you're about to type a hex or px value that isn't in brand-guide, stop.
+- **Gradients only where the brand guide allows them.** Text-effect gradients only via `background-clip: text`. Never apply a text-only gradient to lines, borders, or backgrounds.
+- **No pill shapes (`border-radius: 999px`)** unless the brand guide defines them. Use the brand's tag/button/card radii.
+- **No tag or button variants outside those defined in brand-guide.** If you need different emphasis, use a different element type — not a new variant.
 - **No `backdrop-filter: blur()`** in any design that could be exported to PDF (Chromium print renderer ignores it).
-- **No "kernel-level" language** in any copy examples in this skill or pages it produces. Use "non-human adversary." (Memory feedback.)
 - **No cards inside cards.** If content needs sub-grouping, use spacing, borders, or background tint — not nested card containers.
-- **No Inter + purple gradient + centered-hero default.** That's the generic-AI look even if Inter is our font.
-- **No invented border colors.** Borders are one of two values from brand-guide: soft `1px solid rgba(69, 69, 69, 0.5)` for section dividers / inline separators, or opaque `1px solid #454545` for card containers. Nothing else.
-- **No opaque sticky headers and no legacy blur values.** The site header is always translucent (`rgba(15, 15, 15, 0.4)`) with `backdrop-filter: blur(12px)` — see brand-guide "Site Header" for the full spec. Use the pattern from `go.[your-site]/request-a-demo-thanks`.
+- **No generic-AI default look.** Default font + purple gradient + centered dark hero is the ChatGPT-landing-page aesthetic — vary structure even when the ingredients overlap with your brand.
+- **No accent-colored body text.** Accent colors are for emphasis and interactive elements, not reading text.
+- Record instance-specific bans (banned phrases, banned patterns, header specs) in `references/anti-patterns.md` and brand-guide as they accumulate — this list stays universal.
 
 ## Interaction Patterns
 
@@ -150,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 ```
 
-Tune the `translateY` values per image height and desired peek amount. The `1.5s` animation delay prevents the bounce from firing during page load animations. First shipped on the CNCF happy hour landing page (2026-04-16).
+Tune the `translateY` values per image height and desired peek amount. The `1.5s` animation delay prevents the bounce from firing during page load animations.
 
 ## When building something new
 
@@ -169,7 +168,4 @@ Built pages go wherever the framework dictates (e.g., `src/` for Next.js). Suppo
 
 ## Learnings
 
-<!-- Updated by /reflect. Promote stable patterns to the main skill body. -->
-
-- **[HIGH]** Before building CSS/Canvas approximations of production visuals, check if the actual assets can be pulled from the live site. Pre-rendered Spline scenes at `[your-site]/assets/renders/` are SVGs with embedded PNGs; extract layers with base64 decode when needed for compositing. *(Session 85, 2026-04-16)*
-- **[HIGH]** For dark-mode assets (particle renders, Spline scenes) on light backgrounds, use `filter: invert(1) hue-rotate(180deg)` directly on the image. Don't wrap in dark containers/bands/panels. *(Session 87, 2026-04-17)*
+<!-- Updated by /reflect in your instance. Promote stable patterns to the main skill body. Ships empty. -->

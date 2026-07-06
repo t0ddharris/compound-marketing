@@ -522,4 +522,4 @@ The native daemon supports Chromium and Safari (via WebDriver). Firefox and WebK
 
 <!-- Updated by /reflect. Promote stable patterns to the main skill body. -->
 
-- **[MEDIUM]** When a local HTML/email preview renders differently than the source suggests, inspect raw DOM with `eval 'document.body.innerHTML.slice(0, N)'` — catches malformed HTML (unclosed comments, nested `<!-- -->`, tag mismatches) that browsers silently recover from. Measuring bounding rects alone won't surface structural issues. *(Session 95, 2026-04-22)*
+- **[MEDIUM]** When a local HTML/email preview renders differently than the source suggests, inspect raw DOM with `eval 'document.body.innerHTML.slice(0, N)'` — catches malformed HTML (unclosed comments, nested `<!-- -->`, tag mismatches) that browsers silently recover from. Measuring bounding rects alone won't surface structural issues.

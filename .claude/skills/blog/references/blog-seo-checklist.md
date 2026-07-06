@@ -100,7 +100,7 @@ Use these patterns to structure claims for maximum AI extractability:
 ### Authoritativeness
 - [ ] Content adds something new to the conversation (not just rehashing existing content)
 - [ ] References authoritative external sources where appropriate
-- [ ] Connects to the company's domain authority (AI threat detection, AI agent security, cybersecurity)
+- [ ] Connects to the company's domain authority (your core topic areas — see `brain/positioning-and-messaging.md`)
 
 ### Trustworthiness
 - [ ] No invented facts, metrics, or customer names

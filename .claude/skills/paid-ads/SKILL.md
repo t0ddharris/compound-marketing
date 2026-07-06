@@ -350,5 +350,5 @@ For validating the post-click experience:
 
 <!-- Updated by /reflect. Promote stable patterns to the main skill body. -->
 
-- **[MEDIUM]** Before recommending retargeting, pull actual traffic from Plausible/GA4 and calculate the realistic retargeting pool after ICP filtering. If usable pool is under ~3K people, retargeting is too early — recommend cold ICP targeting to grow the pool first. *(Session 78, 2026-04-14)*
-- **[MEDIUM]** When the standard low-friction CTA (Watch Demo, free trial) is unavailable, substitute an educational asset (livestream recording, deep-dive guide) that self-qualifies for the ICP. Better than forcing the full-friction ask on cold traffic. *(Session 78, 2026-04-14)*
+- **[MEDIUM]** Before recommending retargeting, pull actual traffic from Plausible/GA4 and calculate the realistic retargeting pool after ICP filtering. If usable pool is under ~3K people, retargeting is too early — recommend cold ICP targeting to grow the pool first.
+- **[MEDIUM]** When the standard low-friction CTA (Watch Demo, free trial) is unavailable, substitute an educational asset (livestream recording, deep-dive guide) that self-qualifies for the ICP. Better than forcing the full-friction ask on cold traffic.

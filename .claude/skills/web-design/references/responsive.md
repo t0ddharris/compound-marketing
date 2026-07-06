@@ -9,7 +9,7 @@ Mobile is not a smaller desktop. Design the content reflow before you design the
 - **Mobile:** `max-width: 767px`
 - **Tablet:** `768px – 1023px`
 - **Desktop:** `min-width: 1024px`
-- **Max content width:** `1080px` centered
+- **Max content width:** per brand-guide, centered
 
 Don't invent new breakpoints for a single element. If something needs a one-off breakpoint, the design is usually wrong.
 

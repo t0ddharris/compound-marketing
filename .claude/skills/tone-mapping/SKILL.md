@@ -1,7 +1,7 @@
 ---
 name: tone-mapping
-version: 1.0.0
-description: "Build a voice and tone profile from real writing samples. Trigger with /tone-mapping or when the user mentions 'tone mapping,' 'voice profile,' 'how do I sound,' 'brand voice,' 'writing style,' 'tone of voice,' 'voice extraction,' or 'make it sound like me.' Extracts patterns across eight dimensions and writes brain/voice-and-tone.md."
+version: 1.1.0
+description: "Build a voice and tone profile from real writing samples. Trigger with /tone-mapping or when the user mentions 'tone mapping,' 'voice profile,' 'how do I sound,' 'brand voice,' 'writing style,' 'tone of voice,' 'voice extraction,' or 'make it sound like me.' Extracts patterns across eight dimensions and writes brain/voice-and-tone.md, then optionally brain/voice-samples.md with quoted calibration examples."
 ---
 
 # Tone Mapping
@@ -116,9 +116,30 @@ If `brain/INDEX.md` exists, check whether it already lists `voice-and-tone.md`. 
 
 Tell the user:
 
-> Voice profile saved to `brain/voice-and-tone.md`. Content skills (blog, social-content, copywriting, email-sequence, case-studies) will read it when drafting.
+> Voice profile saved to `brain/voice-and-tone.md`. Content skills (blog, social-content, copywriting, copy-editing, email-sequence, case-studies) read it when drafting and editing.
 >
 > To update your voice profile later, run `/tone-mapping` again with new samples.
+
+### Step 6: Offer Calibration Samples (voice-samples.md)
+
+The profile captures the measurable dimensions of the voice. Calibration samples capture what dimensions can't: signature moves, argument structures, and real quoted examples. Offer this step:
+
+> Want me to also build `brain/voice-samples.md`? It's the positive companion to the profile — your signature moves with real quotes from your writing, so drafts don't just match your metrics but reuse your actual patterns. Works best with 5+ samples.
+
+If yes, extract from the same samples (plus any new ones):
+
+1. **The voice in one paragraph** — describe the voice the way you'd brief an editor
+2. **Signature moves (3-7)** — recurring patterns that make the voice recognizable (e.g., analogy-first framing, parenthetical asides, self-deprecation, direct address). For each: what it is, 2-3 quoted examples **taken verbatim from the samples**, and how often to use it
+3. **Structural patterns** — how pieces open and close, paragraph and subhead habits, with quoted examples
+4. **Argument structures** — how they build a case (e.g., consensus-then-pivot, experience escalation), with the beats spelled out
+5. **What this writer rejects** — patterns that never appear in their writing, stated concretely
+6. **Specificity calibration** — how concrete the voice gets (names, numbers, tools vs. pattern-level)
+
+Write to `brain/voice-samples.md` following the template structure. Confirm the signature moves with the user — show each move with its quotes and ask "is this actually you, or an artifact of one post?" Drop anything that appears in only one sample.
+
+**Hard rule:** every example in voice-samples.md must be quoted verbatim from the user's real writing. If you can't quote it, don't include the move.
+
+If `brain/INDEX.md` exists, list `voice-samples.md` there too.
 
 ---
 

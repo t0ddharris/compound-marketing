@@ -8,8 +8,8 @@ Use this structure for publishing case studies on the [Company] website or custo
 
 ```html
 <title>[Customer Name]: [Key Outcome] with the company | Case Study</title>
-<meta name="description" content="Learn how [Customer] achieved [key metric] using [Company] for AI-native threat detection. [Secondary benefit].">
-<meta name="keywords" content="[Company], case study, [industry], AI threat detection, AI agent security, cybersecurity, behavioral analysis">
+<meta name="description" content="Learn how [Customer] achieved [key metric] using [Company] for [value proposition]. [Secondary benefit].">
+<meta name="keywords" content="[Company], case study, [industry], [product category], [core keyword], [secondary keyword]">
 ```
 
 **URL slug:** `/case-studies/[customer-name-slugified]`
@@ -35,7 +35,7 @@ Use this structure for publishing case studies on the [Company] website or custo
 ```
 # How Acme Corp Cut MTTR by 75% Without Touching Code
 
-Acme's security team went from blind spots across 200+ microservices to full AI threat detection—without disrupting existing workflows.
+Acme's team went from [before state] across 200+ [systems/teams/locations] to [after state]—without disrupting existing workflows.
 
 [Sign Up for a Demo]
 ```
