@@ -149,6 +149,16 @@ claude plugin install --plugin-dir ./path-to-compound-marketing
 
 **Codex:** Clone into your Codex plugin path. The `.codex-plugin/plugin.json` manifest registers it automatically.
 
+## Contributing
+
+This repo is a generator: everything here ships to arbitrary companies, so it must stay company-agnostic. Instance-specific values (brand colors, personal names, positioning) belong in a generated instance's brain files, never in the skills, templates, or docs. CI enforces this by running `scripts/check-leakage.sh` on every pull request, failing if it finds banned content or a malformed skill directory. Run it yourself before opening a PR:
+
+```bash
+./scripts/check-leakage.sh
+```
+
+Legitimate exceptions live in an allowlist inside that script, so genuine edge cases can be permitted without weakening the check.
+
 ## License
 
 MIT
