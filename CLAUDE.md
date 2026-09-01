@@ -42,3 +42,5 @@ Do not modify files in `templates/` to be company-specific. They must remain gen
 ## Working in This Repo
 
 When working here, you are maintaining the generator itself: skills, agents, templates, scripts, and docs. You are not doing marketing work. The routing tables and brain file rules in `templates/CLAUDE.md` apply to generated instances, not here.
+
+**Learnings never accumulate in this repo.** The `## Learnings` sections in `.claude/skills/` ship empty — they exist for generated instances to fill via `/reflect`. When a session here surfaces a skill improvement, edit the skill body through a normal PR (framed as a product change), or record it in a user-level skill outside this repo. Never append session-tagged learning entries to skills here; CI (`scripts/check-leakage.sh`) rejects them.
