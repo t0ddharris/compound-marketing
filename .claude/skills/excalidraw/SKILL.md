@@ -484,7 +484,7 @@ If validation fails, the generator raises an error with details. Fix the spec an
 - Always generate complete, valid JSON. Excalidraw fails silently on bad data.
 - Never omit "boring" fields like `groupIds: []` or `frameId: null` — they're all required.
 - Use the style defaults above unless the user requests a different look.
-- For blog post diagrams, keep them simple: 3-8 nodes maximum. Complex diagrams lose clarity at Substack width.
+- For blog post diagrams, keep them simple: 3-8 nodes maximum. Complex diagrams lose clarity at typical blog content widths.
 - If the user provides a rough sketch or description, interpret liberally. Ask only if genuinely ambiguous.
 - Test text fitting: if a label is long, widen the node or split to two lines rather than letting it overflow.
 
@@ -493,12 +493,14 @@ If validation fails, the generator raises an error with details. Fix the spec an
 - **blog**: Diagrams often accompany blog posts
 - **image-gen**: For raster illustrations (photos, editorial art). Excalidraw is for structural diagrams.
 
+## Field-Tested Rules
+
+- For complex diagrams (more than ~10 nodes), avoid cross-connecting elements within the main structure. Show relationships as separate workflow examples alongside the hierarchy instead.
+- For diagrams with more than ~15 elements, write the spec for `generate_excalidraw.py` rather than hand-crafting JSON. Bidirectional bindings are too error-prone at scale.
+- When placing side labels, compute position from the leftmost content edge across all tiers, not from a single tier's alignment.
+- Generate files with `generate_excalidraw.py`. Live MCP collaboration tools render unreliably and aren't supported.
+- Indices MUST follow Excalidraw's fractional-indexing format: `a` prefix = 2 chars (`a0`–`az`), `b` prefix = 3 chars (`b00`–`bzz`). Indices like `b0` or `c4` make files uneditable because Excalidraw can't generate new indices relative to malformed ones. The generator handles this; check it when hand-editing.
+
 ## Learnings
 
 <!-- Updated by /reflect. Promote stable patterns to the main skill body. -->
-
-- **[HIGH]** For complex diagrams (>10 nodes), avoid cross-connecting elements within the main structure. Show relationships as separate workflow examples alongside the hierarchy instead.
-- **[MEDIUM]** For diagrams with more than ~15 elements, write a generator script rather than hand-crafting JSON. Bidirectional bindings are too error-prone at scale.
-- **[MEDIUM]** When placing side labels, compute position from the leftmost content edge across all tiers, not from a single tier's alignment.
-- **[HIGH]** File generation via `generate_excalidraw.py` is the only supported approach. Live MCP collab (excaliclaude) was tested and abandoned due to unreliable rendering.
-- **[CRITICAL]** Indices MUST follow Excalidraw's fractional-indexing format: `a` prefix = 2 chars (`a0`–`az`), `b` prefix = 3 chars (`b00`–`bzz`). Using `b0`, `c0`, `c4` etc. makes files uneditable — Excalidraw can't generate new indices relative to malformed ones. The generator now handles this correctly.

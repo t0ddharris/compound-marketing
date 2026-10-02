@@ -109,7 +109,7 @@ Place this prominently—sidebar on desktop, inline callout on mobile.
 
   <aside class="stood-out">
     <h4>What Stood Out vs Alternatives</h4>
-    <p>[Key differentiator—AI-native detection, behavioral analysis]</p>
+    <p>[Key differentiator from brain/positioning.md]</p>
   </aside>
 </section>
 ```
@@ -189,7 +189,7 @@ Place this prominently—sidebar on desktop, inline callout on mobile.
 ```html
 <section class="cta">
   <h2>Sign Up for a Demo</h2>
-  <p>[Customer] achieved [key result] with the company. See how AI-native threat detection can work for your team.</p>
+  <p>[Customer] achieved [key result] with the company. See how [core capability] can work for your team.</p>
 
   <div class="cta-buttons">
     <a href="https://[your-site]" class="btn-primary">Sign Up for a Demo</a>

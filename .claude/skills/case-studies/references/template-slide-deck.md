@@ -10,7 +10,7 @@ Use this structure for sales presentations, webinars, and conference talks featu
 *or for anonymous: "Customer Success Story"*
 
 **Headline:** [Key outcome with metric]
-*Example: "95% of AI Agent Attacks Stopped with the company"*
+*Example: "40% Faster Onboarding with [Company]"*
 
 **Visual:** Customer logo (if branded) or industry-relevant imagery
 
@@ -24,8 +24,8 @@ Use this structure for sales presentations, webinars, and conference talks featu
 |-----------|--------|
 | Industry | [Industry] |
 | Scale | [Size indicator—employees, transactions, services] |
-| Environment | [Kubernetes, cloud, architecture] |
-| Approach | [How they handled security before] |
+| Environment | [Tools, platforms, team setup] |
+| Approach | [How they handled the problem before] |
 
 **Gaps & Challenges:**
 - [Gap/challenge 1—keep to one line]
@@ -48,7 +48,7 @@ Use this structure for sales presentations, webinars, and conference talks featu
 - [Factor 3]: [One-line detail]
 
 **What Stood Out vs Alternatives:**
-[What made [Company] the right choice—AI-native detection, behavioral analysis, etc.]
+[What made [Company] the right choice—[key differentiators from brain/positioning.md]]
 
 ---
 
@@ -99,7 +99,7 @@ Use this structure for sales presentations, webinars, and conference talks featu
 
 ## Slide 7: Call to Action
 
-**Ready to Transform Your Security?**
+**Ready to [Achieve the Outcome]?**
 
 - Sign up for a demo at **[your-site]**
 
@@ -120,6 +120,6 @@ Use this structure for sales presentations, webinars, and conference talks featu
 - **Slide 6**: Let the quote speak—don't over-explain
 
 ### Customization for Audience
-- **Technical audience**: Emphasize architecture, behavioral analysis, detection details
+- **Technical audience**: Emphasize architecture, integrations, and technical details
 - **Business audience**: Lead with time/cost savings, team productivity
 - **Mixed audience**: Balance both, lead with business outcomes

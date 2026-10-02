@@ -34,7 +34,7 @@ Every interactive element needs `:focus-visible`. See interaction.md. Never `out
 ## Images
 
 - Every `<img>` has `alt`. Decorative images: `alt=""` (not missing, empty).
-- Meaningful images: alt describes what the image conveys, not what it looks like. "Diagram showing the product detecting an AI agent attack on an API endpoint" > "Diagram".
+- Meaningful images: alt describes what the image conveys, not what it looks like. "Diagram showing how an order moves from checkout to fulfillment" > "Diagram".
 - SVG icons that are decorative: `aria-hidden="true"`. Functional SVG icons: `role="img"` + `<title>`.
 
 ## Keyboard

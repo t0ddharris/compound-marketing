@@ -1,7 +1,7 @@
 ---
 name: seo-geo
-version: 2.0.0
-description: "When the user wants to optimize content for search engines (Google, Bing) or AI engines (ChatGPT, Perplexity, Gemini, Copilot, Claude). Also use when the user mentions 'SEO audit,' 'GEO,' 'generative engine optimization,' 'AI search optimization,' 'technical SEO,' 'why am I not ranking,' 'SEO issues,' 'on-page SEO,' 'meta tags review,' 'keyword research,' 'content gap analysis,' or 'AI citation optimization.' For building pages at scale, see programmatic-seo. For structured data only, see schema-markup."
+version: 2.1.0
+description: "When the user wants to optimize content for search engines (Google, Bing) or AI engines (ChatGPT, Perplexity, Gemini, Copilot, Claude). Also use when the user mentions 'SEO audit,' 'GEO,' 'generative engine optimization,' 'AI search optimization,' 'technical SEO,' 'why am I not ranking,' 'SEO issues,' 'on-page SEO,' 'meta tags review,' 'keyword research,' 'content gap analysis,' or 'AI citation optimization.' For structured data only, see schema-markup."
 ---
 
 # SEO/GEO: Search & Generative Engine Optimization
@@ -132,12 +132,12 @@ Before starting any work, understand:
 
 1. **Start with ICP pain points** -- Pull pain points and use cases from `/brain/positioning-and-messaging.md` and `/brain/use-cases.md`. Keywords should map to real problems the target audience searches for
 2. **Intent mapping** -- Classify every keyword by search intent:
-   - **Informational**: "what is AI agent security" -- target with blog posts and guides
+   - **Informational**: "what is [category]" -- target with blog posts and guides
    - **Navigational**: "[Company] docs" -- ensure owned pages rank
-   - **Commercial investigation**: "best AI security tools for enterprises" -- target with comparison content
+   - **Commercial investigation**: "best [category] tools for [audience]" -- target with comparison content
    - **Transactional**: "[Company] pricing" -- ensure product pages rank
 3. **Difficulty and volume analysis** -- Prioritize keywords with reasonable search volume where [Company] can realistically compete. Avoid vanity keywords with extreme competition
-4. **Long-tail opportunities** -- Identify specific, lower-competition phrases (e.g., "AI agent attack detection enterprise") that map directly to the company capabilities in `truth.md`
+4. **Long-tail opportunities** -- Identify specific, lower-competition phrases (e.g., "[specific capability] for [specific audience]") that map directly to the company capabilities in `truth.md`
 5. **Keyword clusters** -- Group related keywords into topic clusters. Each cluster should have a pillar page and supporting content
 6. **International keyword conflict identification** -- Flag keywords with different meanings across regions
 
@@ -418,24 +418,13 @@ For each priority page, verify:
 
 ### Step 5c: Content Types That Get Cited Most
 
-Not all content is equally citable. Prioritize these formats:
+Not all content is equally citable — and the format mix is **volatile**. The long-standing baseline had comparison articles (~33%) and listicles (~10%) among the top citation earners, but **ChatGPT 5.6 (Aug 2026) demoted the exploited formats: listicle citations fell −50.5% and comparison-page citations −32.1%, while `site:` and "official" retrieval surged** — a shift toward primary sources and owned pages. Format strategy is now per-platform (comparisons still work on Google AIO/Gemini/Perplexity). See [references/format-volatility.md](references/format-volatility.md) for the shift data, the per-platform format table, LinkedIn's citation numbers, and the ChatGPT fan-out extraction diagnostic.
 
-| Content Type | Citation Share | Why AI Cites It |
-|-------------|:------------:|----------------|
-| **Comparison articles** | ~33% | Structured, balanced, high-intent |
-| **Definitive guides** | ~15% | Comprehensive, authoritative |
-| **Original research/data** | ~12% | Unique, citable statistics |
-| **Best-of/listicles** | ~10% | Clear structure, entity-rich |
-| **Product pages** | ~10% | Specific details AI can extract |
-| **How-to guides** | ~8% | Step-by-step structure |
-| **Opinion/analysis** | ~10% | Expert perspective, quotable |
+**Evergreen winners across platforms:** original research and data, definitive guides, and owned "official" pages — product, docs, pricing — with extractable structure.
 
-**Underperformers for AI citation:**
-- Generic blog posts without structure
-- Thin product pages with marketing fluff
-- Gated content (AI can't access it)
-- Content without dates or author attribution
-- PDF-only content (harder for AI to parse)
+**Underperformers:** generic unstructured posts, thin or gated or PDF-only content, and anything undated without author attribution.
+
+**Citation ≠ recommendation.** Getting cited means your content was useful to consult; getting *recommended* — onto the buyer's actual shortlist — is governed by web-wide consensus (reviews, forums, analysts, press) and is largely independent of your own content. Self-promotional "best [category]" listicles can even backfire for emerging brands: in one 100-query B2B study, 69% of the AI Overview citations that self-promotional listicles earned came in answers that recommended competitors instead of the publishing brand. See [references/citations-vs-recommendations.md](references/citations-vs-recommendations.md) for the visibility ladder (retrieved → cited → mentioned → recommended), stage-dependent buyer's-guide strategy, what earns recommendations, and the attribution blind spot.
 
 ---
 
@@ -445,10 +434,11 @@ AI systems don't just cite your website — they cite where you appear. Third-pa
 
 **Key third-party citation sources:**
 - **Wikipedia** (7.8% of all ChatGPT citations) — Ensure your page is accurate and current
-- **Reddit** (1.8% of ChatGPT citations) — Participate authentically in relevant communities
+- **Reddit** (historically ~1.8% of ChatGPT citations, nearly wiped from ChatGPT by Aug 2026 retrieval changes; still retrieved elsewhere) — Participate authentically, as one surface in a portfolio, never the whole strategy
+- **LinkedIn** — per LinkedIn's own AEO guide, the most-cited outlet for professional-topic searches; Articles out-cite Posts ~60/40, and a post's first words become its URL slug, so front-load the target phrase (see [references/format-volatility.md](references/format-volatility.md))
 - **Industry publications** — Get featured in roundups and comparison articles
 - **Review sites** (G2, Capterra, TrustRadius for B2B SaaS) — Maintain updated profiles
-- **YouTube** (frequently cited by Google AI Overviews) — Create content for key how-to queries
+- **YouTube** (frequently cited by Google AI Overviews) — Create content for key how-to queries; models read the text layer (transcript, chapters, description), not the video. See [references/youtube-ai-citations.md](references/youtube-ai-citations.md)
 - **Quora** — Answer relevant questions with depth
 
 **Key stat:** Brands are 6.5x more likely to be cited via third-party sources than their own domains.
@@ -473,6 +463,8 @@ Monthly manual check:
 2. Run each through ChatGPT, Perplexity, and Google
 3. Record: Are you cited? Who is? What page?
 4. Log in a spreadsheet, track month-over-month
+
+AI answers are **non-deterministic**: one run is an anecdote, not a measurement. Run each query 3–5 times per platform and track the mention *rate* with its sample size ("cited 3/5, n=5"), comparing rates over time rather than single runs. Full rigor checklist in [references/format-volatility.md](references/format-volatility.md).
 
 **Key stats:**
 - AI Overviews appear in ~45% of Google searches
@@ -664,6 +656,15 @@ Same format as above
 - [AEO & GEO Patterns](references/aeo-geo-patterns.md): Content patterns optimized for answer engines and AI citation
 - [GEO Content Audit](references/geo-content-audit.md): File-based scoring rubric, content-type matrix, and report format for grading a content artifact's AI-citation readiness
 - [AI Writing Detection](references/ai-writing-detection.md): Common AI writing patterns to avoid (em dashes, overused phrases, filler words)
+- [Platform Ranking Factors](references/platform-ranking-factors.md): How each AI platform selects sources, plus robots.txt configuration for AI bots
+- [Content Patterns](references/content-patterns.md): Templates for extractable answer blocks
+- [Content Types](references/content-types.md): Tactical guidance for product pages, blog content, comparison pages, docs, and local/ecom
+- [Format Volatility](references/format-volatility.md): The Aug 2026 ChatGPT format shift, per-platform format table, LinkedIn citation data, fan-out extraction, and measurement rigor
+- [Citations vs. Recommendations](references/citations-vs-recommendations.md): The visibility ladder (retrieved → cited → mentioned → recommended) and what earns a spot on the shortlist
+- [Agent Readiness](references/agent-readiness.md): Access, discovery, and parseability checklist for AI agents and crawlers
+- [YouTube AI Citations](references/youtube-ai-citations.md): The text layer AI reads around a video
+- [Open Knowledge Format](references/okf.md): Google's markdown spec for representing site content to AI systems
+- [International SEO](references/international-seo.md): hreflang, locale URL structure, and multi-region targeting
 
 ---
 
@@ -726,10 +727,12 @@ When auditing a live site, use agent-browser for hands-on technical validation:
 
 ---
 
+## Field-Tested Rules
+
+- Before recommending SEO/GEO tooling, verify current plans on vendor pricing pages; vendors regularly launch bundled products that don't match older tier structures. Use a browser tool for JS-rendered pricing pages, since plain fetches often return only the JS shell.
+- When recommending a paid tool tier, default to the lowest tier that meets current needs (keywords tracked, projects, AI prompts). Flag any critical unverified spec for sales confirmation rather than over-buying headroom.
+- When the target has no live web property (pre-launch, or no Search Console/GA4 access), use the file-based GEO content audit (Step 5f) instead of crawl-, SERP-, or Search Console-dependent steps.
+
 ## Learnings
 
 <!-- Updated by /reflect. Promote stable patterns to the main skill body. -->
-
-- **[HIGH]** Before recommending SEO/GEO tooling, verify current SKUs on vendor pricing pages. Vendors launched new bundled products (Semrush One, Ahrefs Brand Radar) that don't match older Pro/Guru/Business tier structures. Use agent-browser for JS-rendered pricing pages — WebFetch often returns only the JS shell.
-- **[MEDIUM]** When recommending a paid tool tier, default to the lowest tier that meets current-stage capacity (keywords tracked, projects, AI prompts). Flag one critical unverified spec for sales confirmation rather than over-buying headroom. Upgrade paths exist; unused capacity doesn't.
-- **[MEDIUM]** When the target has no live web property (pre-launch, demo/fictional company, or no Search Console/GA4 access), route to the file-based GEO content audit (Step 5f) instead of crawl-, SERP-, or Search-Console-dependent steps; the file-based audit is fully self-contained.

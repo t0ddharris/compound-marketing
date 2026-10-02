@@ -1,6 +1,6 @@
 ---
 name: competitor-alternatives
-version: 1.0.0
+version: 1.1.0
 description: "When the user wants to create competitor comparison or alternative pages for SEO and sales enablement. Also use when the user mentions 'alternative page,' 'vs page,' 'competitor comparison,' 'comparison page,' '[Product] vs [Product],' '[Product] alternative,' or 'competitive landing pages.' Covers four formats: singular alternative, plural alternatives, you vs competitor, and competitor vs competitor. Emphasizes deep research, modular content architecture, and varied section types beyond feature tables."
 ---
 
@@ -104,6 +104,8 @@ Before creating competitor pages, understand:
 7. CTA
 
 **Important**: Include 4-7 real alternatives. Being genuinely helpful builds trust and ranks better.
+
+**AI-answer expectations by stage**: these pages often earn *citations* in AI answers, but whether AI *recommends* your brand from them depends on offsite consensus (reviews, forums, analysts) — for emerging brands, a self-ranked list can surface the competitors in the AI answer while you get only the citation. Still publish for search intent and category framing, but set expectations accordingly — see seo-geo's citations-vs-recommendations reference for the data.
 
 ---
 
