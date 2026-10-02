@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-Generate a YouTube thumbnail using Gemini 3 Pro Image Preview (Nano Banana Pro).
+Generate a YouTube thumbnail with ChatGPT image generation via the Codex CLI
+(primary, no API key) or Gemini 3 Pro Image / Nano Banana Pro (backup).
 
 Usage:
     python3 generate_thumbnail.py \
@@ -22,17 +23,20 @@ Usage:
         --prompt "detailed prompt text" \
         --output path/to/output.png
 
-Environment:
-    GOOGLE_AI_STUDIO_API_KEY or GEMINI_API_KEY must be set.
+Providers (--provider, default auto):
+    codex   Codex CLI logged in with ChatGPT (`codex login`). No API key.
+    gemini  GOOGLE_AI_STUDIO_API_KEY or GEMINI_API_KEY must be set.
+    auto    Codex if available, falling back to Gemini if Codex is missing or fails.
 """
 
 import argparse
 import os
+import shutil
+import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
-from google import genai
-from google.genai import types
 from PIL import Image
 
 # Enable AVIF support — YouTube thumbnails are often AVIF
@@ -43,7 +47,7 @@ except ImportError:
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="Generate YouTube thumbnail via Gemini")
+    parser = argparse.ArgumentParser(description="Generate YouTube thumbnail via Codex or Gemini")
     parser.add_argument(
         "--headshot", required=True, nargs="+",
         help="Path(s) to headshot reference image(s)"
@@ -63,6 +67,10 @@ def parse_args():
     parser.add_argument(
         "--output", required=True,
         help="Output file path for the generated thumbnail"
+    )
+    parser.add_argument(
+        "--provider", choices=["auto", "codex", "gemini"], default="auto",
+        help="Image provider: codex (ChatGPT via Codex CLI), gemini (Nano Banana Pro), or auto"
     )
     parser.add_argument(
         "--no-style", action="store_true",
@@ -118,17 +126,45 @@ def load_dotenv():
                     os.environ.setdefault(key.strip(), value.strip())
 
 
+def codex_available():
+    if not shutil.which("codex"):
+        return False
+    out = subprocess.run(["codex", "login", "status"], capture_output=True, text=True)
+    return "ChatGPT" in (out.stdout + out.stderr)
+
+
+def generate_codex(prompt, image_paths, output_path):
+    """Generate via Codex's built-in $imagegen. Images are attached in order (Image 1, 2, ...)."""
+    with tempfile.TemporaryDirectory() as tmp:
+        cmd = ["codex", "exec", "--skip-git-repo-check", "--sandbox", "workspace-write", "-C", tmp]
+        for path in image_paths:
+            cmd += ["-i", str(Path(path).resolve())]
+        cmd.append("-")
+        full = (
+            "$imagegen " + prompt + "\n\n"
+            "The attached images are, in order, the images the prompt refers to as Image 1, Image 2, etc. "
+            "Aspect ratio: 16:9 (YouTube thumbnail). Save the final image as ./thumbnail.png in the current "
+            "directory. Do not modify any other files. Reply only with the saved file path."
+        )
+        result = subprocess.run(cmd, input=full, capture_output=True, text=True, timeout=600)
+        produced = Path(tmp) / "thumbnail.png"
+        if not produced.exists():
+            tail = (result.stdout + result.stderr)[-1500:]
+            if "requires a newer version of Codex" in tail:
+                tail += "\nRun `codex update` and try again."
+            print(f"Codex did not produce an image.\n{tail}", file=sys.stderr)
+            return False
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy(produced, output_path)
+    print(f"Thumbnail saved to: {output_path} (via Codex)")
+    return True
+
+
 def main():
     args = parse_args()
 
     load_dotenv()
 
-    api_key = os.environ.get("GOOGLE_AI_STUDIO_API_KEY") or os.environ.get("GEMINI_API_KEY")
-    if not api_key:
-        print("Error: GOOGLE_AI_STUDIO_API_KEY or GEMINI_API_KEY environment variable not set", file=sys.stderr)
-        sys.exit(1)
-
-    client = genai.Client(api_key=api_key)
 
     # Build contents: prompt text + headshot images + reference images + examples
     #
@@ -162,26 +198,48 @@ def main():
             "Do NOT copy these thumbnails. Use them as inspiration for what works."
         )
 
+    image_paths = list(args.headshot) + list(args.reference) + list(args.examples)
+    for path in image_paths:
+        validate_image_file(path)
+    output_path = Path(args.output)
+
+    provider = args.provider
+    if provider == "auto":
+        provider = "codex" if codex_available() else "gemini"
+    if provider == "codex":
+        if generate_codex(prompt, image_paths, output_path):
+            return
+        if args.provider == "codex":
+            sys.exit(1)
+        print("Falling back to Gemini (Nano Banana Pro)...", file=sys.stderr)
+
+    api_key = os.environ.get("GOOGLE_AI_STUDIO_API_KEY") or os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        print("Error: no image provider available. Log in to the Codex CLI (`codex login`) "
+              "or set GOOGLE_AI_STUDIO_API_KEY.", file=sys.stderr)
+        sys.exit(1)
+
+    from google import genai
+    from google.genai import types
+    client = genai.Client(api_key=api_key)
+
     contents = [prompt]
 
     for headshot_path in args.headshot:
-        validate_image_file(headshot_path)
         img = resize_if_needed(Image.open(headshot_path))
         contents.append(img)
 
     for ref_path in args.reference:
-        validate_image_file(ref_path)
         img = resize_if_needed(Image.open(ref_path))
         contents.append(img)
 
     for ex_path in args.examples:
-        validate_image_file(ex_path)
         img = resize_if_needed(Image.open(ex_path))
         contents.append(img)
 
     # Generate
     response = client.models.generate_content(
-        model="gemini-3-pro-image-preview",
+        model="gemini-3-pro-image",
         contents=contents,
         config=types.GenerateContentConfig(
             response_modalities=["TEXT", "IMAGE"],
@@ -192,7 +250,6 @@ def main():
     )
 
     # Process response
-    output_path = Path(args.output)
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     image_saved = False

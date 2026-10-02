@@ -1,6 +1,6 @@
 # Nano Banana Prompting Reference
 
-Curated patterns from [awesome-nanobanana-pro](https://github.com/ZeroLu/awesome-nanobanana-pro) and Google's official prompting guide, filtered for editorial illustration use cases (Substack heroes, social graphics, infographics). Portrait/selfie/anime patterns omitted.
+Curated patterns from [awesome-nanobanana-pro](https://github.com/ZeroLu/awesome-nanobanana-pro) and Google's official prompting guide, filtered for editorial illustration use cases (blog heroes, social graphics, infographics). Portrait/selfie/anime patterns omitted.
 
 ---
 
@@ -148,7 +148,7 @@ Expanding an existing image to a different aspect ratio.
 Zoom out and expand this image to a 16:9 aspect ratio. Seamlessly extend the scenery on both sides. Match the original lighting, weather, and texture perfectly. If there are cut-off objects on the borders, complete them naturally. Do not distort the original center image.
 ```
 
-Takeaway: useful for adapting images between Substack hero (16:9), social (1:1), and other ratios without regenerating from scratch.
+Takeaway: useful for adapting images between a blog hero (16:9), social (1:1), and other ratios without regenerating from scratch.
 
 ---
 
