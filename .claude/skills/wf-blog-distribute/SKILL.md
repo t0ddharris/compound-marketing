@@ -16,7 +16,7 @@ Load and run the `blog` skill for the full drafting workflow (brief intake, outl
 
 ## Stage 2: Quality Pass
 
-Load and run the `tagore` skill on the approved draft. Fix any AI patterns, scoring issues, or voice problems it flags.
+Load and run the `tagore` skill on the approved draft. Fix any AI patterns or voice problems it flags.
 
 **Gate:** Show the user the Tagore score and any remaining items. Get approval before proceeding.
 
