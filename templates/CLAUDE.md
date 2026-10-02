@@ -147,14 +147,14 @@ Do not skip this step. Do not freestyle. Do not generate content without the rel
 | Export HTML pages to print-quality vector PDFs | `html-to-pdf` |
 | Pull meeting notes from Granola | `granola` |
 | Reflect on session, extract skill learnings, self-improving skills | `reflect` |
-| Browse websites, take screenshots, fill forms, scrape data, test web apps | `agent-browser` |
+| Browse websites, take screenshots, fill forms, scrape data, test web apps | `agent-browser` or Claude in Chrome (see Routing Rule 6) |
 | Build HTML email templates for HubSpot | `hubspot-email` |
 | Build HubSpot landing page templates (Design Manager) | `hubspot-landing-page` |
 | CTA buttons, tracking strategy, custom CTA modules | `hubspot-cta` |
 | Build, audit, critique, or polish live web UI | `web-design` |
 | Analyse content patterns, reverse-engineer winning posts | `lookalike-content` |
 | Marketing performance metrics (email, pages, social, video) | `analytics` |
-| Strip AI patterns, score prose quality, enforce human voice | `tagore` |
+| Strip AI patterns, review prose quality, enforce human voice | `tagore` |
 | Build voice and tone profile from writing samples | `tone-mapping` |
 | Extract design system (colors, fonts, spacing) from a website | `design-extract` |
 | Check brain file completeness, see what's missing | `brain-health` |
@@ -178,6 +178,7 @@ Do not skip this step. Do not freestyle. Do not generate content without the rel
 3. **When in doubt, ask.** If the request doesn't clearly map, ask the user which approach they prefer.
 4. **Never skip the skill.** If a matching skill exists, load it. The skills contain frameworks, checklists, and quality standards that must be applied.
 5. **`web-design` beats `frontend-design` (Anthropic plugin) for branded work.** The Anthropic `frontend-design` skill produces generic AI aesthetics. Always prefer the project's `web-design` skill for brand-consistent work.
+6. **Browser automation: pick by session and runtime.** Use Claude in Chrome (`mcp__claude-in-chrome__*` tools, Claude Code only) when the task needs the user's own logged-in browser: HubSpot, LinkedIn, X, or any page behind their login. It's also the right choice when they want to watch or take over. Use `agent-browser` for everything else: public pages, scraping, screenshots, QA passes, and repeatable or headless runs, and always on Codex or when Chrome tools aren't connected. Before your first `agent-browser` command in a session, run `agent-browser skills get core` so you load the instructions that match the installed version. Never submit forms, publish, or send anything from the user's logged-in browser without explicit approval.
 
 ### Proactive Analytics Usage
 

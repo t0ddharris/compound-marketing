@@ -1,6 +1,6 @@
 ---
 name: copywriting
-version: 1.1.0
+version: 1.2.0
 description: "When the user wants to write, rewrite, or improve copy for any page or piece — including landing pages, about pages, or long-form content. Also use when the user says 'write copy for,' 'improve this copy,' 'rewrite this,' 'headline help,' or 'CTA copy.'"
 ---
 
@@ -49,6 +49,8 @@ Gather this context (ask if not provided):
 
 ### Clarity Over Cleverness
 If you have to choose between clear and creative, choose clear.
+
+**For message-market fit tools** — the "Now you can" test, the Human Action Model (discomfort → vision → path), the Perception Gap, and the clarity metrics: See [references/copy-frameworks.md](references/copy-frameworks.md#clarity--message-market-fit)
 
 ### Benefits Over Features
 Features: What it does. Benefits: What that means for the reader.
@@ -117,6 +119,8 @@ Analogies make abstract concepts concrete and memorable.
 - "{Question highlighting main pain point}"
 
 **For comprehensive headline formulas**: See [references/copy-frameworks.md](references/copy-frameworks.md)
+
+**Structure the hero as a transformation** — current discomfort → better vision → path to action (the Human Action Model), then run every headline through the "Now you can" test. See [references/copy-frameworks.md](references/copy-frameworks.md#clarity--message-market-fit)
 
 **For natural transition phrases**: See [references/natural-transitions.md](references/natural-transitions.md)
 
@@ -207,7 +211,7 @@ For headlines and CTAs, provide 2-3 options:
 
 Before presenting the draft to the user, run a copy-editing pass:
 
-1. **Tagore pass**: Run the `tagore` skill on the draft. Full pipeline: 29-pattern scan, 8 core principles, pre-delivery checklist, 8-dimension scoring (must pass 56/80), self-audit, and final rewrite. Review to ensure voice is preserved.
+1. **Tagore pass**: Run the `tagore` skill on the draft. Full pipeline: Orwell's six rules, 34-pattern scan, 8 core principles, pre-delivery checklist, 8-lens read with no unresolved tells, self-audit, and final rewrite. Review to ensure voice is preserved.
 2. **Clarity**: Every sentence immediately understandable. No jargon without context.
 3. **Voice**: Consistent tone throughout. Matches `/brain/voice-and-tone.md` (or the brand voice in positioning-and-messaging.md if no voice profile exists).
 4. **So What**: Every claim answers "why should I care?"

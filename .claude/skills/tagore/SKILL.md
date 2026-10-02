@@ -1,15 +1,16 @@
 ---
 name: tagore
-version: 1.0.0
+version: 2.0.0
 description: |
   Write or rewrite prose so it sounds like a human wrote it — not a frontier
   model. Named in homage to Rabindranath Tagore, whose prose carried what
   frontier models reach for and miss: a point of view, specificity over
   abstraction, and restraint over puffery. Merges two complementary approaches:
-  a 29-pattern catalog of AI tells (from humanizer) plus an 8-rule operating
-  system with an 8-dimension scoring gate (extending stop-slop). Use when
+  a 34-pattern catalog of AI tells (from humanizer) plus an 8-rule operating
+  system with an 8-dimension findings-based read (extending stop-slop). Use when
   drafting, editing, or reviewing any prose: essays, posts, docs, reports,
-  emails. Detects and removes inflated symbolism, promotional language,
+  emails. Enforces Orwell's six rules of writing as a mandatory gate on every
+  draft. Detects and removes inflated symbolism, promotional language,
   superficial -ing analyses, vague attributions, em dash overuse, rule of
   three, AI vocabulary, passive voice, negative parallelisms, filler phrases,
   inanimate-verb constructions, narrator-from-a-distance voice, and metronomic
@@ -25,7 +26,7 @@ allowed-tools:
   - Glob
   - AskUserQuestion
 sources:
-  - humanizer 2.5.1 by blader (https://github.com/blader/humanizer), based on Wikipedia "Signs of AI writing"
+  - humanizer 2.5.1 (patterns 30–34 from 3.1.0) by blader (https://github.com/blader/humanizer), based on Wikipedia "Signs of AI writing"
   - stop-slop by Hardik Pandya (https://github.com/hardikpandya/stop-slop)
 ---
 
@@ -57,10 +58,25 @@ Before any pattern-matching, hold these six properties in mind. Every revision s
 6. **Trust in the reader.** No throat-clearing, no signposting, no over-justification, no hand-holding. State the thing and move on.
 
 Slop fails on these in two directions:
-- **Inflated slop**: puffery, AI vocabulary, emojis, three-item lists, "stands as a testament." Catalog patterns 1–29 below catch these.
-- **Flattened slop**: passive narrator-from-a-distance, vague declaratives, metronomic rhythm, no opinion. The 8 core principles below catch these.
+- **Inflated slop**: puffery, AI vocabulary, emojis, three-item lists, "stands as a testament." Catalog patterns 1–34 below catch these.
+- **Flattened slop**: passive narrator-from-a-distance, vague declaratives, metronomic rhythm, confiding-insight openers, amplifier paragraphs, no opinion. This is the harder direction: every sentence can be mechanically clean and the piece still reads as AI, so a high mechanics score does not clear it. The 8 core principles below, plus the delete-test in Stage 1b, catch these.
 
 A frontier model needs both attacks running simultaneously.
+
+---
+
+## Orwell's Six Rules (mandatory, unskippable)
+
+These override everything below. No draft leaves this skill until all six hold. If a stage of the pipeline produces text that breaks one, the pipeline is wrong and the rule wins.
+
+1. **Never use a metaphor, simile, or figure of speech you are used to seeing in print.** If you have read the phrase before, cut it. Invent the image or drop it.
+2. **Never use a long word where a short one will do.**
+3. **If it is possible to cut a word out, always cut it out.**
+4. **Never use the passive voice where you can use the active.**
+5. **Never use a foreign phrase, a scientific word, or a jargon word if you can think of an everyday English equivalent.**
+6. **Break any of these rules sooner than say anything outright barbarous.** Rule 6 is the only exemption, and it is not a loophole: use it when obeying rules 1 through 5 would produce something clumsy, false, or unclear. Name the rule you broke and why in the change summary.
+
+Rule 3 is the one most often skipped. Test it per sentence: delete each word in turn and check whether the sentence still says the same thing. If it does, the word stays deleted.
 
 ---
 
@@ -70,9 +86,10 @@ Run every job through these stages. Skipping the audit and scoring stages is wha
 
 ```
 0. (Optional) Voice calibration from sample
-1. Draft rewrite — apply the 8 core principles, scrub the 29 patterns
+0b. Orwell's six rules — mandatory, applied at every stage below
+1. Draft rewrite — apply the 8 core principles, scrub the 34 patterns
 2. Pre-delivery checklist — 12 mechanical yes/no checks
-3. Score 1–10 on eight dimensions (5 mechanics + 3 substance, revise if < 56/80)
+3. Read against eight dimensions (5 mechanics + 3 substance) — produce a findings list, not a score
 4. Self-audit — "What makes this still obviously AI generated?"
 5. Final rewrite incorporating the audit
 6. (Optional) Brief change summary
@@ -116,7 +133,7 @@ Apply these as you rewrite. They are the operating system.
 
 5. **Put the reader in the room.** No narrator-from-a-distance voice. "You" beats "People." Specifics beat abstractions.
 
-6. **Vary rhythm.** Mix sentence lengths. Two items beat three. End paragraphs differently. No em dashes.
+6. **Vary rhythm.** Mix sentence lengths. Two items beat three. End paragraphs differently. No em dashes. Run the mic-drop test: read each paragraph's final sentence in sequence; three or more short declarative verdicts in a row is the metronome, so rewrite. Length-variation alone does not fix it — the tell is every sentence landing as a finished verdict.
 
 7. **Trust readers.** State facts directly. Skip softening, justification, hand-holding.
 
@@ -133,6 +150,8 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 - No opinions, just neutral reporting
 - No acknowledgment of uncertainty or mixed feelings
 - No first-person perspective when appropriate
+- **Amplifier paragraphs**: a paragraph that only restates a point already made, dressed in a balanced antithesis, an anaphoric triple, and a tidy landing. It reads as insight and advances nothing. Run the delete-test: cut the paragraph and check whether the argument loses anything. If not, it was filler — a paragraph that shouldn't exist. You cannot cadence-fix filler; polishing it only makes the slop more convincing.
+- **Confiding-insight openers**: "here's the hidden truth" / "what nobody tells you" / "this part never makes it into the job description." This is a *shape*, not a fixed phrase, so it survives rewording off any banned string. If a line promises a secret before delivering it, cut the promise and state the thing.
 - No humor, no edge, no personality
 - Reads like a Wikipedia article or press release
 
@@ -158,9 +177,9 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ---
 
-## Stage 1c — The 29-Pattern Catalog
+## Stage 1c — The 34-Pattern Catalog
 
-Scan the draft for every instance of these patterns and rewrite. The catalog is grouped: Content (1–6), Language and Grammar (7–13), Style (14–19), Communication (20–22), Filler and Hedging (23–29).
+Scan the draft for every instance of these patterns and rewrite. The catalog is grouped: Content (1–6), Language and Grammar (7–13), Style (14–19), Communication (20–22), Filler and Hedging (23–29), Leftovers and Staging (30–34).
 
 ### CONTENT PATTERNS
 
@@ -452,6 +471,70 @@ Scan the draft for every instance of these patterns and rewrite. The catalog is 
 >
 > When users hit a slow page, they leave.
 
+
+---
+
+### LEFTOVERS AND STAGING
+
+#### 30. Sayings That Sound Deep
+
+**Words to watch:** the real question is, at its core, what really matters, fundamentally, the heart of the matter, X is the Y of Z, X becomes a trap, the language of, the currency of
+
+**Problem:** An ordinary point is dressed as a hidden truth or aphorism, and the dressing adds no detail. Replace the saying with the specific claim.
+
+**Before:**
+> Symmetry is the language of trust.
+
+**After:**
+> Symmetric layouts often feel more predictable to users.
+
+#### 31. Arguing With No One
+
+**Words to watch:** I'm not saying, To be clear, Don't get me wrong, This is not to say, A tempting approach would be, You might think... but
+
+**Problem:** The text answers an objection or rejects an option that appears nowhere else, usually a leftover from an earlier draft. Remove the defense; if it holds a real claim, state the claim. Keep objections the text attributes or answers in full.
+
+**Before:**
+> Tokens rotate every 24 hours. A tempting approach would be to restart the auth service on a cron job, but that would drop every session. Rotation happens in place.
+
+**After:**
+> Tokens rotate every 24 hours, in place, and clients refresh transparently.
+
+#### 32. Repeated Sentence Openings
+
+**Problem:** Several sentences in a row start with the same subject because repetition is handled by rule instead of by ear. Merge the sentences, change the subject, or lead with the action. Deliberate repetition for rhythm is fine.
+
+**Before:**
+> She noted the door. She noted the lock on it. She filed both away.
+
+**After:**
+> She noted the door and its lock, then filed both away.
+
+#### 33. Vague Connection or Association
+
+**Words to watch:** associated with, in connection with, linked to, tied to
+
+**Problem:** The text says two things are connected without saying how. Name the relationship the source gives. If the source doesn't say, keep the vague wording rather than inventing one.
+
+**Before:**
+> He is associated with the orchestra.
+
+**After:**
+> He founded and conducts the orchestra.
+
+#### 34. Writing About the Document Instead of Its Subject
+
+**Words to watch:** "was added to replace", "compiled from", "anything unconfirmed is flagged", "the table below compares", "this section is organized by"
+
+**Problem:** The text describes how it was assembled, what it replaced, or a layout the reader can already see. Keep a source credit the reader can follow and any caveat that changes what they should do; cut the account of how you worked.
+
+**Before:**
+> The figures below are drawn from each vendor's published pricing; anything we could not confirm is flagged rather than guessed.
+
+**After:**
+> Prices are each vendor's published rate. Two vendors publish nothing; call them.
+
+**When not to act (applies to the whole catalog):** Leave a watched phrase alone inside a quotation, a title, a proper name, or a passage that discusses the phrase rather than uses it. Several tells together are the signal; one alone rarely is.
 ---
 
 ## Stage 2 — Pre-Delivery Checklist
@@ -470,42 +553,50 @@ Run these as mechanical yes/no checks on the draft. Any "yes" triggers a revisio
 - Vague declarative ("The implications are significant")? Name the specific implication.
 - Narrator-from-a-distance ("Nobody designed this")? Put the reader in the scene.
 - Meta-joiners ("The rest of this essay...")? Delete. Let the essay move.
+- Any figure of speech you have seen in print before? Cut it (Orwell 1).
+- Any long word where a short one works? Swap it (Orwell 2).
+- Any word that can be deleted without loss? Delete it (Orwell 3).
+- Any foreign phrase, scientific word, or jargon with an everyday equivalent? Swap it (Orwell 5).
 
 ---
 
-## Stage 3 — Scoring Rubric
+## Stage 3 — Read Against Eight Dimensions
 
-Rate the rewrite 1–10 on each of the eight dimensions. The first five test prose **mechanics** (how sentences land); the last three test prose **substance** (whether the text actually says something specific, at appropriate size, from a real point of view). A piece can pass mechanics and fail substance — that's the "clean but soulless" failure mode.
+**Do not produce an aggregate score.** No `N/80`, no `Rhythm 8`, no pass-threshold number. A total computed *after* you have already fixed the tells only scores your own cleanup, so it always clears the bar — a gate that can only pass is not a gate. In practice the number also clusters (every draft lands 62–68) and carries no signal. The deliverable of this stage is a **findings list**, not a number.
+
+Use the eight dimensions below as **reading lenses**, not scales. Scan every sentence (body AND any social posts) through each lens and record what you actually find: the specific tells present, where, and how you resolved them. A lens you read and find nothing on is reported as "clean" in one line — not as a digit. Review by reading, never by scoring.
+
+The first five lenses test prose **mechanics** (how sentences land); the last three test **substance** (whether the text says something specific, at appropriate size, from a real point of view). A piece can be mechanically clean and still fail on substance — that's the "clean but soulless" failure mode.
 
 ### Mechanics (carried from stop-slop)
 
-| Dimension | Question |
+| Lens | Read for |
 |-----------|----------|
-| Directness | Statements or announcements? |
-| Rhythm | Varied or metronomic? |
-| Trust | Respects reader intelligence? |
-| Authenticity | Sounds human? |
-| Density | Anything cuttable? |
+| Directness | Announcements/throat-clearing instead of statements |
+| Rhythm | Metronome (mic-drop enders), anaphora, staccato triples, sing-song appositives |
+| Trust | Hand-holding, over-justification, spelling out what the reader already got |
+| Authenticity | Sentences that could appear in any generic post — no person behind them |
+| Density | Anything cuttable; amplifier paragraphs (delete-test) |
 
 ### Substance (extracted from humanizer)
 
-| Dimension | Question | Catches |
+| Lens | Read for | Catches |
 |-----------|----------|---------|
-| Specificity | Names the actual thing, or gestures at categories? | Vague attributions, knowledge-cutoff hedging, generic positive conclusions (patterns 5, 21, 25) |
-| Restraint | States things at their actual size, or puffs them up? | Significance inflation, notability puffery, promotional language (patterns 1, 2, 4) |
-| Voice | Has a point of view, or neutral wire-copy? | Failure of the Personality and Soul section — opinions, stakes, mixed feelings, first-person where appropriate |
+| Specificity | Gestures at categories instead of naming the actual thing | Vague attributions, knowledge-cutoff hedging, generic positive conclusions (patterns 5, 21, 25) |
+| Restraint | Puffs things up past their actual size | Significance inflation, notability puffery, promotional language (patterns 1, 2, 4) |
+| Voice | Neutral wire-copy with no point of view | Failure of the Personality and Soul section — opinions, stakes, mixed feelings, first-person where appropriate |
 
-### Threshold
+### What to report
 
-**Below 56/80 (70%): revise.** Do not advance to Stage 4 until the score clears.
+For each draft, write a short read log: the tells found (quote the offending phrase, name the lens, state the fix) and the lenses that came back clean. If a lens is genuinely weak in what you're about to hand over, **say so in words** — "Voice is thin here; the middle three paragraphs are neutral reporting" — and fix it before advancing. Do not advance to Stage 4 while any lens has an unresolved tell.
 
-**Diagnostic shortcut:** If Mechanics totals high but Substance lags, the text is "clean but soulless" — return to Stage 1b (Personality and Soul) before rescoring. If Substance totals high but Mechanics lags, the text is "interesting but slop-shaped" — return to Stage 1a and the catalog scrub.
+**Diagnostic shortcut:** If the mechanics lenses are clean but substance lenses keep flagging, the text is "clean but soulless" — return to Stage 1b (Personality and Soul). If substance is strong but mechanics keep flagging, it's "interesting but slop-shaped" — return to Stage 1a and the catalog scrub.
 
 ---
 
 ## Stage 4 — Self-Audit
 
-After Stage 3 passes, run this prompt against the current rewrite:
+After the Stage 3 read comes back with no unresolved tells, run this prompt against the current rewrite:
 
 > "What makes the below so obviously AI generated?"
 
@@ -529,7 +620,7 @@ Revise.
 Provide:
 
 1. **Draft rewrite** (post Stage 1)
-2. **Score** (Stage 3) with the five dimensions broken out
+2. **Read log** (Stage 3) — tells found and fixed, plus any lens still weak, in words (no aggregate score)
 3. **Self-audit** (Stage 4) — brief bullets
 4. **Final rewrite** — incorporating the audit
 5. **Brief summary of changes made** (optional, only if helpful)
@@ -542,11 +633,18 @@ If the user provided a writing sample at Stage 0, briefly note in the summary wh
 
 Before delivering, the rewrite must satisfy ALL of these:
 
+**Orwell's six rules (mandatory — a failure here blocks delivery no matter how the rest reads):**
+- [ ] No stock metaphors or figures of speech familiar from print
+- [ ] No long word standing in for a short one
+- [ ] Every remaining word survives the delete test
+- [ ] Active voice throughout, except where active would distort the meaning
+- [ ] No foreign phrase, scientific word, or jargon with an everyday English equivalent
+- [ ] Any rule broken under rule 6 is named, with the reason, in the change summary
+
 **Removed (the "remove the tells" half):**
-- [ ] No items from the 29-pattern catalog survive
+- [ ] No items from the 34-pattern catalog survive
 - [ ] All 12 pre-delivery checks pass
-- [ ] Score is 56/80 or higher (across the 5 mechanics + 3 substance dimensions)
-- [ ] Neither Mechanics subtotal (≥35/50) nor Substance subtotal (≥21/30) is failing on its own
+- [ ] The Stage 3 read across all eight lenses (5 mechanics + 3 substance) left no unresolved tell
 - [ ] Self-audit revealed nothing critical, OR the final revision addressed it
 
 **Present (the "add what's human" half):**
@@ -589,21 +687,21 @@ If any line is unchecked, return to Stage 1.
 >
 > None of this means the tools are useless. It means they are tools. They do not replace judgment, and they do not eliminate the need for tests. If you do not have tests, you cannot tell whether the suggestion is right.
 
-**Score (Stage 3):**
+**Read log (Stage 3):**
 
 *Mechanics:*
-- Directness: 8 (statements, not announcements)
-- Rhythm: 6 (paragraphs are evenly paced — fix)
-- Trust: 8
-- Authenticity: 7 (named sources risk feeling fabricated)
-- Density: 8
+- Directness — clean; statements, not announcements.
+- Rhythm — **flag:** paragraphs are evenly paced, every one lands on a tidy verdict. Needs a fragment and a long wandering sentence to break the pace.
+- Trust — clean.
+- Authenticity — **watch:** the named sources risk reading as plausible-but-fabricated unless they're real; verify or cut.
+- Density — clean; nothing cuttable.
 
 *Substance:*
-- Specificity: 9 (named studies, named tools, named percentages — strong)
-- Restraint: 9 (no puffery, no significance inflation)
-- Voice: 6 (some "I" statements, but the closer leans declarative — fix)
+- Specificity — strong; named studies, named tools, named percentages.
+- Restraint — clean; no puffery or significance inflation.
+- Voice — **flag:** a few "I" statements but the narrator is barely present and the closer leans declarative. Add a reaction, not just a report.
 
-**Total: 61/80** — passes (above 56), but Rhythm and Voice are the weakest. The substance dimensions caught what mechanics missed: the piece is specific and restrained but the narrator is barely present. Worth a Stage 4 pass focused on rhythm and voice.
+**Read verdict:** two unresolved flags (Rhythm, Voice) — the piece is specific and restrained but the person behind it is faint. Do not advance until both are fixed; no number needed to see it.
 
 **Self-audit (Stage 4) — what makes this still obviously AI generated?**
 - The rhythm is still a bit too tidy (clean contrasts, evenly paced paragraphs).

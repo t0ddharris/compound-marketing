@@ -6,7 +6,7 @@ Use this template when the customer has approved use of their company name and d
 
 ## [HEADLINE: Outcome-Focused Statement]
 
-*Example: "How Acme Corp Stopped 95% of AI Agent Attacks with AI-Native Threat Detection"*
+*Example: "How Acme Corp Cut Onboarding Time 40% with [Company]"*
 
 ---
 
@@ -50,7 +50,7 @@ Use this template when the customer has approved use of their company name and d
 
 ### Sign Up for a Demo
 
-[Company] achieved [key result] with the company. See how AI-native threat detection can work for your team.
+[Company] achieved [key result] with the company. See how [core capability] can work for your team.
 
 **[Sign Up for a Demo →](https://[your-site])**
 

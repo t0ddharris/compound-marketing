@@ -10,7 +10,7 @@
 .obsidian/
 
 # Session briefs (local only)
-brief/
+/brief/
 
 # Local working docs and notes (not part of the distributable baseline)
 docs/

@@ -1,32 +1,47 @@
 ---
 name: image-gen
-version: 1.0.0
-description: "Generate editorial illustrations and graphics using Google AI Studio (Gemini Flash Image). Trigger with /image-gen or when the user mentions 'generate an image,' 'create an illustration,' 'make a graphic,' 'image for,' or 'generate a visual.' Works for any project — blog heroes, social graphics, slide illustrations, banners."
+version: 1.2.0
+description: "Generate editorial illustrations and graphics using OpenAI GPT Image (via API key or a logged-in Codex CLI with no key) or Google Gemini (Nano Banana). Trigger with /image-gen or when the user mentions 'generate an image,' 'create an illustration,' 'make a graphic,' 'image for,' or 'generate a visual.' Works for any project — blog heroes, social graphics, slide illustrations, banners."
 ---
 
 # Image Generation
 
-You are an image generation specialist. You use Google AI Studio's Gemini image models to create editorial illustrations and graphics.
+You are an image generation specialist. You use OpenAI's GPT Image models or Google's Gemini image models to create editorial illustrations and graphics.
 
-**You are not a design skill.** This skill generates standalone illustrations and graphics via the Gemini image API.
+**You are not a design skill.** This skill generates standalone illustrations and graphics via the OpenAI or Gemini image APIs.
 
 ---
 
 ## Prerequisites
 
-This skill requires a `GOOGLE_AI_STUDIO_API_KEY` in the project's `.env` file. Get a key at: https://aistudio.google.com/apikey
+This skill needs at least one image provider:
+
+- **OpenAI API:** `OPENAI_API_KEY` in `.env`. Get a key at: https://platform.openai.com/api-keys
+- **Codex (no API key):** the `codex` CLI installed and logged in with a ChatGPT account (`codex login status`). Uses Codex's built-in `$imagegen` (GPT Image) and counts against the ChatGPT plan's Codex usage limits, which image turns consume 3–5x faster than normal turns.
+- **Gemini API:** `GOOGLE_AI_STUDIO_API_KEY` in `.env`. Get a key at: https://aistudio.google.com/apikey
+
+If more than one provider is available, ask the user which to use (see Step 4). If only one is available, use it.
 
 ---
 
 ## Available Models
 
-Select the model based on the user's request or the task requirements. Default to **Nano Banana 2** for most tasks.
+Select the model based on the user's request or the task requirements. Default to **Codex** (ChatGPT's image model, no API key) when the Codex CLI is logged in. Otherwise use **GPT Image 2.5 Flare** if `OPENAI_API_KEY` is set, then **Nano Banana 2** as the backup.
+
+**OpenAI** (Image API, `POST https://api.openai.com/v1/images/generations`):
+
+| Name | API Model ID | Best For |
+|------|-------------|----------|
+| **GPT Image 2.5 Flare** | `gpt-image-2.5-flare` | Default when using the API. Fast, high-quality everyday generation. |
+| **GPT Image 2.5 Sunburst** | `gpt-image-2.5-sunburst` | Workflows where editing precision matters most. |
+
+**Google Gemini** (fallback):
 
 | Name | Codename | API Model ID | Best For |
 |------|----------|-------------|----------|
-| **Nano Banana** | Gemini 2.5 Flash Image | `gemini-2.5-flash-image` | Legacy. Fast but lower quality. Use only as fallback. |
-| **Nano Banana 2** | Gemini 3.1 Flash Image Preview | `gemini-3.1-flash-image-preview` | **Default.** Better quality, text rendering, and instruction following than NB1. |
-| **Nano Banana Pro** | Gemini 3 Pro Image Preview | `gemini-3.0-pro-image-preview` | Highest quality. Complex scenes, photorealistic styles, detailed compositions. Slower. |
+| **Nano Banana 2 Lite** | Gemini 3.1 Flash Lite Image | `gemini-3.1-flash-lite-image` | Fast and cheap. Use for drafts or as a fallback. |
+| **Nano Banana 2** | Gemini 3.1 Flash Image | `gemini-3.1-flash-image` | **Default.** Better quality, text rendering, and instruction following than Lite. |
+| **Nano Banana Pro** | Gemini 3 Pro Image | `gemini-3-pro-image` | Highest quality. Complex scenes, photorealistic styles, detailed compositions. Slower. |
 
 ---
 
@@ -43,7 +58,7 @@ Gather the following from the user. If any are missing, ask before proceeding.
 | **What** | What image(s) they need (hero image, social graphic, slide illustration, etc.) | Yes |
 | **Where** | Where it'll be used (blog, LinkedIn, presentation, website, ad) | Yes |
 | **Concept** | The idea, metaphor, or subject matter to visualize | Yes |
-| **Model** | Which model to use (see Available Models table above) | No (default: Nano Banana 2) |
+| **Model** | Which model to use (see Available Models above) | No (default: Codex; then GPT Image 2.5 Flare via API; then Nano Banana 2) |
 | **Mood/tone** | Feeling it should convey (technical, warm, urgent, calm, playful, etc.) | No (default: professional, analytical) |
 | **Style** | Style preset (see table below) or custom description | No (default: editorial) |
 | **Quantity** | How many images (default: 1) | No |
@@ -64,7 +79,21 @@ Gather the following from the user. If any are missing, ask before proceeding.
 | Vertical story/reel | `9:16` |
 | Ultra-wide banner | `21:9` |
 
-**Supported aspect ratios:** `1:1`, `2:3`, `3:2`, `3:4`, `4:3`, `4:5`, `5:4`, `9:16`, `16:9`, `21:9`
+**Gemini supported aspect ratios:** `1:1`, `2:3`, `3:2`, `3:4`, `4:3`, `4:5`, `5:4`, `9:16`, `16:9`, `21:9`
+
+**OpenAI sizes:** GPT Image takes a `WIDTHxHEIGHT` size, not a ratio. Both edges must be multiples of 16, the ratio between 1:3 and 3:1, no edge over 3840px, and total pixels between 655,360 and 8,294,400. Map ratios like this:
+
+| Ratio | OpenAI `size` |
+|-------|---------------|
+| `1:1` | `1024x1024` |
+| `3:2` / `2:3` | `1536x1024` / `1024x1536` |
+| `4:3` / `3:4` | `1536x1152` / `1152x1536` |
+| `5:4` / `4:5` | `1280x1024` / `1024x1280` |
+| `16:9` / `9:16` | `1536x864` / `864x1536` |
+| `21:9` | `2016x864` |
+| `3:1` | `2304x768` |
+
+Sizes above `2560x1440` are experimental. For ratios wider than 3:1, generate at `3:1` with generous top and bottom padding and crop.
 
 ---
 
@@ -197,24 +226,87 @@ Ask: "Here's the prompt I'll send. Want me to generate, or would you like to adj
 
 ### Step 4: Generate
 
-#### Check for the API Key
+#### Check for the API Keys
+
+#### Choose the Provider
 
 ```bash
 source .env 2>/dev/null || true
-if [ -z "$GOOGLE_AI_STUDIO_API_KEY" ]; then
-  echo "MISSING_KEY"
-else
-  echo "KEY_FOUND"
-fi
+[ -n "$OPENAI_API_KEY" ] && echo "OPENAI_API_AVAILABLE"
+command -v codex >/dev/null && codex login status 2>&1 | grep -q "ChatGPT" && echo "CODEX_AVAILABLE"
+[ -n "$GOOGLE_AI_STUDIO_API_KEY" ] && echo "GEMINI_API_AVAILABLE"
 ```
 
-If `MISSING_KEY`: inform the user and stop.
+- **None available:** tell the user the three options from Prerequisites and stop.
+- **One available:** use it, and say which one in a line.
+- **More than one:** ask the user to choose before generating, recommending Codex first. Suggest the OpenAI API for large batches (API pricing, no plan limits) and Gemini when they ask for Nano Banana or Codex fails. Remember the choice for the rest of the session.
 
-If `KEY_FOUND`: continue.
+If the user picked a specific model in Step 1, that settles the provider.
 
-#### Make the API Call
+#### Make the API Call (OpenAI)
 
-Use Python for reliable JSON handling:
+```python
+python3 << 'PYEOF'
+import os, json, base64, urllib.request
+
+# --- Configuration (fill in per generation) ---
+API_KEY = os.environ.get("OPENAI_API_KEY") or open(".env").read().split("OPENAI_API_KEY=")[1].split("\n")[0]
+MODEL_ID = "[MODEL_ID]"          # gpt-image-2.5-flare or gpt-image-2.5-sunburst
+OUTPUT_DIR = "[output-directory]"
+FILENAME = "[filename]"
+SIZE = "[WIDTHxHEIGHT]"          # from the OpenAI sizes table
+QUALITY = "high"                 # low for drafts; high, xhigh, or max for finals
+PROMPT = "[approved prompt]"
+# -----------------------------------------------
+
+os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+payload = {"model": MODEL_ID, "prompt": PROMPT, "size": SIZE, "quality": QUALITY, "output_format": "png"}
+req = urllib.request.Request(
+    "https://api.openai.com/v1/images/generations",
+    data=json.dumps(payload).encode(),
+    headers={"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
+)
+
+try:
+    with urllib.request.urlopen(req, timeout=180) as resp:
+        data = json.loads(resp.read())
+except urllib.error.HTTPError as e:
+    print(f"HTTP {e.code}: {e.read().decode()[:500]}")
+    raise
+
+if data.get("data") and data["data"][0].get("b64_json"):
+    path = f"{OUTPUT_DIR}/{FILENAME}.png"
+    with open(path, "wb") as f:
+        f.write(base64.b64decode(data["data"][0]["b64_json"]))
+    print(f"IMAGE_SAVED: {path}")
+else:
+    print("IMAGE_FAILED")
+    print(json.dumps(data, indent=2)[:1000])
+PYEOF
+```
+
+Complex prompts can take up to 2 minutes. Use `quality: "low"` for quick drafts, then regenerate the chosen concept at a higher setting. For a transparent background, add `"background": "transparent"` (PNG or WebP only).
+
+#### Generate via Codex (no API key)
+
+Codex picks its own pixel size, so put the aspect ratio in the prompt. Pass the prompt on stdin so quotes in it can't break the command:
+
+```bash
+OUTPUT_DIR="[output-directory]"
+FILENAME="[filename]"
+mkdir -p "$OUTPUT_DIR"
+cat <<'PROMPT_EOF' | codex exec --skip-git-repo-check --sandbox workspace-write -C "$OUTPUT_DIR" -
+$imagegen [approved prompt]
+
+Aspect ratio: [RATIO]. Save the final image as ./[filename].png in the current directory. Do not modify any other files. Reply only with the saved file path.
+PROMPT_EOF
+file "$OUTPUT_DIR/$FILENAME.png"
+```
+
+If `file` doesn't report a PNG, the generation failed: show the user the Codex output and offer another provider. If Codex errors that the model "requires a newer version of Codex", the user needs to run `codex update`. Generation typically takes 1–3 minutes.
+
+#### Make the API Call (Gemini)
 
 ```python
 python3 << 'PYEOF'
@@ -296,14 +388,15 @@ After watermarking:
 |------|-------|
 | Full essay/post production workflow | `blog` |
 
+## Field-Tested Rules
+
+- (Gemini) Gemini supports only these aspect ratios: `1:1, 2:3, 3:2, 3:4, 4:3, 4:5, 5:4, 9:16, 16:9, 21:9`. For other targets (e.g., a 3:1 profile cover or a 5:1 email header), generate at `21:9` with explicit instructions to leave generous top and bottom padding, then crop vertically with PIL (`img.crop(...)`).
+- Never regenerate images the user already approved to propagate a style change without asking. Style changes apply to future images by default.
+- For surfaces where pixel precision matters (small text, even grids, exact centering, mastheads), build directly in PIL instead of generating. Gemini defaults to headline-scale text, sometimes duplicates lines, and renders uneven grids; after 3 failed attempts, switch to PIL.
+- For profile cover images, leave out the person's or company's name when the platform already displays it next to the cover. Let the banner carry only the tagline or positioning line.
+- Prefer free-text prompts over JSON-structured prompts. JSON prompts tend to time out on the Gemini API where a condensed free-text version succeeds. Use JSON only if free text can't produce a coherent result for a genuinely complex scene.
+- Don't replace labeled diagrams with abstract visual metaphors. If a diagram communicates through text labels (e.g., "Input → Process → Output"), keep the labels and add visual polish; swapping them for symbolic objects strips out the meaning.
+
 ## Learnings
 
 <!-- Updated by /reflect. Promote stable patterns to the main skill body. -->
-
-- **[HIGH]** `gemini-3.0-pro-image-preview` (Nano Banana Pro) is not callable on current API keys — returns HTTP 404. Default to `gemini-3.1-flash-image-preview` (Nano Banana 2) for all tasks, including text-heavy technical diagrams where NB2 actually outperforms the listed Pro model (3.1 is newer than 3.0).
-- **[HIGH]** Gemini supports only these aspect ratios: `1:1, 2:3, 3:2, 3:4, 4:3, 4:5, 5:4, 9:16, 16:9, 21:9`. For non-supported target ratios (3:1 Substack profile cover, 5:1 Substack email header), generate at `21:9` with explicit prompt instructions to leave generous top and bottom padding, then crop vertically in Python PIL (`img.crop(...)`) to the target ratio.
-- **[HIGH]** Never regenerate existing user-approved images to propagate a style-spec update without explicit approval. Style changes apply to future images by default; asking first respects the user's prior approval and avoids silently overwriting a decision they already made.
-- **[HIGH]** For brand mastheads and text-on-grid surfaces where pixel precision matters (code-scale text, even grids, exact centering), build directly in PIL instead of rolling Gemini. Gemini defaults to headline scale, occasionally duplicates single lines of text, and renders uneven dotted grids; after 3+ failed rolls it's faster to abandon and build in PIL.
-- **[HIGH]** When designing profile cover images, do NOT include the user's name if the platform's UI renders the name natively below the cover (Substack, LinkedIn, etc.). Duplicating it creates "business card" composition. Let the banner carry only the tagline or positioning line.
-- **[HIGH]** Prefer free-text prompts over JSON-structured prompts for NB2. JSON prompts consistently time out on the Gemini API (two failures at 120s and 300s timeouts), while a condensed free-text version of the same concept succeeds on the first try. Reserve JSON only if free text fails to produce coherent results for a genuinely complex scene.
-- **[HIGH]** Don't replace labeled architecture diagrams with abstract visual metaphors. When an existing diagram communicates with text labels (e.g., "Positioning → Brain → Blog Drafts"), replacing labels with symbolic objects (filing cabinet, tuning fork, chess piece) strips the meaning out. If the original diagram's strength is clarity through labels, preserve the labels and add visual polish, don't abstract them away.

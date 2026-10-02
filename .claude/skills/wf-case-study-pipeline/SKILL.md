@@ -31,7 +31,7 @@ Load and run the `case-studies` skill for the full drafting workflow:
 
 ## Stage 3: Quality Pass
 
-Load and run the `tagore` skill on the approved draft. Fix AI patterns, voice issues, and scoring problems.
+Load and run the `tagore` skill on the approved draft. Fix the AI patterns and voice issues it flags.
 
 **Gate:** Show the Tagore score. Get approval before distributing.
 

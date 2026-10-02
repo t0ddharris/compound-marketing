@@ -5,13 +5,13 @@ Use these questions when interviewing customers or reviewing call recordings. No
 ## Opening / Background
 
 - Can you briefly describe your role and what your team is responsible for?
-- What does your tech stack look like? (Kubernetes, cloud provider, key services)
+- What does your tech stack look like? (key tools, platforms, and services)
 - How many services/microservices are you running?
 
 ## Before [Company]
 
-- What was your environment and approach to security before [Company]?
-- How were you handling threat detection? What tools were you using?
+- What was your environment and approach to [problem area] before [Company]?
+- How were you handling [problem area]? What tools were you using?
 - What gaps or challenges existed with that approach?
 - What was the biggest pain point for your team?
 - How long did it typically take to debug a production issue?

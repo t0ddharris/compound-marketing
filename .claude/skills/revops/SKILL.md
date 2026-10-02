@@ -2,7 +2,7 @@
 name: revops
 description: "When the user wants help with revenue operations, lead lifecycle management, or marketing-to-sales handoff processes. Also use when the user mentions 'RevOps,' 'revenue operations,' 'lead scoring,' 'lead routing,' 'MQL,' 'SQL,' 'pipeline stages,' 'deal desk,' 'CRM automation,' 'marketing-to-sales handoff,' 'data hygiene,' 'leads aren't getting to sales,' 'pipeline management,' 'lead qualification,' or 'when should marketing hand off to sales.' Use this for anything involving the systems and processes that connect marketing to revenue. For email drip campaigns, see email-sequence."
 metadata:
-  version: 1.1.0
+  version: 1.2.0
 ---
 
 # RevOps
@@ -45,13 +45,9 @@ Marketing, sales, and customer success must agree on definitions. If marketing c
 
 ## Lead Lifecycle Framework
 
-### Current State (as of 2026-03)
+### Current State
 
-The lifecycle stages exist conceptually but are **not yet built or trackable in HubSpot**. No lead scoring, no engagement scoring, no automated stage progression. The stages below are the target architecture. Building this out is an active priority.
-
-**What works today:** Lead → MQL → SQL → Opportunity as a rough mental model, but nothing enforces it in the system.
-
-**What needs to be built:** Scoring, stage automation, and tracking in HubSpot so that every MQL means something and reps trust the handoff.
+Before recommending anything, establish what exists today: which lifecycle stages are actually enforced in the CRM, whether lead scoring exists, and whether reps trust the MQL handoff. Treat the stages below as the target architecture and note the gap between it and what's built.
 
 ### Stage Definitions (Target Architecture)
 
@@ -61,7 +57,7 @@ The lifecycle stages exist conceptually but are **not yet built or trackable in 
 | **Lead** | Identified contact with basic info | Meets minimum fit criteria | Marketing |
 | **MQL** | Passes fit + engagement threshold (see below) | Sales accepts and contacts | Marketing |
 | **SQL** | Sales contacts and qualifies via demo | Demo booked → enters pipeline as "Identified" | Sales (SDR/AE) |
-| **Opportunity** | Committed to evaluation ($85K ASP assigned) | POV deployed, then closed or lost | Sales (AE) |
+| **Opportunity** | Committed to evaluation (deal value assigned) | Closed won or lost | Sales (AE) |
 | **Customer** | Closed-won deal | Expands, renews, or churns | CS / Account Mgmt |
 | **Evangelist** | High NPS, referral activity, case study | Ongoing program participation | CS / Marketing |
 
@@ -76,8 +72,8 @@ An MQL requires both **fit** and **engagement**:
 
 Neither alone is sufficient. A perfect-fit company that never engages isn't an MQL. A student downloading every ebook isn't an MQL.
 
-**For [Company] specifically**, given the $85K ASP and sales-led motion, the MQL bar should be high:
-- Fit must match ICP tightly (enterprise, AI agent deployments, security pain)
+**Calibrate the bar to the motion.** A high-ACV, sales-led motion needs a high MQL bar; a low-ACV or product-led motion can pass more leads through. For a sales-led motion:
+- Fit must match the ICP in `/brain/personas.md` tightly
 - Engagement signals that matter most: demo request, pricing page visit, case study views, return visits
 - Engagement signals that matter least: single blog visit, newsletter open, social follow
 
@@ -178,37 +174,23 @@ Build routing rules that prioritize speed. Alert reps immediately. Escalate if S
 
 ## Pipeline Stage Management
 
-### [Company] Pipeline Stages
+### Pipeline Stages
 
-the brand uses a seven-stage sales pipeline in Salesforce. Standard ASP is **$85K** (out-of-box pricing).
+Document the company's actual pipeline stages, ACV, and deal structure before analyzing pipeline. If they aren't in `/brain/`, ask. An example B2B structure:
 
 | Stage | What It Means | Forecast Weight | Key Data |
 |-------|--------------|-----------------|----------|
-| **Identified** | Demo booked, contact mapped in Salesforce | 0% | Contact info, company, source, ICP fit |
-| **Interested** | Demo complete, prospect engaged but not yet committed to evaluation | 10% | Pain points, current stack, decision makers |
-| **Pipeline** | Committed to evaluation; $85K ASP assigned | 25% | Technical requirements, timeline, success criteria |
-| **Upside** | POV deployed; 50% close rate | 50% (forecasted at $42.5K) | POV environment details, usage metrics, champion identified |
-| **Strong Upside** | Technical win achieved, working on budget/procurement | 75% | Budget owner, procurement contact, approval chain |
-| **Commit** | Verbal commitment received, waiting for PO | 90% | Expected PO date, contract terms, legal status |
-| **Closed Won** | PO received | 100% | Signed PO, payment terms, CS handoff |
+| **Identified** | Demo booked, contact mapped in CRM | 0% | Contact info, company, source, ICP fit |
+| **Interested** | Demo complete, engaged but not committed to evaluation | 10% | Pain points, current stack, decision makers |
+| **Evaluation** | Committed to evaluation; deal value assigned | 25% | Technical requirements, timeline, success criteria |
+| **Trial / Pilot** | Trial, pilot, or proof of value underway | 50% | Usage metrics, champion identified |
+| **Technical Win** | Technical win achieved, working budget/procurement | 75% | Budget owner, procurement contact, approval chain |
+| **Commit** | Verbal commitment, waiting for PO or signature | 90% | Expected close date, contract terms, legal status |
+| **Closed Won** | Contract signed | 100% | Signed contract, payment terms, CS handoff |
 
 **Also track:** `Closed Lost` with required loss reason and competitor (if any).
 
-### The POV Model (Two-Deal Structure)
-
-the brand uses a **Proof of Value (POV)**, not a Proof of Concept. The POV is a paid deployment, not a free trial.
-
-**Deal 1: POV**
-- Triggered when a deal moves from Pipeline → Upside (POV deployed)
-- Closes at **$85K** (paid POV)
-- 50% close rate from this stage
-
-**Deal 2: Expansion**
-- A **new opportunity** opens after the POV closes
-- Target: **3-year contract at $300K-$500K**
-- This is where the real land-and-expand motion happens
-
-When analyzing pipeline, always account for this two-deal structure. A single qualified prospect represents up to $585K in total contract value ($85K POV + $500K expansion), not just the initial $85K.
+**Land-and-expand deals:** If the company sells a paid pilot or initial deployment followed by a larger expansion contract, track them as two opportunities and value a qualified prospect at the combined contract value, not just the first deal.
 
 ### Stage Hygiene
 
@@ -216,19 +198,18 @@ When analyzing pipeline, always account for this two-deal structure. A single qu
 - **Stale deal alerts** — Flag deals that sit in a stage beyond the average time (e.g., 2x average days)
 - **Stage skip detection** — Alert when deals jump stages (Identified → Pipeline skipping Interested/demo)
 - **Close date discipline** — Push dates must include a reason; no silent pushes
-- **POV tracking** — Every deal in Upside or beyond must have POV deployment date and success criteria documented
+- **Pilot tracking** — Every deal in a trial or pilot stage must have a start date and success criteria documented
 
 ### Pipeline Metrics
 
-| Metric | What It Tells You | [Company] Context |
-|--------|-------------------|----------------|
-| Stage conversion rates | Where deals die | Watch Interested→Pipeline (commitment gap) and Upside→Strong Upside (technical win rate) |
-| Average time in stage | Where deals stall | POV stage (Upside) often longest; set expectations accordingly |
-| Pipeline velocity | Revenue per day through the funnel | Calculate separately for POV deals and expansion deals |
-| Coverage ratio | Pipeline value vs. quota (target 3-4x) | Use weighted pipeline ($42.5K per Upside deal, not $85K) |
-| Win rate by source | Which channels produce real revenue | Track through to expansion close, not just POV close |
-| POV-to-expansion rate | How many POVs convert to multi-year contracts | Core health metric for the land-and-expand motion |
-
+| Metric | What It Tells You | What to Watch |
+|--------|-------------------|---------------|
+| Stage conversion rates | Where deals die | The commitment gap (demo → evaluation) and the technical win rate |
+| Average time in stage | Where deals stall | Trial/pilot stages usually run longest; set expectations accordingly |
+| Pipeline velocity | Revenue per day through the funnel | Calculate separately for initial and expansion deals |
+| Coverage ratio | Pipeline value vs. quota (target 3-4x) | Use weighted pipeline, not raw deal value |
+| Win rate by source | Which channels produce real revenue | Track through to expansion close where applicable |
+| Expansion rate | How many initial deals convert to larger contracts | Core health metric for land-and-expand motions |
 ---
 
 ## CRM Automation Workflows
@@ -262,9 +243,9 @@ When analyzing pipeline, always account for this two-deal structure. A single qu
 
 ### When You Need a Deal Desk
 
-- Discounts below the **$85K** standard ASP
+- Discounts below standard pricing
 - Non-standard payment terms (net-90, quarterly billing)
-- Multi-year contracts with custom pricing (expansion deals at $300K-$500K have more variability)
+- Multi-year contracts with custom pricing
 - Volume discounts beyond published tiers
 - Custom legal terms or SLAs
 
@@ -325,7 +306,7 @@ Document every exception. Track which non-standard terms get requested most — 
 | Lead-to-MQL rate | MQLs / Total leads | 5-15% |
 | MQL-to-SQL rate | SQLs / MQLs | 30-50% |
 | SQL-to-Opportunity | Opportunities / SQLs | 50-70% |
-| Pipeline velocity | (# deals x avg deal size x win rate) / avg sales cycle | $85K ASP; weight by stage |
+| Pipeline velocity | (# deals x avg deal size x win rate) / avg sales cycle | Weight by stage |
 | CAC | Total sales + marketing spend / new customers | LTV:CAC > 3:1 |
 | LTV:CAC ratio | Customer lifetime value / CAC | 3:1 to 5:1 healthy |
 | Speed-to-lead | Time from form fill to first rep contact | < 5 minutes ideal |
@@ -368,18 +349,18 @@ Format each as a standalone document the user can implement directly. Include pl
 
 ## Tool Integrations
 
-For implementation, see the [tools registry](../../tools/REGISTRY.md). Key RevOps tools:
+Key RevOps tools:
 
-| Tool | What It Does | Guide |
-|------|-------------|-------|
-| **HubSpot** | CRM, marketing automation, lead scoring, workflows | [hubspot.md](../../tools/integrations/hubspot.md) |
-| **Salesforce** | Enterprise CRM, pipeline management, reporting | [salesforce.md](../../tools/integrations/salesforce.md) |
-| **Calendly** | Meeting scheduling, round-robin routing | [calendly.md](../../tools/integrations/calendly.md) |
-| **SavvyCal** | Scheduling with priority-based availability | [savvycal.md](../../tools/integrations/savvycal.md) |
-| **Clearbit** | Real-time lead enrichment and scoring | [clearbit.md](../../tools/integrations/clearbit.md) |
-| **Apollo** | Contact data, enrichment, and outbound sequences | [apollo.md](../../tools/integrations/apollo.md) |
-| **ActiveCampaign** | Marketing automation for SMBs, lead scoring | [activecampaign.md](../../tools/integrations/activecampaign.md) |
-| **Zapier** | Cross-tool automation and workflow glue | [zapier.md](../../tools/integrations/zapier.md) |
+| Tool | What It Does |
+|------|-------------|
+| **HubSpot** | CRM, marketing automation, lead scoring, workflows |
+| **Salesforce** | Enterprise CRM, pipeline management, reporting |
+| **Calendly** | Meeting scheduling, round-robin routing |
+| **SavvyCal** | Scheduling with priority-based availability |
+| **Clearbit** | Real-time lead enrichment and scoring |
+| **Apollo** | Contact data, enrichment, and outbound sequences |
+| **ActiveCampaign** | Marketing automation for SMBs, lead scoring |
+| **Zapier** | Cross-tool automation and workflow glue |
 
 ---
 
@@ -394,8 +375,10 @@ For implementation, see the [tools registry](../../tools/REGISTRY.md). Key RevOp
 
 ---
 
+## Field-Tested Rules
+
+- Email verification tools (e.g., ZeroBounce) can false-positive on enterprise domains with strict MX configs or greylisting. Spot-check flagged high-value contacts (named accounts, active deals) against LinkedIn or the company directory before hard-suppressing them. Some flags are real CRM typos worth fixing; others are valid addresses behind strict mail servers.
+
 ## Learnings
 
 <!-- Updated by /reflect. Promote stable patterns to the main skill body. -->
-
-- **[MEDIUM]** ZeroBounce can false-positive on enterprise domains with strict MX configs or greylisting. Always spot-check flagged high-value contacts (F500, named targets, active deal contacts) against LinkedIn or the company directory before hard-suppressing — some "invalid" results are real CRM typos (catch those), but some are real addresses behind strict mail servers.

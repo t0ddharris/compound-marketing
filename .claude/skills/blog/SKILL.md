@@ -235,26 +235,23 @@ Ask: "Here's the final draft with the quality report. Ready to save, or would yo
 
 After the user approves the final draft, ask one question before proceeding:
 
-> "Would you like me to generate images for this post? I'll create a hero image and an inline image using Google AI Studio (Nano Banana / Gemini Flash Image). This requires a `GOOGLE_AI_STUDIO_API_KEY` in your `.env` file."
+> "Would you like me to generate images for this post? I'll create a hero image and an inline image with ChatGPT's image model through Codex, or Nano Banana (Gemini) as a backup."
 
 **If the user says no:** Skip to Step 6. Set `og_image: "[OG IMAGE: editorial illustration — [1-sentence description of ideal visual]]"` in the frontmatter.
 
 **If the user says yes:**
 
-#### Check for the API key
+#### Check the Image Providers
 
 ```bash
 source .env 2>/dev/null || true
-if [ -z "$GOOGLE_AI_STUDIO_API_KEY" ]; then
-  echo "MISSING_KEY"
-else
-  echo "KEY_FOUND"
-fi
+command -v codex >/dev/null && codex login status 2>&1 | grep -q "ChatGPT" && echo "CODEX_AVAILABLE"
+[ -n "$GOOGLE_AI_STUDIO_API_KEY" ] && echo "GEMINI_AVAILABLE"
 ```
 
-If `MISSING_KEY`: inform the user — "No `GOOGLE_AI_STUDIO_API_KEY` found in `.env`. Skipping image generation. Add the key and re-run this step to generate images." Set placeholders and proceed to Step 6.
-
-If `KEY_FOUND`: continue with image generation.
+- **Codex available:** use it (primary). It runs on the user's ChatGPT plan with no API key; image turns use Codex limits 3–5x faster than normal turns.
+- **Only Gemini available:** use Nano Banana and mention that installing and logging in to the Codex CLI (`codex login`) gives better results.
+- **Neither:** tell the user — "No image provider found. Log in to the Codex CLI (`codex login`) or add `GOOGLE_AI_STUDIO_API_KEY` to `.env`, then re-run this step." Set placeholders and proceed to Step 6.
 
 #### Construct Two Prompts from the Blog Content
 
@@ -285,96 +282,35 @@ Dark background. [Color direction: pick colors that contrast nicely for this spe
 **Prompt rules (see `image-gen` skill for full details):**
 - Derive the visual metaphor from the post's actual arguments and language, not generic topic imagery
 - **Prefer concrete, recognizable metaphors over abstract geometric art.** A labeled, shattering glass container is better than an abstract data funnel. The viewer should understand the concept without reading the post.
-- **Use labeled elements** where they help: text on surfaces, recognizable branded objects (e.g., LLM names on a cube). NB2 handles text rendering.
+- **Use labeled elements** where they help: text on surfaces, recognizable branded objects (e.g., LLM names on a cube). Both GPT Image and Nano Banana 2 handle text rendering.
 - Think about what a Wired or MIT Tech Review cover designer would reach for
 - Keep each prompt under 400 characters (shorter prompts perform better)
 
-#### Make the API Calls
+#### Generate the Images
 
-Run two separate API calls — one for each image. Execute as a single Bash block.
+**Hero aspect ratio and safe band (CRITICAL):** Check how the company's blog template renders the hero (dimensions and `object-fit`; record them in `brain/brand-guide/`). Many blog templates crop heroes into a wide banner. If yours does:
 
-**Model:** `gemini-3.1-flash-image-preview` (Nano Banana 2 — better quality than 2.5, supports 3:2 and 4K). Fallback: `gemini-2.5-flash-image`.
-
-**Supported aspect ratios:** `1:1`, `2:3`, `3:2`, `3:4`, `4:3`, `4:5`, `5:4`, `9:16`, `16:9`, `21:9`
-
-**Hero aspect ratio and safe band (CRITICAL):** The production blog page renders the hero via `BannerImage` at a fixed **1080×250** (desktop) / 100vw × 150 (mobile) with `object-fit: cover; object-position: center`. That is roughly **4.3:1 on desktop** — wider than any supported Gemini ratio. Two consequences for prompts:
-
-1. **Generate at `21:9`** for heroes (closest supported to the rendered crop). A 16:9 hero loses ~30% top and ~30% bottom to the crop.
+1. **Generate at the ratio closest to the rendered crop** (usually `21:9` for wide banners; otherwise `16:9`). The inline image is `3:2`.
 2. **Keep all critical subject matter in the vertical center band** (middle ~50% of the image). Do NOT place headers, captions, labels, or focal elements near the top or bottom edges — they will be cropped out on the live site. Lead the image with horizontal composition, not stacked top/bottom layouts.
 
-```bash
-source .env 2>/dev/null || true
+**Primary: Codex.** Run one call per image (hero, then inline). Codex chooses the pixel size, so the ratio goes in the prompt. The prompt goes in on stdin so quotes can't break the command:
 
+```bash
 SLUG="[post-slug]"
 OUTPUT_DIR="marketing/blog/images"
 mkdir -p "$OUTPUT_DIR"
 
-# --- Hero Image (16:9) ---
-HERO_PROMPT="[constructed hero prompt]"
+cat <<'PROMPT_EOF' | codex exec --skip-git-repo-check --sandbox workspace-write -C "$OUTPUT_DIR" -
+$imagegen [constructed hero prompt]
 
-HERO_RESPONSE=$(curl -s -X POST \
-  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent" \
-  -H "x-goog-api-key: $GOOGLE_AI_STUDIO_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d "{
-    \"contents\": [{\"parts\": [{\"text\": \"$HERO_PROMPT\"}]}],
-    \"generationConfig\": {
-      \"responseModalities\": [\"TEXT\", \"IMAGE\"],
-      \"imageConfig\": {
-        \"aspectRatio\": \"16:9\",
-        \"imageSize\": \"2K\"
-      }
-    }
-  }")
-
-echo "$HERO_RESPONSE" | python3 -c "
-import sys, json, base64
-data = json.load(sys.stdin)
-for part in data['candidates'][0]['content']['parts']:
-    if 'inlineData' in part:
-        img_b64 = part['inlineData']['data']
-        with open('$OUTPUT_DIR/$SLUG-hero.png', 'wb') as f:
-            f.write(base64.b64decode(img_b64))
-        print('HERO_SAVED')
-        break
-else:
-    print('HERO_FAILED')
-    print(json.dumps(data, indent=2))
-"
-
-# --- Inline Image (3:2) ---
-INLINE_PROMPT="[constructed inline prompt]"
-
-INLINE_RESPONSE=$(curl -s -X POST \
-  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent" \
-  -H "x-goog-api-key: $GOOGLE_AI_STUDIO_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d "{
-    \"contents\": [{\"parts\": [{\"text\": \"$INLINE_PROMPT\"}]}],
-    \"generationConfig\": {
-      \"responseModalities\": [\"TEXT\", \"IMAGE\"],
-      \"imageConfig\": {
-        \"aspectRatio\": \"3:2\",
-        \"imageSize\": \"2K\"
-      }
-    }
-  }")
-
-echo "$INLINE_RESPONSE" | python3 -c "
-import sys, json, base64
-data = json.load(sys.stdin)
-for part in data['candidates'][0]['content']['parts']:
-    if 'inlineData' in part:
-        img_b64 = part['inlineData']['data']
-        with open('$OUTPUT_DIR/$SLUG-inline.png', 'wb') as f:
-            f.write(base64.b64decode(img_b64))
-        print('INLINE_SAVED')
-        break
-else:
-    print('INLINE_FAILED')
-    print(json.dumps(data, indent=2))
-"
+Aspect ratio: [21:9 or 16:9]. Save the final image as ./[post-slug]-hero.png in the current directory. Do not modify any other files. Reply only with the saved file path.
+PROMPT_EOF
+file "$OUTPUT_DIR/$SLUG-hero.png" | grep -q PNG && echo "HERO_SAVED" || echo "HERO_FAILED"
 ```
+
+Repeat for the inline image with `[constructed inline prompt]`, `Aspect ratio: 3:2`, and `./[post-slug]-inline.png`, printing `INLINE_SAVED` or `INLINE_FAILED`. Each call typically takes 1–3 minutes. If Codex says the model "requires a newer version of Codex", tell the user to run `codex update`.
+
+**Backup: Nano Banana (Gemini).** If Codex is unavailable or an image fails, generate that image with the `image-gen` skill's Gemini call (`gemini-3.1-flash-image`, with the same ratio and the output path above), and print the same `*_SAVED` / `*_FAILED` marker.
 
 #### Handle Results
 
@@ -383,7 +319,7 @@ else:
 | Both `HERO_SAVED` and `INLINE_SAVED` printed | Success. Set `og_image: "marketing/blog/images/[slug]-hero.png"` in frontmatter. Insert `![inline image](images/[slug]-inline.png)` in the blog body at the identified mid-content location. |
 | Only `HERO_SAVED` | Partial success. Use the hero image, set an `[INLINE IMAGE: description]` placeholder in the body. |
 | Only `INLINE_SAVED` | Partial success. Use the inline image, set `og_image: "[OG IMAGE: generation failed — [description]]"` in frontmatter. |
-| Neither printed | Full failure. Print the raw API responses for debugging. Set placeholders for both and proceed to Step 6. |
+| Neither printed | Full failure. Show the provider output for debugging. Set placeholders for both and proceed to Step 6. |
 
 **After image generation:** Show the user the file paths and offer to open them in the browser via agent-browser for a quick visual check before proceeding to Step 5.6.
 
@@ -572,7 +508,7 @@ After the blog post metadata, append a social brief section:
 | Step 3 (writing) | `content-writer` agent | Blog writing standards, audience calibration, self-edit checklist |
 | Step 4b (editing pass) | `copy-editing` skill | Seven Sweeps framework, AI writing tics detection |
 | Step 4c (SEO check) | `seo-geo` skill | Full SEO/GEO optimization framework |
-| Step 5.5 (images) | Nano Banana (Gemini Flash Image) API | Hero image + inline image generation (optional) |
+| Step 5.5 (images) | Codex `$imagegen` (primary) or Nano Banana (Gemini) API (backup) | Hero image + inline image generation (optional) |
 | Step 5.6 (publish hero) | `[your-site-repo]` (git + gh) | Copy hero into `public/assets/blogs/<slug>/`, open + merge PR, sync local |
 | Step 6 (social brief) | `social-content` skill | Platform-specific post formats, length-by-intent rules |
 

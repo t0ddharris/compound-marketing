@@ -1,6 +1,6 @@
 ---
 name: tracking-setup
-version: 1.0.0
+version: 1.1.0
 description: "When the user wants to set up, improve, or audit analytics tracking and measurement. Also use when the user mentions 'set up tracking,' 'GA4,' 'Google Analytics,' 'conversion tracking,' 'event tracking,' 'UTM parameters,' 'tag manager,' 'GTM,' 'analytics implementation,' or 'tracking plan.' For A/B test measurement, see ab-test-setup."
 ---
 
@@ -349,15 +349,15 @@ dataLayer.push({
 
 ## Tool Integrations
 
-For implementation, see the [tools registry](../../tools/REGISTRY.md). Key analytics tools:
+Key analytics tools:
 
-| Tool | Best For | MCP | Guide |
-|------|----------|:---:|-------|
-| **GA4** | Web analytics, Google ecosystem | ✓ | [ga4.md](../../tools/integrations/ga4.md) |
-| **Mixpanel** | Product analytics, event tracking | - | [mixpanel.md](../../tools/integrations/mixpanel.md) |
-| **Amplitude** | Product analytics, cohort analysis | - | [amplitude.md](../../tools/integrations/amplitude.md) |
-| **PostHog** | Open-source analytics, session replay | - | [posthog.md](../../tools/integrations/posthog.md) |
-| **Segment** | Customer data platform, routing | - | [segment.md](../../tools/integrations/segment.md) |
+| Tool | Best For | MCP |
+|------|----------|:---:|
+| **GA4** | Web analytics, Google ecosystem | ✓ |
+| **Mixpanel** | Product analytics, event tracking | - |
+| **Amplitude** | Product analytics, cohort analysis | - |
+| **PostHog** | Open-source analytics, session replay | - |
+| **Segment** | Customer data platform, routing | - |
 
 ---
 
@@ -369,8 +369,10 @@ For implementation, see the [tools registry](../../tools/REGISTRY.md). Key analy
 
 ---
 
+## Field-Tested Rules
+
+- On a CMS with a native GA4 integration (HubSpot, WordPress, Shopify, etc.), enable either GTM or the native integration, never both. Running both double-counts every pageview and makes funnel conversion rates look about half of reality. GTM is usually the right choice since the GA4 tag lives in the container.
+
 ## Learnings
 
 <!-- Updated by /reflect. Promote stable patterns to the main skill body. -->
-
-- **[HIGH]** When installing tracking on a CMS with a native GA4 integration option (HubSpot, WordPress, Shopify, etc.), enable either GTM OR the native GA4 integration — never both. Both firing in parallel causes every pageview to be double-counted, dropping funnel conversion rates to ~50% of reality. GTM is almost always the right choice because the GA4 tag lives inside the container.

@@ -98,11 +98,11 @@ Default location for saved critiques: `marketing/reviews/<target-name>-devils-ad
 
 ### 6. Override the model
 
-Default is `gemini-3.1-pro-preview`. Other text-capable models on our key include `gemini-3-pro-preview`, `gemini-2.5-pro`, `gemini-pro-latest`. Use a different model only if the user asks, or if the default times out / fails.
+Default is `gemini-3.1-pro-preview`. Other text-capable options include `gemini-3.8-flash` (faster) and `gemini-flash-latest`. Use a different model only if the user asks, or if the default times out / fails.
 
 ```bash
 python3 .claude/skills/devils-advocate/scripts/challenge.py \
-  --files plan.md --model gemini-2.5-pro
+  --files plan.md --model gemini-3.8-flash
 ```
 
 ---
@@ -166,7 +166,7 @@ python3 .claude/skills/devils-advocate/scripts/challenge.py \
 **A positioning statement (inline):**
 ```bash
 python3 .claude/skills/devils-advocate/scripts/challenge.py \
-  --statement "[Company] is the only platform that detects AI agent attacks in real time without instrumenting the agent itself." \
+  --statement "[Company] is the only [category] that [key differentiator]." \
   --context-files brain/positioning-and-messaging.md brain/truth.md \
   --target-type positioning
 ```
@@ -191,7 +191,7 @@ python3 .claude/skills/devils-advocate/scripts/challenge.py \
 
 ## Failure modes to watch for
 
-- **API timeout or 5xx.** Retry once. If it keeps failing, try `--model gemini-2.5-pro` as a fallback.
+- **API timeout or 5xx.** Retry once. If it keeps failing, try `--model gemini-3.8-flash` as a fallback.
 - **Critique that reads like a rewrite request.** The critic sometimes slips into copy-editing mode. Re-run with `--note "do NOT rewrite prose; challenge logic, evidence, and risk only."`
 - **Critique that doesn't know the company.** Add `brain/positioning-and-messaging.md` and `brain/truth.md` to `--context-files` and re-run.
 - **Critique that contradicts something in our brain files.** Trust the brain; flag the disagreement to the user rather than editing to match the critic.

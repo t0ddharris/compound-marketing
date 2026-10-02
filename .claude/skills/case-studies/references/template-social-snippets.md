@@ -27,11 +27,11 @@ Then they implemented [Company].
 — [Speaker, Title]
 
 **Why [Company]:**
-[1-2 sentences on the decision factors—AI-native detection, behavioral analysis, etc.]
+[1-2 sentences on the decision factors—[key differentiators from brain/positioning.md]]
 
 Read the full case study: [LINK]
 
-#AIThreatDetection #AIAgentSecurity #Kubernetes #DevOps #SRE #Cybersecurity
+#[CategoryTag] #[IndustryTag] #[AudienceTag]
 
 ---
 
@@ -49,7 +49,7 @@ No rip-and-replace. No alert fatigue. Just [key benefit].
 
 Full story: [LINK]
 
-#AIThreatDetection #Cybersecurity #Kubernetes
+#[CategoryTag] #[IndustryTag]
 
 ---
 
@@ -121,7 +121,7 @@ Full story: [LINK]
 **Option B (Quote-focused):**
 "[Short, punchy customer quote]"
 
-See how [Customer] transformed their security: [LINK]
+See how [Customer] got [key result]: [LINK]
 
 ---
 
@@ -167,17 +167,10 @@ Use these for social media graphics, testimonial cards, or website callouts.
 ## Hashtag Reference
 
 **Primary (always include 1-2):**
-- #AIThreatDetection
-- #Cybersecurity
-- #AIAgentSecurity
+- [FILL IN: your product category hashtags]
 
 **Secondary (include based on relevance):**
-- #Kubernetes
-- #DevOps
-- #SRE
-- #PlatformEngineering
-- #BehavioralAnalysis
-- #CloudNative
+- [FILL IN: audience, role, or technology hashtags]
 
 **Industry-specific (if applicable):**
 - #Fintech

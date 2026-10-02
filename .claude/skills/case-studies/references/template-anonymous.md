@@ -67,7 +67,7 @@ Use this template when the customer cannot be named due to NDA, privacy policy, 
 
 ### Sign Up for a Demo
 
-This team achieved [key result] with the company. See how AI-native threat detection can deliver the same results for your organization.
+This team achieved [key result] with the company. See how [core capability] can deliver the same results for your organization.
 
 **[Sign Up for a Demo →](https://[your-site])**
 

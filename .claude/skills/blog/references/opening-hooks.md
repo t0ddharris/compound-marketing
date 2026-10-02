@@ -1,6 +1,6 @@
 # Opening Hooks
 
-Use this reference during Step 2 (Outline) of the blog workflow. Select a hook type that matches the post type and audience, then adapt the formula.
+Use this reference during Step 2 (Outline) of the blog workflow. Select a hook type that matches the post type and audience, then adapt the formula. The examples are illustrative and span different industries; rewrite them for the company's audience using `brain/` files, and source every number.
 
 A strong opening does two things: (1) signals relevance to the reader and (2) creates enough tension or curiosity that they keep reading.
 
@@ -13,9 +13,9 @@ A strong opening does two things: (1) signals relevance to the reader and (2) cr
 **When to use:** How-to posts, thought leadership, product-related content. Works best when you can describe the pain vividly enough that the reader thinks "that's exactly my situation."
 
 **Examples:**
-- "Your SIEM says everything is clean. Your API logs show 4,000 enumeration requests from a single source in the last hour. Your EDR didn't flag any of them."
-- "Every incident review ends the same way: 'The traffic looked like normal API usage.' Except normal users don't systematically probe every endpoint in sequence."
-- "You spent a year building detection rules for credential stuffing. The AI agent that hit your auth API last Tuesday didn't match a single one."
+- "Your dashboard says pipeline is up 20%. Your sales team says half those leads never answer the phone. Nobody can tell you which number is real."
+- "Every quarterly review ends the same way: 'The data was in three different spreadsheets.' Except the board meeting is tomorrow, and nobody owns the merge."
+- "You spent a year building a lead-scoring model. The deal that closed last Tuesday scored a 12."
 
 **Pattern:** [Describe the specific pain] + [Make the consequence visible]
 
@@ -28,8 +28,8 @@ A strong opening does two things: (1) signals relevance to the reader and (2) cr
 **When to use:** Thought leadership, listicles, comparison posts. The stat must be sourced and verifiable. If you don't have a real stat, use a different hook type.
 
 **Examples:**
-- "AI agents can probe thousands of API endpoints in minutes. A human pentester takes days to cover the same surface. Your detection rules were calibrated for the human."
-- "Fewer than 15% of enterprise security teams have any detection capability specifically designed for autonomous AI agent attacks. The other 85% are relying on tools built for human adversaries."
+- "Finance teams spend [X] days closing the books each month *(source: [cite])*. The fastest teams do it in [Y]. The gap isn't headcount."
+- "Fewer than [X]% of support teams measure resolution quality, only speed *(source: [cite])*. The rest are optimizing a number customers don't feel."
 
 **Pattern:** [Specific number with source] + [Why that number matters to the reader]
 
@@ -44,8 +44,8 @@ A strong opening does two things: (1) signals relevance to the reader and (2) cr
 **When to use:** Thought leadership posts. This is the default hook for pieces that challenge conventional wisdom.
 
 **Examples:**
-- "Most security teams assume their EDR will catch AI-agent attacks. It won't. EDR was trained on human attacker behavior, and AI agents don't behave like humans."
-- "Adding more SIEM correlation rules to catch AI agents sounds logical. But if every rule is pattern-matching against known attack signatures, you're always one step behind an adversary that generates novel attack paths on the fly."
+- "Most marketing teams assume more content means more pipeline. It doesn't. Past a point, volume dilutes the signal buyers use to shortlist vendors."
+- "Adding another approval step to catch errors sounds responsible. But if every step checks the same thing, you've added delay without adding coverage."
 
 **Pattern:** [State the conventional wisdom] + [Reveal the flaw or blind spot]
 
@@ -60,8 +60,8 @@ A strong opening does two things: (1) signals relevance to the reader and (2) cr
 **When to use:** How-to posts, case study-adjacent content, news posts (for context). Works well when the scenario is specific enough to feel real but broad enough that many readers recognize it.
 
 **Examples:**
-- "It's 2 AM. PagerDuty fires. Your API gateway is returning 429s, but the traffic pattern doesn't match any known bot signature. Hundreds of unique endpoints probed in a systematic sweep. By the time your SOC analyst opens the dashboard, the agent has already moved to credential testing."
-- "Your security team just deployed a new public API. Within 72 hours, an autonomous agent has mapped every endpoint, tested every parameter, and found the one misconfigured permission boundary your pen test missed."
+- "It's 4:55 PM on the last day of the quarter. A seven-figure deal is stuck in legal because the contract template references a product you renamed in March. Your rep is refreshing their inbox."
+- "Your team just launched a new pricing page. Within 72 hours, support tickets about 'which plan do I need' have tripled, and the one FAQ that would answer them is two clicks deep."
 
 **Pattern:** [Set the scene with specific details] + [Reveal the problem or gap]
 
@@ -74,9 +74,9 @@ A strong opening does two things: (1) signals relevance to the reader and (2) cr
 **When to use:** Comparison posts, listicles, thought leadership. The question must be something the reader genuinely cares about — not a rhetorical setup for a sales pitch.
 
 **Examples:**
-- "What does your SOC do when an attacker doesn't match any known signature, doesn't trigger rate limits, and uses legitimate API credentials?"
-- "If your security tools can't distinguish an AI agent systematically probing your API from a developer testing integrations, what are you actually detecting?"
-- "How many of your production APIs are protected against an adversary that adapts its approach based on your responses?"
+- "What does your team do when the customer churns, but every health score said they were fine?"
+- "If your reporting can't distinguish a qualified lead from a student downloading an ebook, what are you actually measuring?"
+- "How many of your onboarding emails would a new customer miss without noticing?"
 
 **Pattern:** [Question that exposes a specific gap or decision] + [Implied stakes]
 
@@ -91,8 +91,8 @@ A strong opening does two things: (1) signals relevance to the reader and (2) cr
 **When to use:** How-to posts, tutorials. This is the default hook for instructional content.
 
 **Examples:**
-- "By the end of this guide, your SOC will have a detection pipeline purpose-built for AI agent attacks, integrated with the SIEM and EDR stack you already run."
-- "This post walks through how one security team went from zero AI-agent detection capability to blocking automated reconnaissance in production, deployed in under a day."
+- "By the end of this guide, you'll have a weekly pipeline review that takes 30 minutes, using the CRM you already run."
+- "This post walks through how one ops team went from a five-day month-end close to two, without adding headcount."
 
 **Pattern:** [Specific outcome the reader wants] + [Specificity that makes it credible]
 

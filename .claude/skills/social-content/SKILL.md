@@ -1,6 +1,6 @@
 ---
 name: social-content
-version: 1.0.0
+version: 1.1.0
 description: "When the user wants help creating, scheduling, or optimizing social media content for LinkedIn, Twitter/X, Instagram, TikTok, Facebook, or other platforms. Also use when the user mentions 'LinkedIn post,' 'Twitter thread,' 'social media,' 'content calendar,' 'social scheduling,' 'engagement,' or 'viral content.' This skill covers content creation, repurposing, and platform-specific strategies."
 ---
 
@@ -56,6 +56,8 @@ Gather this context (ask if not provided):
 | Facebook | Communities, local businesses | 1-2x/day | Groups, native video |
 
 **For detailed platform strategies**: See [references/platforms.md](references/platforms.md)
+
+**For hashtag limits and character counts**: See [references/platform-limits.md](references/platform-limits.md)
 
 ---
 
@@ -157,7 +159,7 @@ Build a menu for your company from three categories, then pick 1-2 per post base
 
 ## Content Repurposing System
 
-Turn one piece of content into many:
+Turn one piece of content into many. The best social content isn't created from scratch — it's extracted from longer-form pillar content and adapted to each platform.
 
 ### Blog Post → Social Content
 
@@ -184,11 +186,12 @@ Turn one piece of content into many:
 
 ### Repurposing Workflow
 
-1. **Create pillar content** (blog, video, podcast)
-2. **Extract key insights** (3-5 per piece)
-3. **Adapt to each platform** (format and tone)
-4. **Schedule across the week** (spread distribution)
-5. **Update and reshare** (evergreen content can repeat)
+1. **Create pillar content** (blog, video, podcast, webinar, newsletter)
+2. **Extract content atoms** (5-10 per piece — quotes, stories, tips, data)
+3. **Adapt to each platform** (format, length, and tone)
+4. **Write standalone captions** (each post must work without context)
+5. **Schedule across the week** (spread distribution, don't dump all at once)
+6. **Update and reshare** (evergreen content can repeat every 3-6 months)
 
 ### Cross-Platform Cadence (brand)
 
@@ -227,6 +230,8 @@ Turn one piece of content into many:
 2. Comment on 5-10 posts from target accounts (15 min)
 3. Share/repost with added insight (5 min)
 4. Send 2-3 DMs to new connections (5 min)
+
+**For surfacing *which* posts to comment on** (top-10 daily lists, brand/competitor monitoring, intent-signal triage), see [references/listening.md](references/listening.md). Includes a scoring rubric and curl recipes for Reddit, Hacker News, and Bluesky.
 
 ### Quality Comments
 
@@ -326,6 +331,87 @@ Instead of guessing, analyze what's working for top creators in your niche:
 
 ---
 
+## Short-Form Video (TikTok, Reels, Shorts)
+
+Short-form video is the highest-reach format on every major platform. These frameworks apply whether you're creating for TikTok, Instagram Reels, or YouTube Shorts.
+
+### Platform Specs
+
+| Platform | Optimal Length | Aspect Ratio | Key Difference |
+|----------|---------------|--------------|----------------|
+| TikTok | 15-60 sec | 9:16 | Trending sounds, raw/authentic feel |
+| Reels | 15-30 sec | 9:16 | Polished content, rewards saves/shares |
+| Shorts | 30-60 sec | 9:16 | YouTube SEO applies, searchable titles |
+
+### The 3-Second Rule
+
+You have 3 seconds to stop the scroll. Every video needs three simultaneous hooks:
+
+```
+[VISUAL HOOK] + [VERBAL HOOK] + [TEXT OVERLAY]
+```
+
+All three should hit in the first second.
+
+### Video Structures
+
+**Problem-Solution (15-30 sec):**
+```
+[0-3s]  Hook: State the problem
+[3-10s] Agitate: Why it matters
+[10-25s] Solution: Your method/product/tip
+[25-30s] CTA: What to do next
+```
+
+**List Format (30-60 sec):**
+```
+[0-3s]  Hook: "X things that [outcome]"
+[3-50s] Items: One every 5-8 seconds
+[50-60s] CTA
+```
+
+**Tutorial (30-60 sec):**
+```
+[0-3s]  Hook: Show the end result first
+[3-8s]  Overview: "Here's how..."
+[8-50s] Steps: Quick, clear instructions
+[50-60s] Result + CTA
+```
+
+### Caption & Subtitle Best Practices
+
+Captions increase watch time by 25-40%. Most social video is watched without sound.
+
+- **MAX 2 lines** on screen at once
+- **3-5 words per line**
+- Bold, sans-serif font with black outline
+- **Highlight key words** in a different color
+- Match timing to speech exactly
+
+Tools: CapCut (free), Descript, Captions.ai, Premiere Pro
+
+### Content Ideas by Type
+
+| Business Type | Video Ideas |
+|---------------|-------------|
+| SaaS | Feature demos (show outcome first), before/after, "Watch me do X in Y seconds" |
+| E-commerce | Unboxing, comparisons, how it's made, customer reviews |
+| Services | Process reveals, client transformations, myth-busting |
+| Personal brand | Lessons learned, controversial takes, day-in-the-life |
+
+### Common Mistakes
+
+1. **Slow hooks** — don't build up to the point
+2. **No text overlay** — many watch without sound
+3. **Poor audio** — bad audio kills retention instantly
+4. **Too long** — if it can be shorter, make it shorter
+5. **No CTA** — tell viewers what to do
+6. **Ignoring comments** — engagement in first hour matters
+
+**For video hook formulas and scripting templates**: See [references/short-form-video.md](references/short-form-video.md)
+
+---
+
 ## Task-Specific Questions
 
 1. What platform(s) are you focusing on?
@@ -385,16 +471,18 @@ This is a quick pass, not a full Seven Sweeps. Social posts are short — focus 
 
 ---
 
+## Field-Tested Rules
+
+- Company account posts use "we" throughout. Don't mix company voice with personal attribution (e.g., naming an author) in the same post.
+- For blog promo posts, lead with a question or tension, not narration of what the post did.
+- Don't cite specific numbers from a blog in social posts unless they're self-evident without the blog's context. If a stat needs setup, tease the gap instead.
+- When a draft or angle is rejected, offer 3–5 short angle concepts (2–3 sentences each, labeled A–E) before drafting the next version, rather than re-drafting in a single direction.
+- When an event has its own LinkedIn event page, keep promo posts short and warm. Don't repeat the date, venue, or description the event page already carries.
+- When an event has both a LinkedIn event page and a landing page, split links across posts: the event page for discovery, social proof, and day-of posts; the landing page for conversion and urgency posts. Point the LinkedIn event's own CTA button at the landing page so RSVPs still reach your marketing automation platform.
+- Publish the LinkedIn event at the start of the campaign, not the end, so it accrues RSVP social proof that strengthens every later post.
+- Light cleverness is fine; self-congratulating cleverness is not. Don't narrate a joke ("the metaphor writes itself"), wink at wordplay, or build conceits that call attention to themselves. If a detail needs framing to land, cut the framing. When in doubt, go straightforward.
+- Every post must stand on its own in a feed. Don't assume context from the campaign, the event page, or other posts: name the event, anchor the day or session.
+
 ## Learnings
 
 <!-- Updated by /reflect. Promote stable patterns to the main skill body. -->
-
-- **[HIGH]** Company account posts use "we" throughout. Never mix company voice with personal attribution (e.g., naming an author) in the same post.
-- **[HIGH]** For blog promo posts, lead with a question or tension, not narration. "How much fits?" not "We did the math."
-- **[HIGH]** Never cite specific numbers from the blog in social posts unless they are self-evident without the blog's context. If a stat requires setup to understand, tease the gap instead.
-- **[MEDIUM]** When a draft or angle is rejected, offer 3-5 short angle concepts (2-3 sentences each, labeled A-E) before drafting the next version. Don't immediately re-draft in a single direction.
-- **[HIGH]** When promoting an event that has its own LinkedIn event page, keep social promos short and warm. Don't repeat date, venue, or description — the event page already carries them.
-- **[HIGH]** When an event has both a LinkedIn event page and a landing page, split the link routing across posts: LI event page for discovery/social-proof/day-of posts, landing page for conversion/urgency posts. Configure the LI event's own CTA button to point at the landing page so LinkedIn RSVPs still reach HubSpot for lead capture.
-- **[MEDIUM]** Publish the LinkedIn event at the start of the campaign, not the end. Early publication lets the event accrue RSVP social proof that strengthens every subsequent post.
-- **[HIGH]** Light cleverness is fine. Self-congratulating cleverness is not. AI defaults to narrating its own jokes ("the metaphor writes itself"), winking at wordplay ("felt appropriate"), and manufacturing conceits that call attention to themselves. A fun detail should land on its own; if you have to frame it or point at it, cut the framing. When in doubt, go straightforward.
-- **[HIGH]** Every post must be self-contained in a feed. Don't assume the reader has context from the campaign, the event page, or surrounding posts. If the post references an event, name it. If it references a day or session, anchor it. A post that requires context from outside itself to make sense is broken.

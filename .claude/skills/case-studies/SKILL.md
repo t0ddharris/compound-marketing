@@ -5,7 +5,7 @@ description: "Create compelling B2B customer case studies for the company. Use w
 
 # Case Study Creation
 
-Create compelling customer success stories that demonstrate the company's value in detecting and stopping AI agent attacks targeting infrastructure.
+Create compelling customer success stories that show the value the company delivers, grounded in the positioning and proof points in the brain files.
 
 ## Source of Truth
 

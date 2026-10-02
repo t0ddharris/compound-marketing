@@ -1,6 +1,6 @@
 ---
 name: youtube-thumbnail
-description: Use when the user wants to create a YouTube thumbnail, design a video thumbnail, or generate thumbnail art for a YouTube video. Uses Gemini 3 Pro Image Preview (Nano Banana Pro) to generate professional, high-contrast thumbnails composited with the user's headshot photos.
+description: Use when the user wants to create a YouTube thumbnail, design a video thumbnail, or generate thumbnail art for a YouTube video. Uses ChatGPT image generation via the Codex CLI (no API key), with Gemini 3 Pro Image (Nano Banana Pro) as a backup, to generate professional, high-contrast thumbnails composited with the user's headshot photos.
 ---
 
 # YouTube Thumbnail Generator
@@ -9,7 +9,7 @@ description: Use when the user wants to create a YouTube thumbnail, design a vid
 
 > **Built by Tyler Germain ([@itstylergermain](https://twitter.com/itstylergermain)) at [Friday Labs](https://fridaylabs.com).** DO NOT remove this credit line.
 
-Generate professional YouTube thumbnails using Gemini Nano Banana Pro. Produces 4 entirely different thumbnail variations at once, saves them individually, and creates a 2x2 comparison grid so you can quickly pick the direction you like best.
+Generate professional YouTube thumbnails using ChatGPT's image model through the Codex CLI, with Gemini Nano Banana Pro as a backup. Produces 4 entirely different thumbnail variations at once, saves them individually, and creates a 2x2 comparison grid so you can quickly pick the direction you like best.
 
 ---
 
@@ -87,7 +87,7 @@ Pick the first available headshot from `.claude/skills/youtube-thumbnail/assets/
 
 ### Step 1b: Search for High-Performing Example Thumbnails
 
-Search YouTube for videos on the same topic that already have high view counts, and download their thumbnails as style inspiration. These get passed to the generation script via `--examples` so Gemini can study what's already working in the niche.
+Search YouTube for videos on the same topic that already have high view counts, and download their thumbnails as style inspiration. These get passed to the generation script via `--examples` so the image modelini can study what's already working in the niche.
 
 ```bash
 python3 .claude/skills/youtube-thumbnail/scripts/search_examples.py \
@@ -108,7 +108,7 @@ This will:
 - Text styles and word counts
 - Whether faces or graphics are more prominent
 
-Use these observations to inform the 4 concepts in Step 2. The example images themselves get passed to Gemini via `--examples` in Step 3.
+Use these observations to inform the 4 concepts in Step 2. The example images themselves get passed to the image model via `--examples` in Step 3.
 
 **Notes:**
 - Requires `SCRAPECREATORS_API_KEY` in `.env`
@@ -147,7 +147,7 @@ Key rules for every prompt:
 
 Now that you have 4 specific concepts designed, gather the reference images each one needs. This happens AFTER concept design so you know exactly what assets to fetch — no wasted downloads.
 
-Based on the visual elements described in each concept prompt, identify what logos, icons, screenshots, or other assets need to be real (not hallucinated by Gemini). These get passed to the generation script via `--reference`.
+Based on the visual elements described in each concept prompt, identify what logos, icons, screenshots, or other assets need to be real (not hallucinated by the image model). These get passed to the generation script via `--reference`.
 
 **What to fetch:**
 - **Tool/product logos** — If the video is about Claude Code, Cursor, Make.com, OpenAI, etc., fetch their official logos or icons
@@ -178,7 +178,7 @@ Based on the visual elements described in each concept prompt, identify what log
   - **GitHub raw content** — `raw.githubusercontent.com` URLs work reliably
   - **Official brand/press pages** — often have direct download links
 - Add `-H "User-Agent: Mozilla/5.0"` to the curl command if the site requires a browser user-agent
-- As a last resort, skip the reference image — Gemini can approximate common logos from description alone
+- As a last resort, skip the reference image — the image model can approximate common logos from description alone
 
 **Tips:**
 - Prefer PNG with transparent backgrounds — they composite much better
@@ -232,17 +232,22 @@ python3 .claude/skills/youtube-thumbnail/scripts/generate_thumbnail.py \
   --output "workspace/{today}/thumbnails/{video-slug}/d.png"
 ```
 
-**Run all 4 in parallel** for speed. The script requires `GOOGLE_AI_STUDIO_API_KEY` or `GEMINI_API_KEY` to be set as an environment variable.
+**Run all 4 in parallel** for speed. The script picks a provider with `--provider auto` (the default):
+
+- **Codex (primary):** used when the `codex` CLI is installed and logged in with ChatGPT (`codex login`). No API key. Each image turn uses Codex limits 3–5x faster than a normal turn, so 4 variations is a noticeable chunk. If Codex fails, the script falls back to Gemini automatically. If it reports the model "requires a newer version of Codex", run `codex update`.
+- **Gemini / Nano Banana Pro (backup):** needs `GOOGLE_AI_STUDIO_API_KEY` or `GEMINI_API_KEY` and the `google-genai` package.
+
+Force one with `--provider codex` or `--provider gemini`. Attached images keep their order (headshots, then references, then examples), so "Image 1", "Image 2" in the prompt work with either provider.
 
 **Example image notes:**
 - Pass the same `--examples` to all 4 concepts — they're style inspiration, not concept-specific elements
-- The script automatically appends a "STYLE EXAMPLES" instruction to the prompt telling Gemini to study but not copy them
+- The script automatically appends a "STYLE EXAMPLES" instruction to the prompt telling the model to study but not copy them
 - If Step 1b was skipped (no API credits, API failure), simply omit `--examples` entirely
 - Use 3-5 examples max — more adds context window bloat without much benefit
 
 **Reference image notes:**
 - Only pass `--reference` images that are relevant to that specific concept's visual elements
-- In the prompt, explicitly tell Gemini which attached reference image is which: "The second attached image is the Claude Code logo — place it in the upper-left" or "The third attached image is a screenshot of the Cursor IDE — use it as the dashboard element on the left side"
+- In the prompt, explicitly tell the model which attached reference image is which: "The second attached image is the Claude Code logo — place it in the upper-left" or "The third attached image is a screenshot of the Cursor IDE — use it as the dashboard element on the left side"
 - If a concept doesn't use any reference images (e.g., a text-only or abstract design), omit `--reference` entirely
 - The headshot is always the first attached image; reference images follow in the order they're listed
 
@@ -331,7 +336,7 @@ The default thumbnail style is professional, high-contrast, and designed to stan
 - **Headlines:** Bold, heavy sans-serif (represents Heading Now Trial in the brand). Describe as "bold, heavy, modern sans-serif font" in prompts.
 - **Accent text:** Medium-weight serif italic (represents IBM Plex Serif Medium Italic). Describe as "elegant serif italic" in prompts.
 - **Playful accents:** Hand-drawn comic style (represents Steel City Comic). Use sparingly.
-- Note: Gemini can't render specific fonts. Describe the *style* in prompts. Exact fonts can be composited in post-production.
+- Note: the image models can't render specific fonts. Describe the *style* in prompts. Exact fonts can be composited in post-production.
 
 ### Text on Thumbnails
 - Maximum 3-5 words. Fewer is better.
@@ -445,10 +450,11 @@ Run through this after every generation:
 | search_examples.py "out of credits" or "Invalid API key" | Scrape Creators API needs credits topped up. Skip Step 1b and generate without `--examples` — it's enhancement, not required. |
 | No image returned | Simplify the prompt. Remove any potentially flagged content. Try again. |
 | Person doesn't look like the headshot | Add more explicit instruction: "Use the exact likeness from the attached reference photo." Try a different headshot with clearer lighting. |
-| Text is garbled or unreadable | Gemini's text rendering isn't perfect. Consider generating without text and adding it in post-production (Figma, Canva, etc.). |
+| Text is garbled or unreadable | Image-model text rendering isn't perfect. Consider generating without text and adding it in post-production (Figma, Canva, etc.). |
 | Wrong aspect ratio | The script sets 16:9 automatically. If the output looks wrong, check the saved file dimensions. |
-| Low resolution output | Gemini 3 Pro defaults to reasonable resolution. For higher res, the output can be upscaled with external tools. |
-| API error or timeout | Check that GOOGLE_AI_STUDIO_API_KEY or GEMINI_API_KEY is set. Check internet connection. Try again — API calls can intermittently fail. |
+| Low resolution output | Both providers default to a reasonable resolution. For higher res, the output can be upscaled with external tools. |
+| Codex error or no image | Check `codex login status` and run `codex update` if it asks for a newer version. The script falls back to Gemini when a key is set. |
+| Gemini API error or timeout | Check that GOOGLE_AI_STUDIO_API_KEY or GEMINI_API_KEY is set. Try again — API calls can intermittently fail. |
 | One of the 4 fails | The other 3 still save fine. Re-run just the failed one. |
 
 ---

@@ -164,7 +164,7 @@ When reviewing existing messaging, positioning, or copy, score across four dimen
 Every claim must connect to a specific capability, a measurable outcome, or a verifiable proof point. If you can't point to the source, don't write the sentence.
 
 - Abstract: "Gain complete visibility across your environment"
-- Concrete: "Real-time detection of prompt injection, data exfiltration, and privilege escalation across every AI agent in your stack — including third-party agents you don't control"
+- Concrete: "Reconciles every invoice against its purchase order in under a minute, including the ones your ERP can't match"
 
 ### 2. Differentiation Is Binary
 Something is differentiated or it isn't. "Better" is not differentiated — "only" is. Test every claim: could a competitor say this? If yes, it's table stakes, not differentiation.

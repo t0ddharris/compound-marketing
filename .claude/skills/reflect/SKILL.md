@@ -1,6 +1,6 @@
 ---
 name: reflect
-version: 1.0.0
+version: 1.1.0
 description: "Analyze the current conversation for corrections, approvals, and patterns, then propose updates to the skill files that were used. Trigger with /reflect or automatically at end of /brief. Use when the user says 'reflect,' 'learn from this,' 'update the skill,' or 'remember this for next time.'"
 ---
 
@@ -55,7 +55,7 @@ For each skill identified in Step 1, read its SKILL.md. Check:
 
 ## Step 4: Propose Updates
 
-Present proposed changes in this format:
+Present proposed changes in this format. **Always label each proposed update with a letter (A, B, C...) so the user can approve or reject individual items by letter.**
 
 ```
 ## Reflect: Session [N] Learnings
@@ -67,8 +67,11 @@ Present proposed changes in this format:
 ### Proposed Skill Updates
 
 **[skill-name]:**
-1. [HIGH] Add: "[actionable rule]"
-2. [MEDIUM] Add: "[pattern description]"
+- **(A)** [HIGH] Add: "[actionable rule]"
+- **(B)** [MEDIUM] Add: "[pattern description]"
+
+**[other-skill-name]:**
+- **(C)** [HIGH] Add: "[actionable rule]"
 
 ### Skipped (already captured)
 - [Any signals that are already in the skill or CLAUDE.md]
@@ -77,11 +80,13 @@ Present proposed changes in this format:
 - [Why no updates are warranted this session]
 ```
 
+Letters run continuously across skills (A, B, C...) so the user can say "approve A and C, skip B" without ambiguity.
+
 **STOP and wait for user approval before making any changes.**
 
 The user can:
-- Accept all proposed changes (Y)
-- Accept some, reject others (specify which)
+- Accept all proposed changes (Y / approve all)
+- Accept some, reject others by letter ("A and C" / "skip B")
 - Modify the wording of any proposed change
 - Add learnings that weren't detected
 - Reject everything (no changes made)
@@ -146,5 +151,7 @@ Before proposing any learning, ask yourself:
 2. **Is this actionable?** Can a future session follow this rule without ambiguity?
 3. **Is it already captured?** Check the skill file, CLAUDE.md, memory, and session brief.
 4. **Is it the right home?** Skill-specific → skill file. Cross-cutting → suggest CLAUDE.md. Company/product fact → suggest the relevant brain file.
+
+5. **Does it bloat the skill?** A rulebook too long to hold gets followed less. When a section outgrows a skimmable list, propose consolidating or promoting recurring items into the skill body instead of appending another bullet.
 
 If a session produced no generalizable learnings, that's fine. Say "no new learnings detected" and move on. Not every session teaches something new. Forcing weak learnings into skills degrades them over time.
