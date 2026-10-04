@@ -62,6 +62,8 @@ cp ~/Documents/brand-guide.pdf incoming/
 
 `/setup` will ask if you have reference files in `incoming/` and use the content to pre-fill your brain files (with your approval before writing anything). Supports PDFs, Markdown, plain text, and images. This can save significant manual entry.
 
+After setup, run `/brain-ingest` to keep feeding the brain. It reads from `incoming/` or directly from whatever connectors your agent has (email, Google Drive, SharePoint, meeting notes), proposes changes file by file with a source on every fact, flags conflicts with what's already there, and writes only what you approve.
+
 ### 4. Connect your notes (optional)
 
 If you already keep meeting notes, people profiles, and clippings in a notes app like Obsidian, `/setup` can connect that folder as a read-only knowledge source. It stays where it is, and the agent can read it in every session:
@@ -120,7 +122,7 @@ Each workflow is one command that chains several skills, with an approval gate b
 | **Design & Brand** | `brand-design`, `web-design`, `image-gen`, `youtube-thumbnail`, `html-to-pdf`, `excalidraw`, `impeccable` |
 | **Strategy & PMM** | `product-marketing`, `marketing-psychology`, `marketing-ideas`, `launch-strategy`, `competitor-alternatives`, `revops` |
 | **Analytics** | `analytics`, `tracking-setup` |
-| **Onboarding & Brand setup** | `setup`, `tone-mapping`, `design-extract`, `brain-health` |
+| **Onboarding & Brand setup** | `setup`, `tone-mapping`, `design-extract`, `brain-health`, `brain-ingest` |
 | **System & tools** | `start`, `brief`, `reflect`, `sync-skills`, `granola`, `agent-browser`, `devils-advocate` |
 
 ## What's Inside

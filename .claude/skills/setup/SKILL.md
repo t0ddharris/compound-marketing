@@ -172,6 +172,8 @@ If they also did the website scrape in Step 3b, merge both sources. Where they c
 
 If they have no files, move on.
 
+Either way, mention that `/brain-ingest` runs this same import anytime later, from `incoming/` or straight from connected sources like email, Google Drive, or SharePoint.
+
 ---
 
 ## Step 4: Fill truth.md
@@ -351,6 +353,7 @@ Full workflows (multi-step pipelines):
 Brain building:
   /tone-mapping      Build your voice profile from writing samples
   /design-extract    Extract brand colors and fonts from your website
+  /brain-ingest      Pull facts from email, Drive, SharePoint, and docs
   /brain-health      Check brain file completeness anytime
 
 Utilities:
