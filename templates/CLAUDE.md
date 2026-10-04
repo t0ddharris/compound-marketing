@@ -49,7 +49,7 @@ When the user provides direction, raw thoughts, or rough language, **never echo 
 
 - `/brain/` — Source of truth. Edits require the user's approval (see Anti-Hallucination rule 5).
 - `/.claude/skills/` — Claude Code skills: marketing skills and project workflow skills (e.g., case studies).
-- `/incoming/` — **Drop zone for raw inputs.** Files placed here for Claude to intake (notes, CSVs, briefs, rough drafts). Read from here, never write to here. Files here are for evaluation and context only; do not treat old marketing collateral as a source of verified claims for new content. All claims must trace to `/brain/`.
+- `/incoming/` — **Drop zone for raw inputs.** Files placed here for Claude to intake (notes, CSVs, briefs, rough drafts). Read from here, never write to here. Files here are for evaluation and context only; do not treat old marketing collateral as a source of verified claims for new content. All claims must trace to `/brain/`. To move facts from here (or from email, Drive, SharePoint, or other connected sources) into the brain, use `brain-ingest`.
 - `/marketing/` — **All Claude output goes here.** Blog drafts, social posts, analysis, reports, plans, templates, etc.
 - `/marketing/plans/` — Backlog of improvements, new skills, tooling ideas, and projects.
 - `/marketing/inspiration/` — Design references, competitor examples, and visual inspiration. Screenshots go in `visual/` subdirectory. Keep reference images co-located with their companion docs.
@@ -61,7 +61,7 @@ If `.compound-marketing.yml` lists `knowledge_sources`, those folders (often an 
 - **Check them first** when a task needs context about a customer, a person, a past meeting, or prior research. Look there before calling an external API (e.g., Granola) for the same information.
 - **Search, don't crawl.** If a QMD collection covers the folder (`qmd collection list`), use `qmd query "..."` and read only the hits. Otherwise grep for names and keywords.
 - **Read-only.** Never create, edit, move, or delete files in a knowledge source.
-- **Raw input, not verified claims.** Same rule as `/incoming/`: notes are context, not sources for published claims. When a note holds a fact worth keeping, propose adding it to the right `/brain/` file with the note's path as its source, and confirm with the user before writing.
+- **Raw input, not verified claims.** Same rule as `/incoming/`: notes are context, not sources for published claims. When a note holds a fact worth keeping, propose adding it to the right `/brain/` file with the note's path as its source, and confirm with the user before writing. For more than a fact or two, run `brain-ingest`.
 - **Keep it private.** Notes can contain names, internal discussions, and customer details. Never quote them in drafts or copy them into `/marketing/` without the user's approval.
 
 ## Workflow Output Convention
