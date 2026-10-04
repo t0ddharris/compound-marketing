@@ -88,7 +88,7 @@ Once setup finishes, you're ready to go. Ask for what you need in plain language
 
 Compound Marketing has three layers, each fixing a way AI marketing usually goes wrong:
 
-- **Brain** (`brain/`) — One source of truth for your company. Every factual claim traces back to a brain file. If a fact isn't there, the system writes `[FILL IN]` instead of inventing one.
+- **Brain** (`brain/`) — One source of truth for your company. Every factual claim traces back to a brain file. If a fact isn't there, the system writes `[FILL IN]` instead of inventing one. `/brain-ingest` fills it from your email, drives, and documents, with your approval and a source on every fact.
 - **Skills** (`.claude/skills/`) — Step-by-step workflows for specific tasks, each with its own references, templates, and approval gates.
 - **`CLAUDE.md`** — Routing and governance. Maps each request to the right skill, enforces the writing rules, and blocks AI slop.
 
@@ -128,7 +128,7 @@ Each workflow is one command that chains several skills, with an approval gate b
 ## What's Inside
 
 ```
-.claude/skills/    # 55 skills (blog, SEO, CRO, HubSpot, ads, etc.)
+.claude/skills/    # 56 skills (blog, SEO, CRO, HubSpot, ads, etc.)
 templates/         # Everything copied into a new instance:
   CLAUDE.md        #   Routing tables, writing rules, anti-hallucination guardrails
   brain/           #   Source-of-truth templates (positioning, personas, competitive)

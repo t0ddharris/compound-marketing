@@ -10,6 +10,7 @@ The repository owner is the final authority on all product facts, positioning, a
 
 - Skills propose edits to these files; the repository owner approves them before anything is written
 - New facts go into `truth.md` only after explicit confirmation
+- `brain-ingest` pulls facts from existing company material (email, Drive, SharePoint, PDFs, decks) with a source on each
 - `product-marketing` is the main skill for building out positioning, messaging, personas, and competitive files
 
 ## Rules
