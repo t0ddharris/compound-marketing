@@ -173,6 +173,7 @@ Do not skip this step. Do not freestyle. Do not generate content without the rel
 | Strip AI patterns, review prose quality, enforce human voice | `tagore` |
 | Build voice and tone profile from writing samples | `tone-mapping` |
 | Extract design system (colors, fonts, spacing) from a website | `design-extract` |
+| Pull facts from email, Drive, SharePoint, PDFs, or decks into the brain | `brain-ingest` |
 | Check brain file completeness, see what's missing | `brain-health` |
 | Sync skills between Claude Code and Codex runtimes | `sync-skills` |
 
