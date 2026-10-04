@@ -20,7 +20,7 @@ Works with **Claude Code** and **OpenAI Codex**.
 
 ## Getting Started
 
-**Prerequisites:** [Claude Code](https://docs.anthropic.com/en/docs/claude-code) or [OpenAI Codex](https://openai.com/codex). Optional: [Vale](https://vale.sh/) for content linting, [GitHub CLI](https://cli.github.com/) (`gh`) for PR workflows.
+**Prerequisites:** [Claude Code](https://docs.anthropic.com/en/docs/claude-code) or [OpenAI Codex](https://openai.com/codex). Optional: [Vale](https://vale.sh/) for content linting, [GitHub CLI](https://cli.github.com/) (`gh`) for PR workflows, the [Codex CLI](https://github.com/openai/codex) signed in with a ChatGPT account for image generation (no API key needed), and [QMD](https://github.com/tobi/qmd) for searching a connected notes folder.
 
 ### 1. Clone and scaffold
 
@@ -47,7 +47,7 @@ claude          # or: codex
 - Build a starter positioning statement and buyer personas
 - Extract your brand colors and fonts from your site (optional)
 - Optionally connect an existing notes folder (like an Obsidian vault) as a read-only knowledge source
-- Set up integrations (HubSpot, LinkedIn, Google AI Studio, etc.)
+- Set up integrations (Codex CLI for images, HubSpot, LinkedIn, Granola, etc.)
 
 You don't need perfect answers. Anything you skip stays as a `[FILL IN]` placeholder that you can complete later.
 
@@ -62,7 +62,17 @@ cp ~/Documents/brand-guide.pdf incoming/
 
 `/setup` will ask if you have reference files in `incoming/` and use the content to pre-fill your brain files (with your approval before writing anything). Supports PDFs, Markdown, plain text, and images. This can save significant manual entry.
 
-### 4. Start working
+### 4. Connect your notes (optional)
+
+If you already keep meeting notes, people profiles, and clippings in a notes app like Obsidian, `/setup` can connect that folder as a read-only knowledge source. It stays where it is, and the agent can read it in every session:
+
+- Claude Code gets read access through `.claude/settings.local.json`. That file is gitignored because the path only works on your machine, so teammates connect their own notes folder.
+- The folder is listed under `knowledge_sources` in `.compound-marketing.yml`. Codex reads it from there.
+- If [QMD](https://github.com/tobi/qmd) is installed, `/setup` offers to index the folder so the agent searches it instead of opening files one at a time.
+
+The agent checks your notes for context on customers, people, and past meetings, and never writes to them. Notes are raw input, like `incoming/`: before a fact from a note backs a published claim, the agent proposes adding it to a brain file and asks you first.
+
+### 5. Start working
 
 Once setup finishes, you're ready to go. Ask for what you need in plain language, or use a slash command:
 
@@ -143,9 +153,9 @@ scripts/           # Generator scripts
 
 Prefer to add the skills to an existing project instead of scaffolding a new repo?
 
-**Claude Code:**
+**Claude Code:** load it for a session with
 ```bash
-claude plugin install --plugin-dir ./path-to-compound-marketing
+claude --plugin-dir ./path-to-compound-marketing
 ```
 
 **Codex:** Clone into your Codex plugin path. The `.codex-plugin/plugin.json` manifest registers it automatically.
