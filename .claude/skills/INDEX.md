@@ -1,6 +1,6 @@
 # Skills Index
 
-46 marketing skills organized by function. Each skill lives in its own folder with a `SKILL.md` definition and optional `references/` directory.
+55 skills organized by function. Each skill lives in its own folder with a `SKILL.md` definition and optional `references/` directory.
 
 ## Write — Content Creation
 
@@ -9,6 +9,7 @@
 | [[blog/SKILL.md\|blog]] | Full blog post workflow: brief, outline, draft, lint, review |
 | [[copywriting/SKILL.md\|copywriting]] | Landing page, feature page, product page copy |
 | [[case-studies/SKILL.md\|case-studies]] | Customer case studies with web page and social snippets |
+| [[long-form/SKILL.md\|long-form]] | Datasheets and whitepapers |
 | [[social-content/SKILL.md\|social-content]] | LinkedIn, X, Instagram posts and platform-specific content |
 | [[email-sequence/SKILL.md\|email-sequence]] | Email drip campaigns, nurture sequences, lifecycle emails |
 | [[ad-creative/SKILL.md\|ad-creative]] | Ad headline/description variations at scale |

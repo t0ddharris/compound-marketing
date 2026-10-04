@@ -1,6 +1,6 @@
 # Tactical Assets
 
-Owned by: **Product Marketer**
+Owned by: **you** (skills propose edits; you approve them)
 
 > **Usage Rule:** All content must derive from `positioning-and-messaging.md` and `truth.md`. If information is missing, mark `[VERIFY]`.
 >

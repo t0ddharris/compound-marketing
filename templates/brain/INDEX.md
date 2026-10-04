@@ -1,6 +1,6 @@
 # Brain — Source of Truth Index
 
-Everything in this folder is the authoritative source for product facts, positioning, and market context. All content generation pulls from here. Only the Product Marketer agent can edit these files.
+Everything in this folder is the authoritative source for product facts, positioning, and market context. All content generation pulls from here. Edits require the repository owner's approval.
 
 ## Core Files
 

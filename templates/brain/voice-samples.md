@@ -1,6 +1,6 @@
 # Voice — Calibration Samples
 
-Owned by: **Product Marketer**
+Owned by: **you** (skills propose edits; you approve them)
 
 > The positive companion to `voice-and-tone.md`. Where the voice profile defines dimensions and rules, this file shows what the voice actually sounds like: signature moves with real quoted examples from published writing. Content skills load this alongside the voice profile before drafting.
 >

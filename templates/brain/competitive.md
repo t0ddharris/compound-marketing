@@ -1,6 +1,6 @@
 # Competitive Landscape
 
-Owned by: **Product Marketer**
+Owned by: **you** (skills propose edits; you approve them)
 
 > Extracted from `positioning-and-messaging.md`. This is the canonical source for competitive positioning, territory mapping, and differentiation themes.
 

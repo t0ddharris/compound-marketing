@@ -70,19 +70,6 @@ As you learn more about your market, customers, and product, update these files.
 
 Skills are step-by-step frameworks for specific marketing tasks. Each one has intake questions, references, quality checks, and approval gates. The routing table in CLAUDE.md automatically loads the right skill based on what you ask for.
 
-### Agents — Specialist Roles
-
-Six specialist agents handle tasks that benefit from a focused persona:
-
-| Agent | Role |
-|-------|------|
-| `content-writer` | Blogs, datasheets, whitepapers, case studies |
-| `product-marketer` | Positioning, messaging, brain file ownership |
-| `seo-specialist` | SEO/GEO strategy and optimization |
-| `social-media-manager` | Social content and platform strategy |
-| `campaign-manager` | Multi-channel campaign coordination |
-| `ppc-specialist` | Paid advertising campaigns |
-
 ### Routing — Automatic Skill Selection
 
 You don't need to memorize commands. The system matches your request to the right skill or workflow automatically. Ask in plain language and it routes correctly. Slash commands are shortcuts, not requirements.
@@ -95,9 +82,7 @@ marketing/              All generated content (blog drafts, social posts, report
 marketing/plans/        Backlog and project plans
 incoming/               Drop zone for raw inputs (notes, CSVs, briefs)
 .claude/skills/         Marketing skills (Claude Code)
-.claude/agents/         Specialist agents (Claude Code)
 .agents/skills/         Marketing skills (Codex) — mirrored from .claude/
-.agents/agents/         Specialist agents (Codex) — mirrored from .claude/
 CLAUDE.md               Routing tables and rules (Claude Code)
 AGENTS.md               Routing tables and rules (Codex)
 .compound-marketing.yml       Runtime configuration

@@ -1,6 +1,6 @@
 # Qualifying Questions
 
-Owned by: **Product Marketer**
+Owned by: **you** (skills propose edits; you approve them)
 
 > Use these to determine whether a prospect fits your ICP and to uncover the pain that drives urgency.
 

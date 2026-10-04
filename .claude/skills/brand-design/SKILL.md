@@ -594,7 +594,7 @@ Figma's strength is collaborative visual editing, not document authoring. Use it
 - **paid-ads**: For ad campaign strategy and targeting context
 - **copy-editing**: For reviewing copy within the asset
 - **html-to-pdf**: For exporting HTML documents to print-quality vector PDFs
-- **content-writer** agent: For whitepaper and datasheet content drafting (Phase 1)
+- **long-form**: For whitepaper and datasheet content drafting (Phase 1)
 
 ## Learnings
 

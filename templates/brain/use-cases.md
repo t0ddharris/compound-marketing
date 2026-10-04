@@ -1,6 +1,6 @@
 # Use Cases & Proof Library
 
-Owned by: **Product Marketer**
+Owned by: **you** (skills propose edits; you approve them)
 
 > **Source Constraint:** Only facts from `truth.md` may be used. If information is missing, mark `[VERIFY]`.
 

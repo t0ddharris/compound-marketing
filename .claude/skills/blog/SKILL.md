@@ -8,7 +8,7 @@ description: "Write a blog post from start to finish. Trigger with /blog or when
 
 You are a blog production orchestrator for the company. Your job is to guide a blog post from topic to published-ready draft through a structured, quality-enforced workflow with two approval gates.
 
-**You do not replace the content-writer agent or the copy-editing skill.** You orchestrate them. The content-writer agent's guidelines are the writing standard. The copy-editing skill's Seven Sweeps are the editing standard. This skill is the workflow that ties them together.
+**You do not replace the copy-editing skill.** You orchestrate it. The writing standards in Step 3 are the drafting standard. The copy-editing skill's Seven Sweeps are the editing standard. This skill is the workflow that ties them together.
 
 ---
 
@@ -110,13 +110,15 @@ Ask: "Here's the outline. Want me to proceed to drafting, or would you like chan
 
 Write the full draft following the approved outline.
 
-**Writing standards** (from content-writer agent):
+**Writing standards:**
 - Pull all product facts from `/brain/truth.md`
 - Pull messaging from `/brain/positioning-and-messaging.md`
 - Cite sources inline: `*(source: truth.md)*`
 - Mark unverified claims `[VERIFY]`
+- Length: 800-1,500 words for standard posts; 1,500-2,500 for deep dives
+- Structure: hook (1-2 sentences) > problem > context > insight or solution > key takeaways > CTA
 - Follow the heading cadence: H2 every 200-300 words
-- Opening: lead with the reader's pain point or the hook from the outline
+- Opening: lead with the reader's pain point or the hook from the outline, never with filler like "In today's world..."
 - Closing: clear takeaway + single CTA
 - No AI slop patterns (see CLAUDE.md and `references/banned-words.md`)
 
@@ -502,10 +504,9 @@ After the blog post metadata, append a social brief section:
 
 **This skill orchestrates, not duplicates.** When the workflow reaches a step that maps to another skill, you MUST load that skill before producing work for that step. Do not attempt to replicate the skill's logic from memory — load it and apply it.
 
-| Step | Skill/Agent to Load | What It Owns |
-|------|---------------------|-------------|
+| Step | Skill to Load | What It Owns |
+|------|---------------|-------------|
 | Pre-workflow (topic selection) | `content-strategy` skill | Topic planning, content calendar |
-| Step 3 (writing) | `content-writer` agent | Blog writing standards, audience calibration, self-edit checklist |
 | Step 4b (editing pass) | `copy-editing` skill | Seven Sweeps framework, AI writing tics detection |
 | Step 4c (SEO check) | `seo-geo` skill | Full SEO/GEO optimization framework |
 | Step 5.5 (images) | Codex `$imagegen` (primary) or Nano Banana (Gemini) API (backup) | Hero image + inline image generation (optional) |
@@ -558,7 +559,6 @@ These are mandatory delegations, not optional references. If the blog workflow r
 | Task | Skill | Mandatory? |
 |------|-------|-----------|
 | Plan what topics to write about | `content-strategy` | Yes — load before Step 1 if topic selection is needed |
-| Write the draft | `content-writer` agent | Yes — load for Step 3 |
 | Edit the draft | `copy-editing` | Yes — load for Step 4b |
 | SEO/GEO optimization | `seo-geo` | Yes — load for Step 4c |
 | Create social posts from the blog | `social-content` | Yes — load for Step 6 |

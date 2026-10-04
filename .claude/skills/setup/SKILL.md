@@ -76,7 +76,6 @@ Where `[runtime]` is `claude` or `codex` from Step 1b, and `[knowledge-dir]` is 
 This script:
 - Creates the directory structure
 - Copies all skills into both `.claude/skills/` and `.agents/skills/` (hardlinked)
-- Copies agents into the primary runtime's agents directory
 - Generates both `CLAUDE.md` and `AGENTS.md` (identical except title and path references)
 - Writes `.compound-marketing.yml` with the primary runtime setting
 - Copies brain templates with `[FILL IN]` placeholders
@@ -87,7 +86,6 @@ This script:
 If the script doesn't exist or fails, do the same work manually:
 - `mkdir -p` the directory tree
 - Copy skills into both `.claude/skills/` and `.agents/skills/`
-- Copy agents into the primary runtime's agents directory
 - Generate both `CLAUDE.md` and `AGENTS.md`
 - Write `.compound-marketing.yml` with `primary_runtime: [claude|codex]` (plus `knowledge_sources: ["[knowledge-dir]"]` if set)
 - If a knowledge folder was given, write `.claude/settings.local.json` with `{"permissions": {"additionalDirectories": ["[knowledge-dir]"]}}`

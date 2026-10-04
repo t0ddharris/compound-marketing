@@ -6,17 +6,17 @@ This folder is the single source of truth for all marketing content.
 
 The repository owner is the final authority on all product facts, positioning, and messaging. All additions to `/brain/` require their approval.
 
-## Ownership
+## Editing
 
-- **Product Marketer** owns and maintains all files in `/brain/`
-- All other agents may **read** but **not modify** these files
-- The repository owner has final approval over all content
+- Skills propose edits to these files; the repository owner approves them before anything is written
+- New facts go into `truth.md` only after explicit confirmation
+- `product-marketing` is the main skill for building out positioning, messaging, personas, and competitive files
 
 ## Rules
 
 1. All factual claims must originate from `truth.md`
-2. If information is missing, agents must ask or mark `[VERIFY]`
-3. No agent may invent product facts, customer names, metrics, or features
+2. If information is missing, ask or mark `[VERIFY]`
+3. Never invent product facts, customer names, metrics, or features
 4. When in doubt, leave a placeholder rather than guess
 
 ---

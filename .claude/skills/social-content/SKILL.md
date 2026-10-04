@@ -233,6 +233,13 @@ Turn one piece of content into many. The best social content isn't created from 
 
 **For surfacing *which* posts to comment on** (top-10 daily lists, brand/competitor monitoring, intent-signal triage), see [references/listening.md](references/listening.md). Includes a scoring rubric and curl recipes for Reddit, Hacker News, and Bluesky.
 
+### Replying to Comments on Your Posts
+
+- **Product questions:** answer only from `/brain/truth.md`. If it isn't there, say you'll check and flag it for the user.
+- **Negative feedback:** acknowledge, don't argue. Offer to move to DMs or a support channel.
+- **Competitor comparisons:** stay factual, use the differentiation in `/brain/positioning-and-messaging.md`, never disparage.
+- **Compliments:** thank briefly; don't over-engage.
+
 ### Quality Comments
 
 - Add new insight, not just "Great post!"
