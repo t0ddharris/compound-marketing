@@ -22,23 +22,27 @@ Works with **Claude Code** and **OpenAI Codex**.
 
 **Prerequisites:** [Claude Code](https://docs.anthropic.com/en/docs/claude-code) or [OpenAI Codex](https://openai.com/codex). Optional: [Vale](https://vale.sh/) for content linting, [GitHub CLI](https://cli.github.com/) (`gh`) for PR workflows, the [Codex CLI](https://github.com/openai/codex) signed in with a ChatGPT account for image generation (no API key needed), and [QMD](https://github.com/tobi/qmd) for searching a connected notes folder.
 
-### 1. Clone and scaffold
+### 1. Clone and run setup
+
+Clone the generator and run `/setup` from inside it:
 
 ```bash
 git clone https://github.com/t0ddharris/compound-marketing.git compound-marketing
 cd compound-marketing
-./scripts/create-instance.sh
-```
-
-This asks for your company name and creates a standalone repo (e.g., `../your-company-marketing/`) with all skills and brain templates.
-
-### 2. Run setup
-
-```bash
-cd ../your-company-marketing
 claude          # or: codex
 /setup
 ```
+
+`/setup` asks for your company name and creates your marketing repo next to the generator. If you cloned into `~/Development`, you get:
+
+```
+~/Development/compound-marketing/          # the generator (this repo)
+~/Development/your-company-marketing/      # your marketing repo, where you work from now on
+```
+
+It's a real folder, not a temp one. The new repo has all the skills, brain templates, `CLAUDE.md`, and `AGENTS.md`, plus an initial git commit. It has no remote; add one if you want it on GitHub. Keep the generator clone only if you want to pull future skill updates.
+
+### 2. Answer the setup questions
 
 `/setup` is a guided walkthrough. It will:
 
@@ -51,13 +55,15 @@ claude          # or: codex
 
 You don't need perfect answers. Anything you skip stays as a `[FILL IN]` placeholder that you can complete later.
 
+Prefer to scaffold without the walkthrough? `./scripts/create-instance.sh` creates the same repo from the command line, but leaves every brain file as a `[FILL IN]` template.
+
 ### 3. Bring your own docs (optional)
 
-Already have messaging frameworks, product overviews, brand guidelines, or competitive research? Drop them in the `incoming/` folder before or during setup:
+Already have messaging frameworks, product overviews, brand guidelines, or competitive research? Once `/setup` has created your repo, drop them in its `incoming/` folder:
 
 ```bash
-cp ~/Documents/our-messaging.pdf incoming/
-cp ~/Documents/brand-guide.pdf incoming/
+cp ~/Documents/our-messaging.pdf ../your-company-marketing/incoming/
+cp ~/Documents/brand-guide.pdf ../your-company-marketing/incoming/
 ```
 
 `/setup` will ask if you have reference files in `incoming/` and use the content to pre-fill your brain files (with your approval before writing anything). Supports PDFs, Markdown, plain text, and images. This can save significant manual entry.
@@ -76,7 +82,7 @@ The agent checks your notes for context on customers, people, and past meetings,
 
 ### 5. Start working
 
-Once setup finishes, you're ready to go. Ask for what you need in plain language, or use a slash command:
+Once setup finishes, open your new repo (`cd ../your-company-marketing && claude`) and ask for what you need in plain language, or use a slash command:
 
 ```
 /blog              Write a blog post
