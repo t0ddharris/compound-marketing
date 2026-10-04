@@ -102,13 +102,17 @@ If the script doesn't exist or fails, do the same work manually:
 
 Skip if there's no `[knowledge-dir]`.
 
-If `qmd` is installed (`command -v qmd`), check `qmd collection list` for a collection already pointing at `[knowledge-dir]`. If none, offer:
+If `qmd` isn't installed (`command -v qmd`), tell the user and offer to install it:
+
+> QMD isn't installed. It lets me search your notes instead of reading them one by one, which matters for a large vault. Want me to install it? (`npm install -g @tobilu/qmd`, needs Node.js)
+
+If they agree and `npm` is available, run the install. If they decline or there's no `npm`, tell them the instance will search notes with grep and they can install QMD later, then skip the rest of this step.
+
+Once `qmd` is available, check `qmd collection list` for a collection already pointing at `[knowledge-dir]`. If none, offer:
 
 > Want me to index your notes with QMD so I can search them instead of reading files one by one?
 
 If they agree, run `qmd collection add "[knowledge-dir]" --name [company-slug]-notes`, then `qmd embed`. Indexing can take a few minutes on a large vault.
-
-If `qmd` isn't installed, skip silently. The instance falls back to grep.
 
 ---
 
