@@ -68,7 +68,7 @@ If you already keep meeting notes, people profiles, and clippings in a notes app
 
 - Claude Code gets read access through `.claude/settings.local.json`. That file is gitignored because the path only works on your machine, so teammates connect their own notes folder.
 - The folder is listed under `knowledge_sources` in `.compound-marketing.yml`. Codex reads it from there.
-- If [QMD](https://github.com/tobi/qmd) is installed, `/setup` offers to index the folder so the agent searches it instead of opening files one at a time.
+- `/setup` offers to index the folder with [QMD](https://github.com/tobi/qmd) so the agent searches it instead of opening files one at a time. QMD doesn't ship with Compound Marketing; `/setup` offers to install it, or install it yourself with `npm install -g @tobilu/qmd` (needs Node.js). Without it, the agent searches with grep.
 
 The agent checks your notes for context on customers, people, and past meetings, and never writes to them. Notes are raw input, like `incoming/`: before a fact from a note backs a published claim, the agent proposes adding it to a brain file and asks you first.
 
