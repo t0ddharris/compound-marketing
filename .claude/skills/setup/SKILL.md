@@ -1,6 +1,6 @@
 ---
 name: setup
-version: 3.0.0
+version: 3.1.0
 description: "Create a new Compound Marketing instance for your company. Trigger with /setup. Asks your company name, scaffolds a standalone repo with all skills and brain templates, then walks you through configuring everything."
 ---
 
@@ -10,7 +10,7 @@ Run `/setup` to create a new, fully configured Compound Marketing instance for y
 
 ## Overview
 
-1. Ask company name, location, and preferred AI runtime
+1. Ask company name, location, preferred AI runtime, and any existing notes folder to connect
 2. Run the generator script to scaffold everything
 3. Scrape the website (optional) to pre-fill brain files
 4. Import reference documents from `incoming/` (optional) to pre-fill brain files
@@ -48,15 +48,30 @@ Store the choice as `claude` or `codex`.
 
 ---
 
+## Step 1c: Knowledge Source (Optional)
+
+Ask the user:
+
+> Do you keep working notes somewhere you want me to read every session, like an Obsidian vault with meeting notes, people profiles, and clippings? If so, what's the folder path?
+
+If they give a path:
+- Expand `~` and confirm the folder exists. If it doesn't, ask again or skip.
+- It must not be inside the target path from Step 1. The notes stay where they are; the new repo only points at them.
+- Store it as `[knowledge-dir]`.
+
+If they don't have one, leave `[knowledge-dir]` empty and move on.
+
+---
+
 ## Step 2: Create the Repo
 
 Run the generator script to scaffold the new repo:
 
 ```bash
-./scripts/create-instance.sh "[company-name]" "[target-path]" "[runtime]"
+./scripts/create-instance.sh "[company-name]" "[target-path]" "[runtime]" "[knowledge-dir]"
 ```
 
-Where `[runtime]` is `claude` or `codex` from Step 1b.
+Where `[runtime]` is `claude` or `codex` from Step 1b, and `[knowledge-dir]` is the folder from Step 1c (omit the argument if there isn't one).
 
 This script:
 - Creates the directory structure
@@ -66,6 +81,7 @@ This script:
 - Writes `.compound-marketing.yml` with the primary runtime setting
 - Copies brain templates with `[FILL IN]` placeholders
 - Copies Vale styles, settings, .gitignore
+- If a knowledge folder was given: grants Claude Code read access in `.claude/settings.local.json` (`permissions.additionalDirectories`, gitignored) and lists it under `knowledge_sources:` in `.compound-marketing.yml`
 - Initializes git with an initial commit
 
 If the script doesn't exist or fails, do the same work manually:
@@ -73,11 +89,26 @@ If the script doesn't exist or fails, do the same work manually:
 - Copy skills into both `.claude/skills/` and `.agents/skills/`
 - Copy agents into the primary runtime's agents directory
 - Generate both `CLAUDE.md` and `AGENTS.md`
-- Write `.compound-marketing.yml` with `primary_runtime: [claude|codex]`
+- Write `.compound-marketing.yml` with `primary_runtime: [claude|codex]` (plus `knowledge_sources: ["[knowledge-dir]"]` if set)
+- If a knowledge folder was given, write `.claude/settings.local.json` with `{"permissions": {"additionalDirectories": ["[knowledge-dir]"]}}`
 - Copy brain/, styles/, PRODUCT.md, INDEX.md, .vale.ini, .claude/settings.json, .env.example, .gitignore
 - `git init && git add -A && git commit -m "Initial setup: [Company] Compound Marketing instance"`
 
 **All remaining steps operate on files in the NEW repo, not the compound-marketing source repo.**
+
+---
+
+## Step 2a: Index the Knowledge Source (if set)
+
+Skip if there's no `[knowledge-dir]`.
+
+If `qmd` is installed (`command -v qmd`), check `qmd collection list` for a collection already pointing at `[knowledge-dir]`. If none, offer:
+
+> Want me to index your notes with QMD so I can search them instead of reading files one by one?
+
+If they agree, run `qmd collection add "[knowledge-dir]" --name [company-slug]-notes`, then `qmd embed`. Indexing can take a few minutes on a large vault.
+
+If `qmd` isn't installed, skip silently. The instance falls back to grep.
 
 ---
 
@@ -272,6 +303,7 @@ Present (adapt the commands based on the runtime they chose — `/` for Claude, 
 ```
 Setup complete. Your Compound Marketing instance is at: [path]
 Primary runtime: [Claude Code | Codex]
+Knowledge source: [knowledge-dir | none]
 
 Brain files configured:
   truth.md, positioning-and-messaging.md, competitive.md,
@@ -338,3 +370,4 @@ Utilities:
 - If the user gives a website URL, offer to read it and extract info (with approval)
 - Keep the pace brisk. Don't over-explain.
 - If the target directory exists, stop and confirm before doing anything
+- Never write into the knowledge source folder

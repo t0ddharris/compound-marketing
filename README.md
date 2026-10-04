@@ -46,6 +46,7 @@ claude          # or: codex
 - Scrape your website (optional) to pull in messaging and features automatically
 - Build a starter positioning statement and buyer personas
 - Extract your brand colors and fonts from your site (optional)
+- Optionally connect an existing notes folder (like an Obsidian vault) as a read-only knowledge source
 - Set up integrations (HubSpot, LinkedIn, Google AI Studio, etc.)
 
 You don't need perfect answers. Anything you skip stays as a `[FILL IN]` placeholder that you can complete later.
