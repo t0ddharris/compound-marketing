@@ -26,7 +26,9 @@ This project is a starter kit. You download it once, and its setup command build
 
 ### 1. Download the starter kit and run setup
 
-Open Terminal and run these commands. They put everything in a `Development` folder in your home folder; use any folder you like (create it first with `mkdir ~/Development` if it doesn't exist):
+Open Terminal and run the commands below. They use a folder called `Development` in your home folder, but any folder works. To use `Documents` instead, change the first line to `cd ~/Documents`. If you pick a folder that doesn't exist yet, create it first (for example, `mkdir ~/Development`).
+
+One caution: avoid folders that a sync service like iCloud, OneDrive, or Dropbox backs up, because syncing can damage the change history git keeps. Work laptops often sync `Documents` and `Desktop` this way. On a Mac, iCloud does it when "Desktop & Documents Folders" is turned on under System Settings › your name › iCloud. If you're not sure, `~/Development` is a safe choice.
 
 ```bash
 cd ~/Development
@@ -37,7 +39,7 @@ claude          # or: codex
 
 `git clone` downloads this project into a new `compound-marketing` folder. The last line starts your agent. When it's ready, type `/setup`.
 
-Setup asks for your company name and creates your company's folder next to the starter kit:
+Setup asks for your company name and creates your company's folder next to the starter kit. It shows you the location first, so you can pick a different one:
 
 ```
 ~/Development/compound-marketing/          # the starter kit you downloaded
