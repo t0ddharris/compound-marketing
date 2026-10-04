@@ -232,7 +232,7 @@ Show the user what integrations are available and ask which ones they want to se
 
 | Service | What it powers | Required? |
 |---------|---------------|-----------|
-| **OpenAI** | Image generation via API (`/image-gen`) | Optional — or skip it and use a logged-in Codex CLI (`codex login`), which generates images on a ChatGPT plan with no key |
+| **Codex CLI** | Image generation (`/image-gen`, blog, thumbnails) via `codex login` with a ChatGPT account. No API key | Recommended |
 | **Google AI Studio** | Backup image generation (Nano Banana) when the Codex CLI isn't available | Optional |
 | **HubSpot** | Email, page, and campaign analytics | Optional |
 | **LinkedIn** | Post and page analytics | Optional |
