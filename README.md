@@ -20,69 +20,77 @@ Works with **Claude Code** and **OpenAI Codex**.
 
 ## Getting Started
 
-**Prerequisites:** [Claude Code](https://docs.anthropic.com/en/docs/claude-code) or [OpenAI Codex](https://openai.com/codex). Optional: [Vale](https://vale.sh/) for content linting, [GitHub CLI](https://cli.github.com/) (`gh`) for PR workflows, the [Codex CLI](https://github.com/openai/codex) signed in with a ChatGPT account for image generation (no API key needed), and [QMD](https://github.com/tobi/qmd) for searching a connected notes folder.
+You need [Claude Code](https://docs.anthropic.com/en/docs/claude-code) or [OpenAI Codex](https://openai.com/codex). Both are AI agents that run in your terminal (the Terminal app on a Mac). Everything else is optional: [Vale](https://vale.sh/) checks drafts for banned words and AI tells, the [GitHub CLI](https://cli.github.com/) (`gh`) helps if you put your work on GitHub, the [Codex CLI](https://github.com/openai/codex) signed in with a ChatGPT account makes images (no API key needed), and [QMD](https://github.com/tobi/qmd) searches a notes folder if you connect one.
 
-### 1. Clone and run setup
+This project is a starter kit. You download it once, and its setup command builds a separate folder just for your company, with its own copy of the skills and a set of blank "brain" files that hold your company's facts, positioning, and brand. You do all your marketing work in that new folder.
 
-Clone the generator and run `/setup` from inside it:
+### 1. Download the starter kit and run setup
+
+Open Terminal and run these commands. They put everything in a `Development` folder in your home folder; use any folder you like (create it first with `mkdir ~/Development` if it doesn't exist):
 
 ```bash
-git clone https://github.com/t0ddharris/compound-marketing.git compound-marketing
+cd ~/Development
+git clone https://github.com/t0ddharris/compound-marketing.git
 cd compound-marketing
 claude          # or: codex
-/setup
 ```
 
-`/setup` asks for your company name and creates your marketing repo next to the generator. If you cloned into `~/Development`, you get:
+`git clone` downloads this project into a new `compound-marketing` folder. The last line starts your agent. When it's ready, type `/setup`.
+
+Setup asks for your company name and creates your company's folder next to the starter kit:
 
 ```
-~/Development/compound-marketing/          # the generator (this repo)
-~/Development/your-company-marketing/      # your marketing repo, where you work from now on
+~/Development/compound-marketing/          # the starter kit you downloaded
+~/Development/your-company-marketing/      # your company's folder, where you'll work
 ```
 
-It's a real folder, not a temp one. The new repo has all the skills, brain templates, `CLAUDE.md`, and `AGENTS.md`, plus an initial git commit. It has no remote; add one if you want it on GitHub. Keep the generator clone only if you want to pull future skill updates.
+Both are ordinary, permanent folders on your computer; nothing goes to a temporary location. Your company's folder is also a git repository, which means it keeps a history of every change so you can see what changed and undo mistakes. It stays on your computer unless you choose to put it on GitHub. Keep the starter kit folder if you want future updates; otherwise you can delete it.
 
 ### 2. Answer the setup questions
 
-`/setup` is a guided walkthrough. It will:
+Setup is a conversation. It will:
 
 - Ask about your product, target customer, and category
-- Scrape your website (optional) to pull in messaging and features automatically
-- Build a starter positioning statement and buyer personas
-- Extract your brand colors and fonts from your site (optional)
-- Optionally connect an existing notes folder (like an Obsidian vault) as a read-only knowledge source
-- Set up integrations (Codex CLI for images, HubSpot, LinkedIn, Granola, etc.)
+- Read your website (optional) to pull in messaging and features
+- Draft a starter positioning statement and buyer personas
+- Pick up your brand colors and fonts from your site (optional)
+- Connect a folder of notes you already keep (optional, see step 4)
+- Connect other tools: image generation, HubSpot, LinkedIn, Granola, and more
 
 You don't need perfect answers. Anything you skip stays as a `[FILL IN]` placeholder that you can complete later.
 
-Prefer to scaffold without the walkthrough? `./scripts/create-instance.sh` creates the same repo from the command line, but leaves every brain file as a `[FILL IN]` template.
+Comfortable in the terminal and want to skip the conversation? `./scripts/create-instance.sh` creates the same company folder, but leaves every brain file blank.
 
 ### 3. Bring your own docs (optional)
 
-Already have messaging frameworks, product overviews, brand guidelines, or competitive research? Once `/setup` has created your repo, drop them in its `incoming/` folder:
+Have messaging frameworks, product overviews, brand guidelines, or competitive research? When setup asks, copy them into the `incoming` folder inside your company's folder. Drag them in with Finder, or from Terminal:
 
 ```bash
-cp ~/Documents/our-messaging.pdf ../your-company-marketing/incoming/
-cp ~/Documents/brand-guide.pdf ../your-company-marketing/incoming/
+cp ~/Documents/our-messaging.pdf ~/Development/your-company-marketing/incoming/
 ```
 
-`/setup` will ask if you have reference files in `incoming/` and use the content to pre-fill your brain files (with your approval before writing anything). Supports PDFs, Markdown, plain text, and images. This can save significant manual entry.
+Setup reads PDFs, Markdown, plain text, and images, then shows you what it wants to add to your brain files and asks before writing anything. That saves a lot of typing.
 
-After setup, run `/brain-ingest` to keep feeding the brain. It reads from `incoming/` or directly from whatever connectors your agent has (email, Google Drive, SharePoint, meeting notes), proposes changes file by file with a source on every fact, flags conflicts with what's already there, and writes only what you approve.
+The brain keeps growing after setup. Run `/brain-ingest` whenever you find something useful. It reads files in `incoming` or pulls straight from the tools your agent is connected to, like email, Google Drive, SharePoint, or meeting notes. For each brain file it shows the changes it suggests and where each fact came from, flags anything that disagrees with what's already there, and writes only what you approve.
 
 ### 4. Connect your notes (optional)
 
-If you already keep meeting notes, people profiles, and clippings in a notes app like Obsidian, `/setup` can connect that folder as a read-only knowledge source. It stays where it is, and the agent can read it in every session:
+If you keep meeting notes, people profiles, and clippings in a notes app like Obsidian, setup can let the agent read that folder. Your notes stay where they are, and the agent never changes them. It checks them for context on customers, people, and past meetings. Before a fact from your notes goes into anything you publish, the agent suggests adding it to a brain file and asks you first.
 
-- Claude Code gets read access through `.claude/settings.local.json`. That file is gitignored because the path only works on your machine, so teammates connect their own notes folder.
-- The folder is listed under `knowledge_sources` in `.compound-marketing.yml`. Codex reads it from there.
-- `/setup` offers to index the folder with [QMD](https://github.com/tobi/qmd) so the agent searches it instead of opening files one at a time. QMD doesn't ship with Compound Marketing; `/setup` offers to install it, or install it yourself with `npm install -g @tobilu/qmd` (needs Node.js). Without it, the agent searches with grep.
+Setup also offers to install [QMD](https://github.com/tobi/qmd), a search tool that lets the agent find the right note without opening every file. You can install it yourself with `npm install -g @tobilu/qmd` (needs Node.js). Without it, the agent still searches, just more slowly.
 
-The agent checks your notes for context on customers, people, and past meetings, and never writes to them. Notes are raw input, like `incoming/`: before a fact from a note backs a published claim, the agent proposes adding it to a brain file and asks you first.
+Under the hood: Claude Code gets read access through `.claude/settings.local.json`, which stays on your machine and out of git because the path only works there. The folder is also listed under `knowledge_sources` in `.compound-marketing.yml`, which is where Codex finds it.
 
 ### 5. Start working
 
-Once setup finishes, open your new repo (`cd ../your-company-marketing && claude`) and ask for what you need in plain language, or use a slash command:
+From now on, start your agent in your company's folder:
+
+```bash
+cd ~/Development/your-company-marketing
+claude          # or: codex
+```
+
+Then ask for what you need in plain language, or use a slash command:
 
 ```
 /blog              Write a blog post
