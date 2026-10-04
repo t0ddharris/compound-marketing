@@ -1,0 +1,10 @@
+# Secrets
+.env
+
+# macOS
+.DS_Store
+
+# Local tooling
+.playwright-mcp/
+.mcp.json
+.obsidian/

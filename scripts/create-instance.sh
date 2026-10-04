@@ -158,7 +158,7 @@ cp "$TEMPLATES/PRODUCT.md" "$TARGET/PRODUCT.md"
 cp "$TEMPLATES/INDEX.md" "$TARGET/INDEX.md"
 cp "$TEMPLATES/.vale.ini" "$TARGET/.vale.ini"
 cp "$TEMPLATES/.env.example" "$TARGET/.env.example" 2>/dev/null || true
-cp "$REPO_ROOT/.gitignore" "$TARGET/.gitignore" 2>/dev/null || true
+cp "$TEMPLATES/.gitignore" "$TARGET/.gitignore"
 
 # --- Runtime config ---
 # "both" defaults to claude as primary for sync direction

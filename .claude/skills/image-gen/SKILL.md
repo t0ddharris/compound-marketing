@@ -1,7 +1,7 @@
 ---
 name: image-gen
-version: 1.2.0
-description: "Generate editorial illustrations and graphics using OpenAI GPT Image (via API key or a logged-in Codex CLI with no key) or Google Gemini (Nano Banana). Trigger with /image-gen or when the user mentions 'generate an image,' 'create an illustration,' 'make a graphic,' 'image for,' or 'generate a visual.' Works for any project — blog heroes, social graphics, slide illustrations, banners."
+version: 1.3.0
+description: "Generate editorial illustrations and graphics with ChatGPT's image model through a logged-in Codex CLI (no API key), with Google Gemini (Nano Banana) as the backup. Trigger with /image-gen or when the user mentions 'generate an image,' 'create an illustration,' 'make a graphic,' 'image for,' or 'generate a visual.' Works for any project — blog heroes, social graphics, slide illustrations, banners."
 ---
 
 # Image Generation
@@ -14,21 +14,19 @@ You are an image generation specialist. You use OpenAI's GPT Image models or Goo
 
 ## Prerequisites
 
-This skill needs at least one image provider:
+**Always generate with Codex.** Use Gemini only as the backup, and the OpenAI API only when the user explicitly asks for it in the current request. Never pick the OpenAI API just because `OPENAI_API_KEY` is set: that key may exist for other purposes.
 
-- **OpenAI API:** `OPENAI_API_KEY` in `.env`. Get a key at: https://platform.openai.com/api-keys
-- **Codex (no API key):** the `codex` CLI installed and logged in with a ChatGPT account (`codex login status`). Uses Codex's built-in `$imagegen` (GPT Image) and counts against the ChatGPT plan's Codex usage limits, which image turns consume 3–5x faster than normal turns.
-- **Gemini API:** `GOOGLE_AI_STUDIO_API_KEY` in `.env`. Get a key at: https://aistudio.google.com/apikey
-
-If more than one provider is available, ask the user which to use (see Step 4). If only one is available, use it.
+- **Codex (default, no API key):** the `codex` CLI installed and logged in with a ChatGPT account (`codex login status`). Uses Codex's built-in `$imagegen` (GPT Image) and counts against the ChatGPT plan's Codex usage limits, which image turns consume 3–5x faster than normal turns.
+- **Gemini API (backup):** `GOOGLE_AI_STUDIO_API_KEY` in `.env`. Used when Codex isn't available or fails. Get a key at: https://aistudio.google.com/apikey
+- **OpenAI API (explicit opt-in only):** `OPENAI_API_KEY` in `.env`. Pay-per-image, no plan limits; useful for large batches, exact pixel sizes, or transparent backgrounds. Use it only when the user asks for the OpenAI API by name.
 
 ---
 
 ## Available Models
 
-Select the model based on the user's request or the task requirements. Default to **Codex** (ChatGPT's image model, no API key) when the Codex CLI is logged in. Otherwise use **GPT Image 2.5 Flare** if `OPENAI_API_KEY` is set, then **Nano Banana 2** as the backup.
+Select the model based on the user's request or the task requirements. Default to **Codex** (ChatGPT's image model, no API key). If Codex is unavailable or fails, use **Nano Banana 2**. The OpenAI API models below are used only when the user explicitly asks for the OpenAI API.
 
-**OpenAI** (Image API, `POST https://api.openai.com/v1/images/generations`):
+**OpenAI API** (explicit opt-in only; `POST https://api.openai.com/v1/images/generations`):
 
 | Name | API Model ID | Best For |
 |------|-------------|----------|
@@ -58,7 +56,7 @@ Gather the following from the user. If any are missing, ask before proceeding.
 | **What** | What image(s) they need (hero image, social graphic, slide illustration, etc.) | Yes |
 | **Where** | Where it'll be used (blog, LinkedIn, presentation, website, ad) | Yes |
 | **Concept** | The idea, metaphor, or subject matter to visualize | Yes |
-| **Model** | Which model to use (see Available Models above) | No (default: Codex; then GPT Image 2.5 Flare via API; then Nano Banana 2) |
+| **Model** | Which model to use (see Available Models above) | No (default: Codex; backup: Nano Banana 2; OpenAI API only on explicit request) |
 | **Mood/tone** | Feeling it should convey (technical, warm, urgent, calm, playful, etc.) | No (default: professional, analytical) |
 | **Style** | Style preset (see table below) or custom description | No (default: editorial) |
 | **Quantity** | How many images (default: 1) | No |
@@ -232,18 +230,17 @@ Ask: "Here's the prompt I'll send. Want me to generate, or would you like to adj
 
 ```bash
 source .env 2>/dev/null || true
-[ -n "$OPENAI_API_KEY" ] && echo "OPENAI_API_AVAILABLE"
 command -v codex >/dev/null && codex login status 2>&1 | grep -q "ChatGPT" && echo "CODEX_AVAILABLE"
 [ -n "$GOOGLE_AI_STUDIO_API_KEY" ] && echo "GEMINI_API_AVAILABLE"
 ```
 
-- **None available:** tell the user the three options from Prerequisites and stop.
-- **One available:** use it, and say which one in a line.
-- **More than one:** ask the user to choose before generating, recommending Codex first. Suggest the OpenAI API for large batches (API pricing, no plan limits) and Gemini when they ask for Nano Banana or Codex fails. Remember the choice for the rest of the session.
+- **Codex available:** use Codex. Don't ask.
+- **Codex unavailable or it fails:** use Gemini if its key is set, and say so in a line. Suggest `codex login` (or `codex update`) for next time.
+- **Neither:** tell the user to log in to the Codex CLI (`codex login`) or add `GOOGLE_AI_STUDIO_API_KEY`, and stop.
 
-If the user picked a specific model in Step 1, that settles the provider.
+**The OpenAI API is never chosen automatically**, even when `OPENAI_API_KEY` is set. Use it only when the user explicitly asks for the OpenAI API in this request. If they ask for Nano Banana or Gemini by name, use Gemini.
 
-#### Make the API Call (OpenAI)
+#### Make the API Call (OpenAI, explicit opt-in only)
 
 ```python
 python3 << 'PYEOF'
