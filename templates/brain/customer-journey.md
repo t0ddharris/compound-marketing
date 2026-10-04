@@ -1,6 +1,6 @@
 # Customer Journey Intelligence
 
-Owned by: **Product Marketer**
+Owned by: **you** (skills propose edits; you approve them)
 
 > This file captures the real mechanics of how prospects find you, what triggers conversion, where deals stall, and what accelerates them. Mine from sales call transcripts and use to inform email sequences, landing pages, case studies, and conversion-focused content.
 >

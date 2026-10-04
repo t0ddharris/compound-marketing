@@ -1,6 +1,6 @@
 # Product Capabilities
 
-Owned by: **Product Marketer**
+Owned by: **you** (skills propose edits; you approve them)
 
 > Source of truth for approved capability descriptions, technical details, and proof points.
 > All claims must be verified before adding. Use `[FILL IN]` or `[VERIFY]` for missing data.

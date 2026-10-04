@@ -4,13 +4,12 @@ This is the source repo for Compound Marketing, a distributable system that crea
 
 ## What This Repo Is
 
-A generator, not a marketing instance. Users clone this repo, run `/setup`, and it scaffolds a new standalone repo for their company with all skills, agents, brain templates, and config. Supports both Claude Code and OpenAI Codex as runtimes.
+A generator, not a marketing instance. Users clone this repo, run `/setup`, and it scaffolds a new standalone repo for their company with all skills, brain templates, and config. Supports both Claude Code and OpenAI Codex as runtimes.
 
 ## Repo Structure
 
 ```
 .claude/skills/       # Marketing skills (copied to generated repos)
-.claude/agents/       # Specialist agents (copied to generated repos)
 templates/            # Everything that gets copied into a new instance:
   CLAUDE.md           #   Instance instructions, routing tables, guardrails
   brain/              #   Brain file templates with [FILL IN] placeholders
@@ -41,6 +40,6 @@ Do not modify files in `templates/` to be company-specific. They must remain gen
 
 ## Working in This Repo
 
-When working here, you are maintaining the generator itself: skills, agents, templates, scripts, and docs. You are not doing marketing work. The routing tables and brain file rules in `templates/CLAUDE.md` apply to generated instances, not here.
+When working here, you are maintaining the generator itself: skills, templates, scripts, and docs. You are not doing marketing work. The routing tables and brain file rules in `templates/CLAUDE.md` apply to generated instances, not here.
 
 **Learnings never accumulate in this repo.** The `## Learnings` sections in `.claude/skills/` ship empty — they exist for generated instances to fill via `/reflect`. When a session here surfaces a skill improvement, edit the skill body through a normal PR (framed as a product change), or record it in a user-level skill outside this repo. Never append session-tagged learning entries to skills here; CI (`scripts/check-leakage.sh`) rejects them.

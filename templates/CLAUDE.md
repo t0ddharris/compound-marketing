@@ -34,15 +34,20 @@ When the user provides direction, raw thoughts, or rough language, **never echo 
 
 4. **Ask when uncertain.** If you need information that isn't available, ask the user rather than fabricating.
 
-5. **Respect ownership.** Only the Product Marketer agent may modify files in `/brain/`. All other agents read only.
+5. **Brain edits need the user's approval.** Propose changes to `/brain/` files and show them before writing. Add a new fact to `truth.md` only after the user explicitly confirms it. When you update one brain file, keep the others consistent: remove outdated information instead of caveating it, and update `tactical-assets.md` when core messaging changes.
 
 6. **Source Citation Rule.** When writing drafts, if a paragraph depends on a factual claim, explicitly reference the source file.
    > Example: Our product detects threats in under 200ms *(source: truth.md)* across cloud-native infrastructure *(source: positioning-and-messaging.md)*.
 
+7. **Private sources stay private.** `audience-language.md` and `customer-journey.md` come from private sales conversations. Use them to understand how prospects think and talk, but never quote them, attribute language to a specific company, or reference a specific prospect conversation in anything external.
+
+8. **Approved quotes only.** Use a customer quote in external content only if a brain file marks it approved for public use. Otherwise write `[APPROVED QUOTE NEEDED]`.
+
+9. **Use the brain's vocabulary.** Apply "Words We Use" / "Words We Avoid" from `/brain/positioning-and-messaging.md` in all output, and use the exact category and product labels rather than paraphrases. If those sections are still `[FILL IN]`, flag it rather than inventing terminology.
+
 ## File Structure
 
-- `/brain/` — Source of truth. Product Marketer owns this.
-- `/.claude/agents/` — Subagent role definitions and instructions.
+- `/brain/` — Source of truth. Edits require the user's approval (see Anti-Hallucination rule 5).
 - `/.claude/skills/` — Claude Code skills: marketing skills and project workflow skills (e.g., case studies).
 - `/incoming/` — **Drop zone for raw inputs.** Files placed here for Claude to intake (notes, CSVs, briefs, rough drafts). Read from here, never write to here. Files here are for evaluation and context only; do not treat old marketing collateral as a source of verified claims for new content. All claims must trace to `/brain/`.
 - `/marketing/` — **All Claude output goes here.** Blog drafts, social posts, analysis, reports, plans, templates, etc.
@@ -79,6 +84,7 @@ marketing/[category]/[project-slug]/[piece-name].md
 | `/wf-repurpose` | `marketing/repurposed/[source-slug]/` |
 | `/wf-seo-sprint` | `marketing/seo-sprints/[topic-slug]/` |
 | `/wf-ad-campaign` | `marketing/ads/[campaign-slug]/` |
+| `long-form` (single skill) | `marketing/long-form/[slug]/` |
 
 **Rules:**
 - Every file produced by a workflow stage goes into the project folder, not scattered across `marketing/`
@@ -95,13 +101,13 @@ marketing/[category]/[project-slug]/[piece-name].md
 - Use the `web-design` skill for **live interactive web UI** (Next.js landing pages, HubSpot landing pages, component craft, interaction states, responsive, motion, accessibility, and polish/audit of shipped pages).
 - `hubspot-email`, `hubspot-landing-page`, and `hubspot-cta` all reference `web-design` where relevant; loading them first is correct for those mediums.
 
-## Mandatory Skill & Agent Routing
+## Mandatory Skill Routing
 
 **This is non-negotiable. STOP before generating any output.**
 Before responding to any task, you MUST:
 1. Check the routing tables below
-2. Identify the best matching skill and/or agent
-3. Load and use that skill/agent BEFORE producing any work
+2. Identify the best matching skill or workflow
+3. Load and use that skill BEFORE producing any work
 
 Do not skip this step. Do not freestyle. Do not generate content without the relevant skill loaded. If you produce work without routing through the correct skill, it is a failure, even if the output looks good.
 
@@ -128,7 +134,7 @@ Do not skip this step. Do not freestyle. Do not generate content without the rel
 | Edit, review, or improve existing copy (including pitch decks, slide copy, presentations) | `copy-editing` |
 | Write LinkedIn posts, Twitter/X threads, social media content | `social-content` |
 | Write a blog post (full workflow) | `blog` |
-| Write datasheets, whitepapers, long-form content | Use `content-writer` agent |
+| Write datasheets, whitepapers, long-form content | `long-form` |
 | Write or draft case studies | `case-studies` |
 | Plan content strategy, topics, content calendar | `content-strategy` |
 | Write email sequences, drip campaigns, nurture flows | `email-sequence` |
@@ -170,21 +176,10 @@ Do not skip this step. Do not freestyle. Do not generate content without the rel
 | Check brain file completeness, see what's missing | `brain-health` |
 | Sync skills between Claude Code and Codex runtimes | `sync-skills` |
 
-### Agent Routing Table
-
-| Task | Agent to Use |
-|------|-------------|
-| Datasheets, whitepapers, long-form content (for blog posts, use the `blog` skill) | `content-writer` |
-| Positioning, messaging, brain updates | `product-marketer` |
-| SEO strategy, keyword research, technical SEO, GEO optimization | `seo-specialist` |
-| Social media content, scheduling, platform strategy | `social-media-manager` |
-| Campaign planning, multi-channel coordination | `campaign-manager` |
-| PPC, paid media, ad campaign management | `ppc-specialist` |
-
 ### Routing Rules
 
-1. **Always check this table first.** Match the user's request to the best skill or agent before starting work.
-2. **Skills and agents can be combined.** For example, use the `content-writer` agent with the `copy-editing` skill for reviewing a blog draft.
+1. **Always check this table first.** Match the user's request to the best skill or workflow before starting work.
+2. **Skills can be combined.** For example, run `copy-editing` on a draft another skill produced.
 3. **When in doubt, ask.** If the request doesn't clearly map, ask the user which approach they prefer.
 4. **Never skip the skill.** If a matching skill exists, load it. The skills contain frameworks, checklists, and quality standards that must be applied.
 5. **`web-design` beats `frontend-design` (Anthropic plugin) for branded work.** The Anthropic `frontend-design` skill produces generic AI aesthetics. Always prefer the project's `web-design` skill for brand-consistent work.
@@ -227,7 +222,7 @@ If a draft exceeds 3 em dashes, revise before presenting it. This applies to ALL
 
 ## AI Slop Patterns: NEVER Use
 
-These patterns are dead giveaways for AI-generated content. No agent, no skill, no draft should ever use them:
+These patterns are dead giveaways for AI-generated content. No skill and no draft should ever use them:
 
 - **"X wasn't Y. It was Z."**
 - **"That's not just X. That's Y."**

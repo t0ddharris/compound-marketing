@@ -1,6 +1,6 @@
 # Voice & Tone
 
-Owned by: **Product Marketer**
+Owned by: **you** (skills propose edits; you approve them)
 
 > How the brand sounds in writing. All content-producing skills (blog, social-content, copywriting, email-sequence, case-studies, copy-editing) read this file and match these patterns. Its companion, `voice-samples.md`, holds quoted calibration examples and signature moves.
 >

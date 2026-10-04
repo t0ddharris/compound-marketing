@@ -17,7 +17,9 @@ Load and run the `launch-strategy` skill to define:
 - Timeline and phases
 - Key messages per phase
 
-**Gate:** User approves the campaign plan before creating assets.
+Then write the campaign brief using [references/campaign-brief.md](references/campaign-brief.md) (brief structure, channel mix by campaign type, KPI framework).
+
+**Gate:** User approves the campaign brief before creating assets.
 
 ## Stage 2: Core Messaging
 

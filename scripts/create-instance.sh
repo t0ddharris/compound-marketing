@@ -122,13 +122,6 @@ mkdir -p "$TARGET/.claude" "$TARGET/.agents"
 cp -R "$REPO_ROOT/.claude/skills" "$TARGET/$PRIMARY_SKILLS_DIR"
 rm -rf "$TARGET/$PRIMARY_SKILLS_DIR/setup"
 
-# --- Agents into both runtime directories (hardlinked) ---
-cp -R "$REPO_ROOT/.claude/agents" "$TARGET/.claude/agents"
-mkdir -p "$TARGET/.agents/agents"
-for f in "$TARGET/.claude/agents/"*; do
-  [ -f "$f" ] && ln "$f" "$TARGET/.agents/agents/$(basename "$f")"
-done
-
 # --- Mirror skills to secondary runtime via hardlinks ---
 mkdir -p "$TARGET/$SECONDARY_SKILLS_DIR"
 cd "$TARGET/$PRIMARY_SKILLS_DIR"
@@ -168,12 +161,10 @@ if [ "$RUNTIME" = "codex" ]; then
   # Generate AGENTS.md as primary from CLAUDE.md template
   sed '1s/Claude Instructions/Codex Instructions/' "$TEMPLATES/CLAUDE.md" \
     | sed 's|/\.claude/skills/|/.agents/skills/|g' \
-    | sed 's|/\.claude/agents/|/.agents/agents/|g' \
     > "$TARGET/AGENTS.md"
   # Generate CLAUDE.md as secondary (copy of primary with title swapped back)
   sed '1s/Codex Instructions/Claude Instructions/' "$TARGET/AGENTS.md" \
     | sed 's|/\.agents/skills/|/.claude/skills/|g' \
-    | sed 's|/\.agents/agents/|/.claude/agents/|g' \
     > "$TARGET/CLAUDE.md"
 else
   # Claude primary — copy template directly
@@ -181,7 +172,6 @@ else
   # Generate AGENTS.md as secondary
   sed '1s/Claude Instructions/Codex Instructions/' "$TARGET/CLAUDE.md" \
     | sed 's|/\.claude/skills/|/.agents/skills/|g' \
-    | sed 's|/\.claude/agents/|/.agents/agents/|g' \
     > "$TARGET/AGENTS.md"
 fi
 

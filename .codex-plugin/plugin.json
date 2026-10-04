@@ -1,7 +1,7 @@
 {
   "name": "compound-marketing",
   "version": "1.0.0",
-  "description": "Complete marketing operations system for OpenAI Codex. 46 skills, 6 specialist agents, brain-based knowledge architecture, routing tables, and quality enforcement.",
+  "description": "Complete marketing operations system for OpenAI Codex. 55 skills, brain-based knowledge architecture, routing tables, and quality enforcement.",
   "author": {
     "name": "Todd Harris",
     "url": "https://github.com/t0ddharris"
@@ -19,6 +19,5 @@
     "brand",
     "analytics"
   ],
-  "skills": "./.claude/skills/",
-  "agents": "./.claude/agents/"
+  "skills": "./.claude/skills/"
 }

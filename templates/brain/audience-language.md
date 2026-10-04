@@ -1,6 +1,6 @@
 # How Our Audience Talks
 
-Owned by: **Product Marketer**
+Owned by: **you** (skills propose edits; you approve them)
 
 > This file captures the actual vocabulary your prospects and customers use when describing their challenges, their environment, and their buying process. Mine it from real sales call transcripts and use it in every content-producing skill to ensure your language mirrors theirs.
 >

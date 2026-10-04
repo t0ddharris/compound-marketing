@@ -14,7 +14,7 @@ Compound Marketing is built primarily for B2B marketers and GTM teams — more r
 
 What makes it compound: skills capture how you do the work, workflows chain those skills into full pipelines, and a "brain" holds your company's positioning, personas, and brand. Every correction you make and every session you close feeds back into the system — so the hundredth blog post starts from everything the first ninety-nine taught it. The approach borrows from [compound engineering](https://github.com/EveryInc/compound-engineering-plugin), applied to marketing.
 
-Everything is moldable. You do not need to use the specialist sub-agents. Feel free to work with your main agent to customize the workflows and skills to your own processes and styles. Trim what you don't need, modify what you want, add what you're missing!
+Everything is moldable. Work with your agent to customize the workflows and skills to your own processes and styles. Trim what you don't need, modify what you want, add what you're missing!
 
 Works with **Claude Code** and **OpenAI Codex**.
 
@@ -30,7 +30,7 @@ cd compound-marketing
 ./scripts/create-instance.sh
 ```
 
-This asks for your company name and creates a standalone repo (e.g., `../your-company-marketing/`) with all skills, agents, and brain templates.
+This asks for your company name and creates a standalone repo (e.g., `../your-company-marketing/`) with all skills and brain templates.
 
 ### 2. Run setup
 
@@ -84,11 +84,10 @@ Once setup finishes, you're ready to go. Ask for what you need in plain language
 
 ## How It Works
 
-Compound Marketing has four layers, each fixing a way AI marketing usually goes wrong:
+Compound Marketing has three layers, each fixing a way AI marketing usually goes wrong:
 
 - **Brain** (`brain/`) — One source of truth for your company. Every factual claim traces back to a brain file. If a fact isn't there, the system writes `[FILL IN]` instead of inventing one.
 - **Skills** (`.claude/skills/`) — Step-by-step workflows for specific tasks, each with its own references, templates, and approval gates.
-- **Agents** (`.claude/agents/`) — Specialist roles with defined tools and brain access. One agent (product-marketer) owns brain writes; the rest read only.
 - **`CLAUDE.md`** — Routing and governance. Maps each request to the right skill, enforces the writing rules, and blocks AI slop.
 
 Vale linting runs automatically after every edit in `marketing/`, catching banned words, weak language, and AI tells before you read the draft.
@@ -112,7 +111,7 @@ Each workflow is one command that chains several skills, with an approval gate b
 
 | Category | Skills |
 |----------|--------|
-| **Content** | `blog`, `copywriting`, `copy-editing`, `content-strategy`, `case-studies`, `lookalike-content`, `tagore` |
+| **Content** | `blog`, `long-form`, `copywriting`, `copy-editing`, `content-strategy`, `case-studies`, `lookalike-content`, `tagore` |
 | **SEO & Site** | `seo-geo`, `schema-markup`, `site-architecture` |
 | **CRO** | `page-cro`, `form-cro`, `ab-test-setup` |
 | **Paid** | `paid-ads`, `ad-creative` |
@@ -124,22 +123,10 @@ Each workflow is one command that chains several skills, with an approval gate b
 | **Onboarding & Brand setup** | `setup`, `tone-mapping`, `design-extract`, `brain-health` |
 | **System & tools** | `start`, `brief`, `reflect`, `sync-skills`, `granola`, `agent-browser`, `devils-advocate` |
 
-## Agents
-
-| Agent | Role |
-|-------|------|
-| `content-writer` | Blogs, datasheets, whitepapers, case studies |
-| `product-marketer` | Positioning, messaging, brain ownership |
-| `seo-specialist` | SEO and AI-search (GEO) optimization |
-| `social-media-manager` | Social content and platform strategy |
-| `campaign-manager` | Multi-channel campaign coordination |
-| `ppc-specialist` | Paid advertising campaigns |
-
 ## What's Inside
 
 ```
-.claude/skills/    # 54 marketing skills (blog, SEO, CRO, HubSpot, ads, etc.)
-.claude/agents/    # 6 specialist agents
+.claude/skills/    # 55 skills (blog, SEO, CRO, HubSpot, ads, etc.)
 templates/         # Everything copied into a new instance:
   CLAUDE.md        #   Routing tables, writing rules, anti-hallucination guardrails
   brain/           #   Source-of-truth templates (positioning, personas, competitive)

@@ -1,6 +1,6 @@
 # Positioning & Messaging
 
-Owned by: **Product Marketer**
+Owned by: **you** (skills propose edits; you approve them)
 
 > This is the canonical source for positioning and messaging.
 >

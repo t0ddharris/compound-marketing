@@ -141,7 +141,6 @@ Title swap: replace the first line's "Claude Instructions" with "Codex Instructi
 
 Path swaps:
 - `/.claude/skills/` ↔ `/.agents/skills/`
-- `/.claude/agents/` ↔ `/.agents/agents/`
 
 ## Step 4: Summary
 

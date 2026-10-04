@@ -1,6 +1,6 @@
 # Buyer Personas
 
-Owned by: **Product Marketer**
+Owned by: **you** (skills propose edits; you approve them)
 
 > Extracted from `positioning-and-messaging.md`. ICP definition remains in the positioning doc; these are the detailed persona profiles.
 
