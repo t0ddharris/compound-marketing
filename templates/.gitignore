@@ -5,6 +5,7 @@
 .DS_Store
 
 # Local tooling
+.claude/settings.local.json
 .playwright-mcp/
 .mcp.json
 .obsidian/

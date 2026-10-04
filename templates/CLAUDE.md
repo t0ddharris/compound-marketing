@@ -49,6 +49,16 @@ When the user provides direction, raw thoughts, or rough language, **never echo 
 - `/marketing/plans/` — Backlog of improvements, new skills, tooling ideas, and projects.
 - `/marketing/inspiration/` — Design references, competitor examples, and visual inspiration. Screenshots go in `visual/` subdirectory. Keep reference images co-located with their companion docs.
 
+## Knowledge Sources
+
+If `.compound-marketing.yml` lists `knowledge_sources`, those folders (often an Obsidian vault) hold the user's working notes: meeting notes, people profiles, clippings, research. They live outside this repo and are available every session.
+
+- **Check them first** when a task needs context about a customer, a person, a past meeting, or prior research. Look there before calling an external API (e.g., Granola) for the same information.
+- **Search, don't crawl.** If a QMD collection covers the folder (`qmd collection list`), use `qmd query "..."` and read only the hits. Otherwise grep for names and keywords.
+- **Read-only.** Never create, edit, move, or delete files in a knowledge source.
+- **Raw input, not verified claims.** Same rule as `/incoming/`: notes are context, not sources for published claims. When a note holds a fact worth keeping, propose adding it to the right `/brain/` file with the note's path as its source, and confirm with the user before writing.
+- **Keep it private.** Notes can contain names, internal discussions, and customer details. Never quote them in drafts or copy them into `/marketing/` without the user's approval.
+
 ## Workflow Output Convention
 
 When a workflow skill runs (any multi-step pipeline), all output goes into a single project folder under `marketing/`. The structure:

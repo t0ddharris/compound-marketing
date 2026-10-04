@@ -3,10 +3,12 @@
 # Create a new standalone Compound Marketing instance.
 #
 # Usage:
-#   ./scripts/create-instance.sh "Company Name" [target-dir] [runtime]   (non-interactive, called by /setup)
+#   ./scripts/create-instance.sh "Company Name" [target-dir] [runtime] [knowledge-dir]   (non-interactive, called by /setup)
 #   ./scripts/create-instance.sh                                          (interactive)
 #
 # runtime: claude (default), codex, or both
+# knowledge-dir: optional existing notes folder (e.g. an Obsidian vault) the agent
+#   may read every session. Kept outside the repo; never copied in.
 
 set -euo pipefail
 
@@ -61,6 +63,24 @@ else
     3|both)   RUNTIME="both" ;;
     *)        RUNTIME="claude" ;;
   esac
+fi
+
+# --- Optional external knowledge source ---
+KNOWLEDGE_DIR=""
+if [ $# -ge 4 ] && [ -n "$4" ]; then
+  if [ ! -d "$4" ]; then
+    echo "  Knowledge folder not found: $4"
+    exit 1
+  fi
+  KNOWLEDGE_DIR="$(cd "$4" && pwd)"
+  # The overwrite below runs rm -rf on TARGET; never let that reach the notes.
+  if [ -d "$TARGET" ]; then
+    case "$KNOWLEDGE_DIR/" in
+      "$(cd "$TARGET" && pwd)"/*)
+        echo "  Knowledge folder is inside the target directory: $KNOWLEDGE_DIR"
+        exit 1 ;;
+    esac
+  fi
 fi
 
 # Normalize
@@ -126,6 +146,19 @@ else
   cp "$REPO_ROOT/.claude/settings.json" "$TARGET/.claude/settings.json"
 fi
 
+# Machine-specific, so it goes in settings.local.json (gitignored), not settings.json.
+# Codex sandboxes can already read outside the workspace; it only needs the
+# knowledge_sources entry in .compound-marketing.yml below.
+if [ -n "$KNOWLEDGE_DIR" ]; then
+  cat > "$TARGET/.claude/settings.local.json" <<EOF
+{
+  "permissions": {
+    "additionalDirectories": ["$KNOWLEDGE_DIR"]
+  }
+}
+EOF
+fi
+
 # --- Brain templates ---
 cp "$TEMPLATES"/brain/*.md "$TARGET/brain/"
 cp -R "$TEMPLATES/brain/brand-guide" "$TARGET/brain/"
@@ -173,6 +206,14 @@ cat > "$TARGET/.compound-marketing.yml" <<EOF
 primary_runtime: $CONFIG_PRIMARY
 company: "$COMPANY"
 EOF
+if [ -n "$KNOWLEDGE_DIR" ]; then
+  cat >> "$TARGET/.compound-marketing.yml" <<EOF
+
+# Read-only external notes (meeting notes, people, clippings). See "Knowledge Sources" in CLAUDE.md.
+knowledge_sources:
+  - "$KNOWLEDGE_DIR"
+EOF
+fi
 
 # --- Vale styles ---
 cp "$TEMPLATES"/styles/Brand/*.yml "$TARGET/styles/Brand/"
