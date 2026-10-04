@@ -12,7 +12,7 @@ Compound Marketing is built primarily for B2B marketers and GTM teams — more r
 - **Speeds up** the work you already do.
 - **Extends** into specialties you'd otherwise outsource or skip.
 
-What makes it compound: skills capture how you do the work, workflows chain those skills into full pipelines, and a "brain" holds your company's positioning, personas, and brand. Every correction you make and every session you close feeds back into the system — so the hundredth blog post starts from everything the first ninety-nine taught it. The approach borrows from [compound engineering](https://github.com/EveryInc/compound-engineering-plugin), applied to marketing.
+What makes it compound: skills capture how you work, workflows chain those skills into full pipelines, and a "brain" holds your company's positioning, personas, and brand. Every correction you make and every session you close feeds back into the system — so the hundredth blog post starts from everything the first ninety-nine taught it. The approach borrows from [compound engineering](https://github.com/EveryInc/compound-engineering-plugin), applied to marketing.
 
 Everything is moldable. Work with your agent to customize the workflows and skills to your own processes and styles. Trim what you don't need, modify what you want, add what you're missing!
 
