@@ -22,6 +22,7 @@ Everything in this folder is the authoritative source for product facts, positio
 | [[market-signals.md]] | Market trends, industry shifts, and timing signals |
 | [[qualifying-questions.md]] | Discovery and qualification questions for sales conversations |
 | [[tactical-assets.md]] | Inventory of available marketing assets and collateral |
+| [[sources.md]] | Sources already mined and leads still to check (kept by `brain-ingest`) |
 
 ## Brand
 

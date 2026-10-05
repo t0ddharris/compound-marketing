@@ -60,6 +60,12 @@ The repository owner is the final authority on all product facts, positioning, a
 |------|---------|-------|
 | `tactical-assets.md` | Boilerplate, pitches, snippets | Ready-to-use execution assets |
 
+### Bookkeeping
+
+| File | Purpose | Usage |
+|------|---------|-------|
+| `sources.md` | Log of sources already mined and leads still to check | Read and updated by `brain-ingest`; not a source of claims |
+
 ---
 
 ## Key Distinctions

@@ -23,6 +23,7 @@ The knowledge base that drives all content generation. See [[brain/INDEX]].
 - [[brain/market-signals.md]] — Market trends and signals
 - [[brain/qualifying-questions.md]] — Discovery and qualification questions
 - [[brain/tactical-assets.md]] — Available marketing assets
+- [[brain/sources.md]] — Sources already mined and leads still to check
 - [[brain/brand-guide/brand-guide.md]] — Visual brand system (colors, type, gradients)
 
 ## Skills — 50 Marketing Skills

@@ -14,13 +14,17 @@ Turn scattered company material into brain-file updates. Works with any source t
 
 ### Step 1: Pick the sources
 
-Ask what to pull from, if the user hasn't said:
+Read `brain/sources.md` first (create it from the format below if it's missing). It records what's already been mined and what's still waiting.
+
+Ask what to pull from, if the user hasn't said. Offer the open items under "To check":
 
 > What should I pull from? A file or folder, a Drive or SharePoint location, an email search, or "everything in incoming/"?
 
 - **Connector sources:** use the connectors available in this session. If the user names a source with no connector, say so and suggest exporting the files to `incoming/` instead. Don't guess at APIs.
 - **Searches:** narrow before reading. Search by topic, sender, folder, or date range, list the hits (title, owner or sender, date), and let the user confirm which to read. Never bulk-read a whole mailbox or drive.
 - **Files:** read PDFs, decks, docs, spreadsheets, and images with whatever file-reading ability the runtime has. If one can't be read, say which and move on.
+
+If the user names a source already listed under "Ingested," say when it was read and offer to look only at what changed since.
 
 Keep a list of what you read, with a locator for each: a file path, document URL, or email subject + sender + date. That locator becomes the source citation.
 
@@ -77,6 +81,14 @@ Then write only the approved items:
 - Mark anything the user approved but wasn't sure about with `[VERIFY]`.
 
 ### Step 5: Wrap up
+
+Update `brain/sources.md`:
+
+- Add a row under "Ingested" for every source read, including ones that turned up nothing, so nobody reads them twice. Use the same locator as the citations.
+- Remove those sources from "To check."
+- Add new leads to "To check": documents a source referred to, folders you saw but didn't open, people named as owning a topic ("pricing questions go to the deal desk lead"). At a company where material is scattered, these leads are often the most useful thing a run produces.
+
+Unlike other brain files, this log doesn't need approval for each line. Tell the user what you added.
 
 Report what changed, file by file, and what was skipped. Then run `/brain-health` to show what's still empty, and suggest sources likely to fill it ("personas.md is still thin. Sales call recordings or a discovery guide would help").
 
