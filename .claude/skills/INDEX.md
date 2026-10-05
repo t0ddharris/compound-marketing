@@ -84,3 +84,4 @@
 | [[brain-health/SKILL.md\|brain-health]] | Brain file completeness check with next-step recommendations |
 | [[setup/SKILL.md\|setup]] | Scaffold and configure a new Compound Marketing instance |
 | [[sync-skills/SKILL.md\|sync-skills]] | Sync skills between Claude Code and Codex runtimes |
+| [[update/SKILL.md\|update]] | Pull new skills and fixes from the starter kit, keeping your changes |

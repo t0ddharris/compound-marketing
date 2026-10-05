@@ -176,6 +176,7 @@ Do not skip this step. Do not freestyle. Do not generate content without the rel
 | Pull facts from email, Drive, SharePoint, PDFs, or decks into the brain | `brain-ingest` |
 | Check brain file completeness, see what's missing | `brain-health` |
 | Sync skills between Claude Code and Codex runtimes | `sync-skills` |
+| Get the latest skills and fixes from the starter kit | `update` |
 
 ### Routing Rules
 

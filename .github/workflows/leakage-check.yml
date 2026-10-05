@@ -15,3 +15,6 @@ jobs:
 
       - name: Scan for company-specific leakage
         run: ./scripts/check-leakage.sh
+
+      - name: Test /update end to end
+        run: ./scripts/test-update.sh

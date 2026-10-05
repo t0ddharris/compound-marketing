@@ -46,7 +46,7 @@ Setup asks for your company name and creates your company's folder next to the s
 ~/Development/your-company-marketing/      # your company's folder, where you'll work
 ```
 
-Both are ordinary, permanent folders on your computer; nothing goes to a temporary location. Your company's folder is also a git repository, which means it keeps a history of every change so you can see what changed and undo mistakes. It stays on your computer unless you choose to put it on GitHub. Keep the starter kit folder if you want future updates; otherwise you can delete it.
+Both are ordinary, permanent folders on your computer; nothing goes to a temporary location. Your company's folder is also a git repository, which means it keeps a history of every change so you can see what changed and undo mistakes. It stays on your computer unless you choose to put it on GitHub. Keep the starter kit folder where it is. It's how your company's folder gets new skills and fixes later (see step 6).
 
 ### 2. Answer the setup questions
 
@@ -100,6 +100,12 @@ Then ask for what you need in plain language, or use a slash command:
 /wf-landing-page   Build a landing page, end to end
 ```
 
+### 6. Get updates
+
+When the starter kit gets new skills or fixes, run `/update` in your company's folder. It downloads the latest starter kit and shows you what would change before touching anything. Skills you never edited get the new version. Skills you edited, including lessons your agent saved with `/reflect`, keep your changes, with the new material merged in around them. If you and the update changed the same lines, the agent shows you both versions and you choose. Your brain files are never changed, though new ones get added.
+
+The agent saves your work before updating, so if you don't like the result, you can undo the whole update with one command it gives you.
+
 ## How It Works
 
 Compound Marketing has three layers, each fixing a way AI marketing usually goes wrong:
@@ -139,12 +145,12 @@ Each workflow is one command that chains several skills, with an approval gate b
 | **Strategy & PMM** | `product-marketing`, `marketing-psychology`, `marketing-ideas`, `launch-strategy`, `competitor-alternatives`, `revops` |
 | **Analytics** | `analytics`, `tracking-setup` |
 | **Onboarding & Brand setup** | `setup`, `tone-mapping`, `design-extract`, `brain-health`, `brain-ingest` |
-| **System & tools** | `start`, `brief`, `reflect`, `sync-skills`, `granola`, `agent-browser`, `devils-advocate` |
+| **System & tools** | `start`, `brief`, `reflect`, `sync-skills`, `update`, `granola`, `agent-browser`, `devils-advocate` |
 
 ## What's Inside
 
 ```
-.claude/skills/    # 56 skills (blog, SEO, CRO, HubSpot, ads, etc.)
+.claude/skills/    # 57 skills (blog, SEO, CRO, HubSpot, ads, etc.)
 templates/         # Everything copied into a new instance:
   CLAUDE.md        #   Routing tables, writing rules, anti-hallucination guardrails
   brain/           #   Source-of-truth templates (positioning, personas, competitive)

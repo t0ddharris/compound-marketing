@@ -195,6 +195,10 @@ cat > "$TARGET/.compound-marketing.yml" <<EOF
 
 primary_runtime: $CONFIG_PRIMARY
 company: "$COMPANY"
+
+# Starter kit this folder was built from; /update reads these.
+starter_kit: "$REPO_ROOT"
+starter_kit_version: $(git -C "$REPO_ROOT" rev-parse HEAD 2>/dev/null || echo unknown)
 EOF
 if [ -n "$KNOWLEDGE_DIR" ]; then
   cat >> "$TARGET/.compound-marketing.yml" <<EOF
