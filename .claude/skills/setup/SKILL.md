@@ -77,7 +77,7 @@ This script:
 - Creates the directory structure
 - Copies all skills into both `.claude/skills/` and `.agents/skills/` (hardlinked)
 - Generates both `CLAUDE.md` and `AGENTS.md` (identical except title and path references)
-- Writes `.compound-marketing.yml` with the primary runtime setting
+- Writes `.compound-marketing.yml` with the primary runtime setting, plus the starter kit's location and version (used by `/update`)
 - Copies brain templates with `[FILL IN]` placeholders
 - Copies Vale styles, settings, .gitignore
 - If a knowledge folder was given: grants Claude Code read access in `.claude/settings.local.json` (`permissions.additionalDirectories`, gitignored) and lists it under `knowledge_sources:` in `.compound-marketing.yml`
@@ -87,7 +87,7 @@ If the script doesn't exist or fails, do the same work manually:
 - `mkdir -p` the directory tree
 - Copy skills into both `.claude/skills/` and `.agents/skills/`
 - Generate both `CLAUDE.md` and `AGENTS.md`
-- Write `.compound-marketing.yml` with `primary_runtime: [claude|codex]` (plus `knowledge_sources: ["[knowledge-dir]"]` if set)
+- Write `.compound-marketing.yml` with `primary_runtime: [claude|codex]` and `starter_kit: "[this repo's absolute path]"` and `starter_kit_version: [output of git rev-parse HEAD here]` (plus `knowledge_sources: ["[knowledge-dir]"]` if set)
 - If a knowledge folder was given, write `.claude/settings.local.json` with `{"permissions": {"additionalDirectories": ["[knowledge-dir]"]}}`
 - Copy brain/, styles/, PRODUCT.md, INDEX.md, .vale.ini, .claude/settings.json, .env.example, .gitignore
 - `git init && git add -A && git commit -m "Initial setup: [Company] Compound Marketing instance"`
@@ -360,6 +360,7 @@ Utilities:
   /analytics         Check marketing performance
   /tagore            Strip AI patterns from any prose
   /sync-skills       Sync skills between runtimes
+  /update            Get new skills and fixes from the starter kit
   /start             Start a session (loads context)
   /brief             End a session (checkpoint work)
 ```

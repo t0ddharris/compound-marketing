@@ -37,7 +37,7 @@ Organized by category. See [[skills/INDEX]] for the full inventory.
 - **Design** — brand-design, image-gen, youtube-thumbnail, web-design, impeccable
 - **Build** — hubspot-email, hubspot-landing-page, hubspot-cta
 - **Analyze** — analytics, lookalike-content, copy-editing, devils-advocate
-- **System** — brain-ingest, reflect, brief, start, sync-skills, agent-browser, html-to-pdf, granola, revops
+- **System** — brain-ingest, reflect, brief, start, sync-skills, update, agent-browser, html-to-pdf, granola, revops
 
 ## Output
 
