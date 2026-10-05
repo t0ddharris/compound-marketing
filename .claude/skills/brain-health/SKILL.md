@@ -136,6 +136,7 @@ If they pick one, route to the appropriate skill.
 
 ## Rules
 
+- Skip `sources.md`. It's a log kept by `/brain-ingest`, not a file to fill. If it has open items under "To check," mention the count after the recommendations as a likely next source.
 - Read files as-is. Don't modify any brain files during a health check.
 - Count `[FILL IN]` and `[VERIFY]` literally (case-insensitive match on `[fill in]` and `[verify]`).
 - If a file has custom content mixed with some remaining placeholders, it's partial, not empty.
