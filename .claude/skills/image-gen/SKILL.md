@@ -230,6 +230,7 @@ Ask: "Here's the prompt I'll send. Want me to generate, or would you like to adj
 
 ```bash
 source .env 2>/dev/null || true
+export PATH="$PATH:/opt/homebrew/bin:/usr/local/bin"  # Homebrew installs, missed by non-login shells
 command -v codex >/dev/null && codex login status 2>&1 | grep -q "ChatGPT" && echo "CODEX_AVAILABLE"
 [ -n "$GOOGLE_AI_STUDIO_API_KEY" ] && echo "GEMINI_API_AVAILABLE"
 ```
