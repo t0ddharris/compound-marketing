@@ -1,6 +1,6 @@
 ---
 name: setup
-version: 3.1.0
+version: 3.2.0
 description: "Create a new Compound Marketing instance for your company. Trigger with /setup. Asks your company name, scaffolds a standalone repo with all skills and brain templates, then walks you through configuring everything."
 ---
 
@@ -100,7 +100,9 @@ If the script doesn't exist or fails, do the same work manually:
 
 Skip if there's no `[knowledge-dir]`.
 
-If `qmd` isn't installed (`command -v qmd`), tell the user and offer to install it:
+Check for `qmd` with `export PATH="$PATH:/opt/homebrew/bin:/usr/local/bin"; command -v qmd`. Non-login shells can leave Homebrew's folder off the PATH, so a plain `command -v` misses it. Keep that `export` at the start of every `qmd` command in this step.
+
+If `qmd` isn't installed, tell the user and offer to install it:
 
 > QMD isn't installed. It lets me search your notes instead of reading them one by one, which matters for a large vault. Want me to install it? (`npm install -g @tobilu/qmd`, needs Node.js)
 
@@ -163,7 +165,7 @@ Ask the user:
 
 If they have files:
 1. List the files found in `incoming/` and confirm which ones to read
-2. Read each file and extract relevant information: product facts, positioning language, personas, competitive intel, brand details
+2. Read each file (for `.pptx` and `.docx`, use the `brain-ingest` skill's `scripts/office-text.py`, as that skill describes) and extract relevant information: product facts, positioning language, personas, competitive intel, brand details
 3. Map extracted content to the appropriate brain files (truth.md, positioning-and-messaging.md, competitive.md, personas.md, brand-guide.md)
 4. **Always show what you extracted and confirm before writing.** Never silently inject content from reference documents into brain files.
 5. Note: reference documents are raw inputs, not verified claims. Extracted facts go into brain files as starting points; the user confirms accuracy.
