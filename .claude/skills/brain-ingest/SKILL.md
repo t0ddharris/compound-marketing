@@ -1,6 +1,6 @@
 ---
 name: brain-ingest
-version: 1.0.0
+version: 1.1.0
 description: "Pull facts from company sources (email, Google Drive, SharePoint, PDFs, decks, docs, meeting notes) into brain files, with a source on every fact and approval before anything is written. Trigger with /brain-ingest or when the user mentions 'ingest,' 'import this into the brain,' 'pull from Drive,' 'pull from SharePoint,' 'pull from my email,' 'update the brain from this doc,' 'mine these files,' or drops documents in incoming/ after setup."
 ---
 
@@ -22,7 +22,7 @@ Ask what to pull from, if the user hasn't said. Offer the open items under "To c
 
 - **Connector sources:** use the connectors available in this session. If the user names a source with no connector, say so and suggest exporting the files to `incoming/` instead. Don't guess at APIs.
 - **Searches:** narrow before reading. Search by topic, sender, folder, or date range, list the hits (title, owner or sender, date), and let the user confirm which to read. Never bulk-read a whole mailbox or drive.
-- **Files:** read PDFs, decks, docs, spreadsheets, and images with whatever file-reading ability the runtime has. If one can't be read, say which and move on.
+- **Files:** read PDFs, decks, docs, spreadsheets, and images with whatever file-reading ability the runtime has. For `.pptx` and `.docx`, run `python3 .claude/skills/brain-ingest/scripts/office-text.py <file>`. It prints slide text and speaker notes locally, at any file size, with no extra installs. If one can't be read, say which and move on.
 
 If the user names a source already listed under "Ingested," say when it was read and offer to look only at what changed since.
 

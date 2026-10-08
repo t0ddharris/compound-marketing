@@ -206,6 +206,8 @@ The `analytics` skill should be used **proactively**. Don't wait for the user to
 
 ## CLI Tools
 
+**Missing a tool?** Non-login shells often leave Homebrew's folder off the PATH, so `command -v` can miss tools that are installed (qmd, codex, gh). Before telling the user something isn't installed, retry with `export PATH="$PATH:/opt/homebrew/bin:/usr/local/bin"` at the start of the command, and keep that prefix on later commands that use the tool.
+
 **GitHub CLI (`gh`):** Use `gh` for all GitHub operations: PRs, issues, API calls, repo queries. No MCP plugin needed.
 
 **Google Workspace CLI (`gws`):** Configured for Google Workspace. Use it to read, create, and edit Google Sheets, Docs, Slides, and Drive files. See `.env.example` for setup details and command reference. Extract file IDs from Google URLs (the segment after `/d/` in the URL).

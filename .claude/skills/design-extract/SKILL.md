@@ -38,7 +38,7 @@ Optional follow-ups:
 Check if designlang is available:
 
 ```bash
-command -v designlang || npm list -g designlang 2>/dev/null
+export PATH="$PATH:/opt/homebrew/bin:/usr/local/bin"; command -v designlang || npm list -g designlang 2>/dev/null
 ```
 
 If not installed, use npx to avoid global install permission issues:

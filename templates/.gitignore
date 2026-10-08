@@ -1,6 +1,10 @@
 # Secrets
 .env
 
+# Raw inputs: decks and exports can pass GitHub's 100 MB limit. Facts move into brain/.
+incoming/*
+!incoming/.gitkeep
+
 # macOS
 .DS_Store
 
